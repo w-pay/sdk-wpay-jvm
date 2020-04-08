@@ -15,7 +15,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
 
-        buildConfigField "String", "API_VERSION", "\"0.0.3\""
+        buildConfigField "String", "VILLAGE_API_VERSION", "\"0.0.3\""
     }
 
     buildTypes {

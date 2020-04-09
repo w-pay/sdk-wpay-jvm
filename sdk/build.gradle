@@ -1,3 +1,7 @@
+plugins {
+    id 'org.openapi.generator' version '4.3.0'
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -36,4 +40,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = "$rootDir/sdk/village.json".toString()
+    outputDir = "$buildDir/generated/openapi".toString()
+    apiPackage = "${rootProject.ext.packageName}.api"
+    invokerPackage = "${rootProject.ext.packageName}.client"
+    modelPackage = "${rootProject.ext.packageName}.dto"
+}
+
+openApiValidate {
+    inputSpec = "$rootDir/sdk/village.json".toString()
 }

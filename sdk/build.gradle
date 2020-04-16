@@ -48,6 +48,10 @@ openApiGenerate {
 
     inputSpec = "$rootDir/sdk/village.json".toString()
     outputDir = "$buildDir/generated/openapi".toString()
+
+    groupId = rootProject.ext.packageName
+    id = "village-sdk-${generatorName.get()}"
+    packageName = rootProject.ext.packageName
     apiPackage = "${rootProject.ext.packageName}.api"
     invokerPackage = "${rootProject.ext.packageName}.client"
     modelPackage = "${rootProject.ext.packageName}.dto"

@@ -55,6 +55,8 @@ openApiGenerate {
     apiPackage = "${rootProject.ext.packageName}.api"
     invokerPackage = "${rootProject.ext.packageName}.client"
     modelPackage = "${rootProject.ext.packageName}.dto"
+
+    generateModelTests = false
 }
 
 openApiValidate {

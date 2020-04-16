@@ -44,6 +44,8 @@ dependencies {
 
 openApiGenerate {
     generatorName = "java"
+    validateSpec = true
+
     inputSpec = "$rootDir/sdk/village.json".toString()
     outputDir = "$buildDir/generated/openapi".toString()
     apiPackage = "${rootProject.ext.packageName}.api"

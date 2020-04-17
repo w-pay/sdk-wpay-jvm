@@ -68,4 +68,17 @@ libraries.each { lib ->
         generateModelDocumentation = false
         generateApiTests = false
     }
+
+    /*
+     * We do not depend on the generation of the SDK as generation
+     * should only happen in a controlled manner to ensure that the
+     * SDK works for a given version of the API specification. The SDK code
+     * should be versioned.
+     */
+    task("build${name}Sdk") {
+        group = "SDK Generators"
+        description = "Builds the library '${lib}'"
+
+        dependsOn gradle.includedBuild("sdk-okhttp-gson").task(':build')
+    }
 }

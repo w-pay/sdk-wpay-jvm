@@ -66,5 +66,6 @@ libraries.each { lib ->
 
         generateModelTests = false
         generateModelDocumentation = false
+        generateApiTests = false
     }
 }

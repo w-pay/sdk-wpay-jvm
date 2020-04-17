@@ -1,4 +1,4 @@
 rootProject.name='VillageWalletClientSDK'
-include ':sdk'
+include ':sdk-tests'
 
 includeBuild 'okhttp-gson'

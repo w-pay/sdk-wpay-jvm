@@ -32,7 +32,7 @@ task can be used; see `$ ./gradlew tasks` for details.
 Village API spec is expected to be found in the `sdk` module. A symlink
 will suffice.
 
-TODO: GH link
+See https://github.com/OpenAPITools/openapi-generator/issues/5965 for more details.
 
 TODO: Testing
 TODO: Publishing

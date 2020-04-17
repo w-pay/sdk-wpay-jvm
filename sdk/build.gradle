@@ -1,7 +1,3 @@
-plugins {
-    id 'org.openapi.generator' version '4.3.0'
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -38,34 +34,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-}
-
-def libraries = [ "okhttp-gson" ]
-
-libraries.each { lib ->
-    def name = lib.split("-")
-                .collect({ s -> "${Character.toUpperCase(s.charAt(0))}${s.substring(1).toLowerCase()}" })
-                .join("")
-
-    task ("generate${name}Sdk", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-        group = "SDK Generators"
-        description = "Generates the Village SDK using the ${lib} framework"
-        generatorName = "java"
-        validateSpec = true
-        library = lib
-
-        inputSpec = "$rootDir/sdk/village.json".toString()
-        outputDir = "${rootDir}/${library.get()}".toString()
-
-        groupId = rootProject.ext.packageName
-        id = "sdk-${lib}"
-        packageName = "${rootProject.ext.packageName}.sdk"
-        apiPackage = "${packageName.get()}.api"
-        invokerPackage = "${packageName.get()}.client"
-        modelPackage = "${packageName.get()}.dto"
-
-        generateModelTests = false
-        generateModelDocumentation = false
-        generateApiTests = false
-    }
 }

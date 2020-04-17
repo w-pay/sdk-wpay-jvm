@@ -17,6 +17,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'org.openapi.generator' version '4.3.0'
+}
+
 allprojects {
     repositories {
         google()
@@ -31,4 +35,37 @@ ext {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+def libraries = [ "okhttp-gson" ]
+
+libraries.each { lib ->
+    def name = lib
+        .split("-")
+        .collect({ s -> "${Character.toUpperCase(s.charAt(0))}${s.substring(1).toLowerCase()}" })
+        .join("")
+
+    def outputLoc = "${projectDir}/${lib}".toString()
+
+    task("generate${name}Sdk", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+        group = "SDK Generators"
+        description = "Generates the Village SDK using the ${lib} framework"
+        generatorName = "java"
+        validateSpec = true
+        library = lib
+
+        inputSpec = "$projectDir/village.json".toString()
+        outputDir = outputLoc
+
+        groupId = project.ext.packageName
+        id = "sdk-${lib}"
+        packageName = "${project.ext.packageName}.sdk"
+        apiPackage = "${packageName.get()}.api"
+        invokerPackage = "${packageName.get()}.client"
+        modelPackage = "${packageName.get()}.dto"
+
+        generateModelTests = false
+        generateModelDocumentation = false
+        generateApiTests = false
+    }
 }

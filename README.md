@@ -34,7 +34,7 @@ will suffice.
 
 See https://github.com/OpenAPITools/openapi-generator/issues/5965 for more details.
 
-## Building an SDK
+## Building an SDK variant
 
 The project takes advantage of Gradle [Multi Project Builds](https://docs.gradle.org/current/userguide/multi_project_builds.html)
 to allow configuration and execution of the tasks to build/test/publish
@@ -49,6 +49,14 @@ For example, to build only the SDK using "OkHTTP with GSON" run
 
 ```sh
 $ ./gradlew :okhttp-gson:build
+```
+
+## Testing and SDK variant
+
+In order to see how dependencies are applied run
+
+```sh
+$ ./gradlew projectReport 
 ```
 
 TODO: Testing

@@ -28,11 +28,10 @@ So if the API is at `x.y.z` the SDK will be version `x.y.z`
 If the SDK for a variant needs to be updated the relevant "SDK Generators"
 task can be used; see `$ ./gradlew tasks` for details.
 
-**Caveat:** Due to not being able to provide the API spec dynamically, the
-Village API spec is expected to be found in the root of the project. A symlink
-will suffice.
+**Caveat:** Due to not being able to [provide the API spec dynamically](https://github.com/OpenAPITools/openapi-generator/issues/5965),
+the Village API spec is expected to be found in the root of the project.
 
-See https://github.com/OpenAPITools/openapi-generator/issues/5965 for more details.
+A symlink will suffice.
 
 ## Building an SDK variant
 

@@ -37,9 +37,9 @@ A symlink will suffice.
 
 The project takes advantage of Gradle [Multi Project Builds](https://docs.gradle.org/current/userguide/multi_project_builds.html)
 to allow configuration and execution of the tasks to build/test/publish
-and SDK variant.
+an SDK variant.
 
-As such the top level tasks of `build`, `test`, etc will run these tasks
+As such, the top level tasks of `build`, `test`, etc will run these tasks
 **for all** SDK variants. To run (address) a specific variant, use the
 path to the project (see [Gradle docs](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:running_partial_build_from_the_root)
 for more details).

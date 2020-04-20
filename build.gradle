@@ -99,7 +99,7 @@ def createSdkFlavor = { prj ->
 subprojects.each { sub ->
     /*
      * The project configuration eg: the "android" block has to be evaluated first so that we can
-     * manipulate it afterwards.
+     * manipulate it.
      */
     sub.afterEvaluate { prj ->
         /*

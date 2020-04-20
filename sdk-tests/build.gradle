@@ -23,6 +23,11 @@ android {
         }
     }
 
+    flavorDimensions "sdks"
+    productFlavors {
+
+    }
+
     setProperty("archivesBaseName", "village-${archivesBaseName}-${defaultConfig.versionName}")
 }
 

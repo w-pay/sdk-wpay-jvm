@@ -41,13 +41,99 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-def libraries = [ "okhttp-gson" ]
-
-libraries.each { lib ->
-    def name = lib
+def pascalCase = {
+    return it
         .split("-")
         .collect({ s -> "${Character.toUpperCase(s.charAt(0))}${s.substring(1).toLowerCase()}" })
         .join("")
+}
+
+def camelCase = { it ->
+    def pc = pascalCase(it)
+    return "${pc[0].toLowerCase()}${pc.substring(1)}"
+}
+
+def libraries = [ "okhttp-gson" ]
+def sdkTestsProject = null
+def evaluatedProjects = []
+def createSdkFlavor = { prj ->
+    logger.info("Creating SDK flavor for ${prj.path}")
+
+    project.configure(sdkTestsProject, {
+        android {
+            productFlavors.create("${camelCase(prj.name)}", {})
+        }
+
+        /*
+         * Add the SDK project as a dependency for the flavour testing
+         */
+        dependencies {
+            "test${pascalCase(prj.name)}Implementation" prj
+        }
+    })
+}
+
+/*
+ * For each SDK variant we want to create a "virtual project", that mixes the source of the SDK
+ * library, the Android tools, and the tests for the SDK. By organising along a "virtual project"
+ * we can keep classpaths separate and compiled code from mixing between SDK variants. In stock
+ * Gradle this could be achieved through `sourceSets`, `configurations` and `dependencies`
+ * configuration.
+ *
+ * However we can't mix Android modules (projects) into Java modules (projects) [1], which prevents
+ * us from allowing each SDK variant the ability to manage it's build/test lifecycle with the Android
+ * libraries and the SDK tests being mixed into the variant project (to help with isolation).
+ *
+ * However the Android Gradle Plugin doesn't not allow arbitrary `sourceSets`, etc to be configured
+ * by the root project as it provides it's own `sourceSet` implementation in order to implement features
+ * (like flavour variants).
+ *
+ * Consequently we utilise the Product Flavour[2] facility to dynamically create a product flavour
+ * per SDK variant to then allow the isolated testing of each SDK variant. This means that unit tests
+ * are run in isolation, and if Android Instrumentation Tests want to be run, a separate APK per SDK
+ * variant will be produced; again for isolation.
+ *
+ * @see [1] - https://stackoverflow.com/questions/49714744/failed-to-resolve-project-android-library-and-java-library-module-dependency
+ * @see [2] - https://developer.android.com/studio/build/build-variants#product-flavors
+ */
+subprojects.each { sub ->
+    /*
+     * The project configuration eg: the "android" block has to be evaluated first so that we can
+     * manipulate it afterwards.
+     */
+    sub.afterEvaluate { prj ->
+        /*
+         * Because we don't know the order Gradle will evaluate (load) sub projects we can't guarantee
+         * that the SDK tests project will have been evaluated when other sub projects are. What we
+         * therefore do is:
+         *
+         * 1. If the SDK tests project has been evaluated, create a flavour for the newly evaluated project.
+         * 2. If not (1) save the project for later.
+         * 3. If the newly evaluated project is the SDK tests, create a flavour for any previously saved projects.
+         */
+        logger.debug("${prj.path} is evaluated")
+
+        if (prj.path == ":sdk-tests") {
+            logger.debug("${prj.path} is evaluated; creating flavours for any saved projects")
+            sdkTestsProject = prj
+
+            evaluatedProjects.each(createSdkFlavor)
+        }
+        else {
+            if (sdkTestsProject != null) {
+                createSdkFlavor(prj)
+            }
+            else {
+                logger.debug("Saving ${prj.path} for later configuration")
+
+                evaluatedProjects.add(prj)
+            }
+        }
+    }
+}
+
+libraries.each { lib ->
+    def name = pascalCase(lib)
 
     def outputLoc = "${projectDir}/${lib}".toString()
 

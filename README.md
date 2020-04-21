@@ -50,15 +50,63 @@ For example, to build only the SDK using "OkHTTP with GSON" run
 $ ./gradlew :okhttp-gson:build
 ```
 
-## Testing and SDK variant
+## Testing an SDK variant
 
-In order to see how dependencies are applied run
+For each SDK variant we want to create a "virtual test project", that
+mixes the source of the SDK library, the Android tools, and the tests
+for the SDK. By organising by a "virtual project" we can keep
+classpaths separate and compiled code from mixing between SDK variants.
+In stock Gradle this could be achieved through `sourceSets`,
+`configurations` and `dependencies` configuration.
+
+However we can't [mix](https://stackoverflow.com/questions/49714744/failed-to-resolve-project-android-library-and-java-library-module-dependency)
+Android [modules](https://docs.gradle.org/current/userguide/dependency_management_terminology.html#sub:terminology_module)
+(projects) into Java modules (projects), which prevents us from allowing
+each SDK variant the ability to manage it's build/test lifecycle with
+the Android libraries and the SDK tests being mixed into the variant
+project (to help with isolation).
+
+Unfortunately the Android Gradle Plugin doesn't not allow arbitrary
+`sourceSets`, etc to be configured by the root project as it provides
+it's own `sourceSet` implementation in order to implement features
+(like flavour variants). Consequently we utilise the [Product Flavour](https://developer.android.com/studio/build/build-variants#product-flavors)
+facility to dynamically create a product flavour per SDK variant to
+then allow the isolated testing of each SDK variant. This means that
+unit tests are run in isolation, and if Android Instrumentation Tests
+want to be run, a separate APK per SDK variant will be produced; again
+for isolation.
+
+### Dependency details
+
+Each flavour variant gets its own dependency tree and classpath. To help
+see what dependencies are being used a project report is available.
 
 ```sh
 $ ./gradlew projectReport 
 ```
 
-TODO: Testing
+### Running tests
+
+The SDK tests need to be run against and SDK variant, and the [Gradle
+build](https://developer.android.com/studio/test/command-line) is setup
+to do that. To run the tests for a particular variant run the right
+task ie: `test[SDK Variant]DebugUnitTest` which follows the Android SDK
+task naming conventions.
+
+To run a specific test, use the `--test` [feature](https://docs.gradle.org/current/userguide/java_testing.html#test_filtering)
+of Gradle to specify the FQN of the test you want to run.
+
+#### Using Android Studio (IDE)
+
+In order to run tests in an IDE ie: Android Studio, the default
+`Android JUnit` [Run Configuration](https://developer.android.com/studio/test#run_a_test)
+can't be used as the IDE will not be able to configure the classpath
+correctly and the SDK variant source will not be found. The project
+will either fail to compile or throw a `ClassNotFoundException` at runtime.
+
+The IDE `Gradle` [Run Configuration](https://www.jetbrains.com/help/idea/create-run-debug-configuration-gradle-tasks.html)
+should be used with the `--test` option in the `Arguments`. This will run
+the task allowing the test to be run in the IDE.
 
 ## Publishing a version
 

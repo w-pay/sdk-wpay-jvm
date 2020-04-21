@@ -56,6 +56,7 @@ def camelCase = { it ->
 def libraries = [ "okhttp-gson" ]
 def sdkTestsProject = null
 def evaluatedProjects = []
+
 def createSdkFlavor = { prj ->
     logger.info("Creating SDK flavor for ${prj.path}")
 
@@ -74,27 +75,9 @@ def createSdkFlavor = { prj ->
 }
 
 /*
- * For each SDK variant we want to create a "virtual project", that mixes the source of the SDK
- * library, the Android tools, and the tests for the SDK. By organising along a "virtual project"
- * we can keep classpaths separate and compiled code from mixing between SDK variants. In stock
- * Gradle this could be achieved through `sourceSets`, `configurations` and `dependencies`
- * configuration.
+ * Configure the SDK tests project to have a flavour for each SDK variant.
  *
- * However we can't mix Android modules (projects) into Java modules (projects) [1], which prevents
- * us from allowing each SDK variant the ability to manage it's build/test lifecycle with the Android
- * libraries and the SDK tests being mixed into the variant project (to help with isolation).
- *
- * However the Android Gradle Plugin doesn't not allow arbitrary `sourceSets`, etc to be configured
- * by the root project as it provides it's own `sourceSet` implementation in order to implement features
- * (like flavour variants).
- *
- * Consequently we utilise the Product Flavour[2] facility to dynamically create a product flavour
- * per SDK variant to then allow the isolated testing of each SDK variant. This means that unit tests
- * are run in isolation, and if Android Instrumentation Tests want to be run, a separate APK per SDK
- * variant will be produced; again for isolation.
- *
- * @see [1] - https://stackoverflow.com/questions/49714744/failed-to-resolve-project-android-library-and-java-library-module-dependency
- * @see [2] - https://developer.android.com/studio/build/build-variants#product-flavors
+ * See the README for further explanation.
  */
 subprojects.each { sub ->
     /*

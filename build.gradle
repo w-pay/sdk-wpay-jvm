@@ -35,10 +35,15 @@ htmlDependencyReport {
 
 ext {
     packageName = "au.com.woolworths.village"
+    spec = "$projectDir/village.json".toString()
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+openApiValidate {
+    inputSpec = project.ext.spec
 }
 
 def pascalCase = {
@@ -127,7 +132,7 @@ libraries.each { lib ->
         validateSpec = true
         library = lib
 
-        inputSpec = "$projectDir/village.json".toString()
+        inputSpec = project.ext.spec
         outputDir = outputLoc
 
         groupId = project.ext.packageName

@@ -1,12 +1,13 @@
 package au.com.woolworths.village.sdk.api
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.BeforeClass
-import org.junit.Test
-
 import au.com.woolworths.village.sdk.client.Configuration
 import au.com.woolworths.village.sdk.dto.HealthCheckResult
 import au.com.woolworths.village.sdk.dto.HealthCheckResultData
+
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
+import org.junit.BeforeClass
+import org.junit.Test
 
 class AdministrationApiTest {
     companion object {
@@ -22,7 +23,7 @@ class AdministrationApiTest {
         val api = AdministrationApi()
         val result: HealthCheckResult = api.checkHealth()
 
-        assertThat(result.data.healthCheck).isEqualTo(HealthCheckResultData.HealthCheckEnum.SUCCESS)
-        assertThat(result.meta).isNotNull()
+        assertThat(result.data.healthCheck, equalTo(HealthCheckResultData.HealthCheckEnum.SUCCESS))
+        assertThat(result.meta, not(nullValue()))
     }
 }

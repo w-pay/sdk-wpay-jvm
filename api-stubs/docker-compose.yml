@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  stubs:
+    image: outofcoffee/imposter-openapi
+
+    expose:
+      - "8080"
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - ".:/opt/imposter/config:ro"

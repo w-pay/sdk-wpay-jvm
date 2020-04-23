@@ -85,6 +85,33 @@ see what dependencies are being used a project report is available.
 $ ./gradlew projectReport 
 ```
 
+### Testing setup
+
+The SDK tests make HTTP requests to a stub server to validate endpoint
+IO. The tests are concerned about data structures only. The SDK doesn't
+care that an ID is a guid or not, it cares that a string is sent or received.
+
+Therefore the tests are not reliant on particular data values.
+
+Any server can be used for the SDK tests, however a default `api-stubs`
+is available. It uses a [Docker Imposter](https://github.com/outofcoffee/imposter)
+to return data provided by `examples` in the API spec. Therefore the
+`examples` should be kept up to date.
+
+A [Docker Compose](https://docs.docker.com/compose/) file is provided to
+run the stubs on `http://localhost:8080`
+
+**Caveat**: Due to a [defect](https://github.com/outofcoffee/imposter/issues/39)
+in the imposter, the examples in the API spec are not loaded if the response
+content is not inline. A workaround is to use [Swagger CLI](https://apitools.dev/swagger-cli/)
+to inline the references for Imposter eg:
+
+```shell
+$ cd api-stubs
+$ swagger-cli bundle -f 4 -r ../village.json > village-all.json
+$ docker-compose up -d --force-recreate
+```
+
 ### Running tests
 
 The SDK tests need to be run against and SDK variant, and the [Gradle

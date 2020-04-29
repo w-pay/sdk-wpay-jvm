@@ -8,7 +8,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.hamcrest.text.IsBlankString.blankOrNullString
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 
 class CustomerApiTest {
@@ -109,9 +108,11 @@ class CustomerApiTest {
     @Test
     fun setCustomerPreferencesTest() {
         val customerPreferences = CustomerPreferences()
-        customerPreferences.data = HashMap()
-        customerPreferences.data["preferenceGroup"] = HashMap()
-        customerPreferences.data["preferenceGroup"]!!["preference"] = "preference value"
+        customerPreferences.data = hashMapOf(
+            "preferenceGroup" to hashMapOf(
+                "preference" to "preference value"
+            )
+        ) as Map<String, Map<String, String>>
 
         api.setCustomerPreferences(customerPreferences)
     }

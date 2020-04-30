@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 
 group = 'au.com.woolworths.village'
-version = '0.0.4'
+version = '0.0.4.0'
 
 buildscript {
     repositories {

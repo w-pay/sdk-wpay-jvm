@@ -21,7 +21,10 @@ if required.
 ## Versioning
 
 The SDK follows the same versioning scheme as the Village API spec.
-So if the API is at `x.y.z` the SDK will be version `x.y.z`
+So if the API is at `x.y.z` the SDK will be version `x.y.z.b` where `b`
+is the build number. The build number allows for implementation changes
+to be versioned that don't require a version bump to the spec because the
+interface hasn't changed.
 
 ## Generating the SDK
 
@@ -137,8 +140,8 @@ the task allowing the test to be run in the IDE.
 
 ## Publishing a version
 
-TODO: Publishing
-TODO: Version schemes, tagging
+- TODO: Publishing
+- TODO: Tagging
 
 ## Adding a new variant
 

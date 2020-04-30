@@ -18,6 +18,7 @@ import java.util.Arrays;
 import au.com.woolworths.village.sdk.dto.Basket;
 import au.com.woolworths.village.sdk.dto.CustomerTransactionDetailAllOf;
 import au.com.woolworths.village.sdk.dto.CustomerTransactionSummary;
+import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOfInstruments;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -27,12 +28,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Detailed information for a single transaction
  */
 @ApiModel(description = "Detailed information for a single transaction")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class CustomerTransactionDetail extends CustomerTransactionSummary {
   public static final String SERIALIZED_NAME_BASKET = "basket";
   @SerializedName(SERIALIZED_NAME_BASKET)

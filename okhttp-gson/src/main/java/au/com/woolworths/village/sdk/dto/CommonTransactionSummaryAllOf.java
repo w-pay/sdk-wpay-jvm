@@ -23,11 +23,12 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * CommonTransactionSummaryAllOf
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class CommonTransactionSummaryAllOf {
   public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
   @SerializedName(SERIALIZED_NAME_TRANSACTION_ID)
@@ -84,6 +85,63 @@ public class CommonTransactionSummaryAllOf {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
 
+  public static final String SERIALIZED_NAME_EXECUTION_TIME = "executionTime";
+  @SerializedName(SERIALIZED_NAME_EXECUTION_TIME)
+  private OffsetDateTime executionTime;
+
+  /**
+   * The current status of the transactions
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    PROCESSING("PROCESSING"),
+    
+    APPROVED("APPROVED"),
+    
+    REJECTED("REJECTED");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return StatusEnum.fromValue(value);
+      }
+    }
+  }
+
+  public static final String SERIALIZED_NAME_STATUS = "status";
+  @SerializedName(SERIALIZED_NAME_STATUS)
+  private StatusEnum status;
+
   public static final String SERIALIZED_NAME_REFUND_REASON = "refundReason";
   @SerializedName(SERIALIZED_NAME_REFUND_REASON)
   private String refundReason;
@@ -133,6 +191,50 @@ public class CommonTransactionSummaryAllOf {
   }
 
 
+  public CommonTransactionSummaryAllOf executionTime(OffsetDateTime executionTime) {
+    
+    this.executionTime = executionTime;
+    return this;
+  }
+
+   /**
+   * Date/time stamp of when the transaction occurred in ISO string format
+   * @return executionTime
+  **/
+  @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", required = true, value = "Date/time stamp of when the transaction occurred in ISO string format")
+
+  public OffsetDateTime getExecutionTime() {
+    return executionTime;
+  }
+
+
+  public void setExecutionTime(OffsetDateTime executionTime) {
+    this.executionTime = executionTime;
+  }
+
+
+  public CommonTransactionSummaryAllOf status(StatusEnum status) {
+    
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * The current status of the transactions
+   * @return status
+  **/
+  @ApiModelProperty(required = true, value = "The current status of the transactions")
+
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+
   public CommonTransactionSummaryAllOf refundReason(String refundReason) {
     
     this.refundReason = refundReason;
@@ -167,12 +269,14 @@ public class CommonTransactionSummaryAllOf {
     CommonTransactionSummaryAllOf commonTransactionSummaryAllOf = (CommonTransactionSummaryAllOf) o;
     return Objects.equals(this.transactionId, commonTransactionSummaryAllOf.transactionId) &&
         Objects.equals(this.type, commonTransactionSummaryAllOf.type) &&
+        Objects.equals(this.executionTime, commonTransactionSummaryAllOf.executionTime) &&
+        Objects.equals(this.status, commonTransactionSummaryAllOf.status) &&
         Objects.equals(this.refundReason, commonTransactionSummaryAllOf.refundReason);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(transactionId, type, refundReason);
+    return Objects.hash(transactionId, type, executionTime, status, refundReason);
   }
 
 
@@ -182,6 +286,8 @@ public class CommonTransactionSummaryAllOf {
     sb.append("class CommonTransactionSummaryAllOf {\n");
     sb.append("    transactionId: ").append(toIndentedString(transactionId)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    executionTime: ").append(toIndentedString(executionTime)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    refundReason: ").append(toIndentedString(refundReason)).append("\n");
     sb.append("}");
     return sb.toString();

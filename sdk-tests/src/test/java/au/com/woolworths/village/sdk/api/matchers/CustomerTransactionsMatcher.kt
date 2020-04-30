@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk.api.matchers
 
 import au.com.woolworths.village.sdk.dto.CustomerTransactionSummary
+import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOfInstruments
 import au.com.woolworths.village.sdk.dto.GetCustomerTransactionsResultData
 import org.hamcrest.Description
 import org.hamcrest.MatcherAssert.assertThat
@@ -40,16 +41,10 @@ class CustomerTransactionMatcher: TypeSafeMatcher<CustomerTransactionSummary>() 
         assertThat(item.paymentRequestId, not(blankOrNullString()))
         assertThat(item.type, not(nullValue()))
         assertThat(item.grossAmount, not(nullValue()))
-
-        // TODO: assertThat(item.executionTime, not(blankOrNullString()))
-        // TODO: assertThat(item.status, not(blankOrNullString()))
-        /* TODO: "instruments": [
-        {
-            "paymentInstrumentId": "123456",
-            "amount": 12000
-        }
-        ]*/
-
+        assertThat(item.executionTime, not(nullValue()))
+        assertThat(item.status, not(nullValue()))
+        assertThat(item.instruments.size, greaterThanOrEqualTo(1))
+        assertThat(item.instruments, hasItems(withCustomerPaymentInstruments()))
         assertThat(item.transactionId, not(blankOrNullString()))
 
         return true
@@ -58,4 +53,22 @@ class CustomerTransactionMatcher: TypeSafeMatcher<CustomerTransactionSummary>() 
     override fun describeTo(description: Description) {
         description.appendText("A Customer Transaction")
     }
+}
+
+fun withCustomerPaymentInstruments(): CustomerPaymentInstrumentsMatcher {
+    return CustomerPaymentInstrumentsMatcher()
+}
+
+class CustomerPaymentInstrumentsMatcher: TypeSafeMatcher<CustomerTransactionSummaryAllOfInstruments>() {
+    override fun matchesSafely(item: CustomerTransactionSummaryAllOfInstruments): Boolean {
+        assertThat(item.paymentInstrumentId, not(blankOrNullString()))
+        assertThat(item.amount, not(nullValue()))
+
+        return true
+    }
+
+    override fun describeTo(description: Description) {
+        description.appendText("Customer Transaction Summary with instruments")
+    }
+
 }

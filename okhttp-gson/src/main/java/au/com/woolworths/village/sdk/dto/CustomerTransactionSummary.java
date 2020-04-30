@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import au.com.woolworths.village.sdk.dto.CommonTransactionSummary;
 import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOf;
+import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOfInstruments;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -26,16 +27,23 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Summary information of the resulting transaction
  */
 @ApiModel(description = "Summary information of the resulting transaction")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class CustomerTransactionSummary extends CommonTransactionSummary {
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
   private String merchantId;
+
+  public static final String SERIALIZED_NAME_INSTRUMENTS = "instruments";
+  @SerializedName(SERIALIZED_NAME_INSTRUMENTS)
+  private List<CustomerTransactionSummaryAllOfInstruments> instruments = new ArrayList<CustomerTransactionSummaryAllOfInstruments>();
 
 
   public CustomerTransactionSummary merchantId(String merchantId) {
@@ -60,6 +68,33 @@ public class CustomerTransactionSummary extends CommonTransactionSummary {
   }
 
 
+  public CustomerTransactionSummary instruments(List<CustomerTransactionSummaryAllOfInstruments> instruments) {
+    
+    this.instruments = instruments;
+    return this;
+  }
+
+  public CustomerTransactionSummary addInstrumentsItem(CustomerTransactionSummaryAllOfInstruments instrumentsItem) {
+    this.instruments.add(instrumentsItem);
+    return this;
+  }
+
+   /**
+   * The instruments used to make the payment.  For refunds and cash back amounts will be negative
+   * @return instruments
+  **/
+  @ApiModelProperty(required = true, value = "The instruments used to make the payment.  For refunds and cash back amounts will be negative")
+
+  public List<CustomerTransactionSummaryAllOfInstruments> getInstruments() {
+    return instruments;
+  }
+
+
+  public void setInstruments(List<CustomerTransactionSummaryAllOfInstruments> instruments) {
+    this.instruments = instruments;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -70,12 +105,13 @@ public class CustomerTransactionSummary extends CommonTransactionSummary {
     }
     CustomerTransactionSummary customerTransactionSummary = (CustomerTransactionSummary) o;
     return Objects.equals(this.merchantId, customerTransactionSummary.merchantId) &&
+        Objects.equals(this.instruments, customerTransactionSummary.instruments) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(merchantId, super.hashCode());
+    return Objects.hash(merchantId, instruments, super.hashCode());
   }
 
 
@@ -85,6 +121,7 @@ public class CustomerTransactionSummary extends CommonTransactionSummary {
     sb.append("class CustomerTransactionSummary {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    merchantId: ").append(toIndentedString(merchantId)).append("\n");
+    sb.append("    instruments: ").append(toIndentedString(instruments)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -32,7 +32,7 @@ import java.util.List;
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class GetCustomerPaymentInstrumentsResultsData {
   public static final String SERIALIZED_NAME_CREDIT_CARDS = "creditCards";
   @SerializedName(SERIALIZED_NAME_CREDIT_CARDS)

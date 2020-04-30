@@ -15,6 +15,7 @@ package au.com.woolworths.village.sdk.dto;
 
 import java.util.Objects;
 import java.util.Arrays;
+import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOfInstruments;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,15 +24,21 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CustomerTransactionSummaryAllOf
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class CustomerTransactionSummaryAllOf {
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
   private String merchantId;
+
+  public static final String SERIALIZED_NAME_INSTRUMENTS = "instruments";
+  @SerializedName(SERIALIZED_NAME_INSTRUMENTS)
+  private List<CustomerTransactionSummaryAllOfInstruments> instruments = new ArrayList<CustomerTransactionSummaryAllOfInstruments>();
 
 
   public CustomerTransactionSummaryAllOf merchantId(String merchantId) {
@@ -56,6 +63,33 @@ public class CustomerTransactionSummaryAllOf {
   }
 
 
+  public CustomerTransactionSummaryAllOf instruments(List<CustomerTransactionSummaryAllOfInstruments> instruments) {
+    
+    this.instruments = instruments;
+    return this;
+  }
+
+  public CustomerTransactionSummaryAllOf addInstrumentsItem(CustomerTransactionSummaryAllOfInstruments instrumentsItem) {
+    this.instruments.add(instrumentsItem);
+    return this;
+  }
+
+   /**
+   * The instruments used to make the payment.  For refunds and cash back amounts will be negative
+   * @return instruments
+  **/
+  @ApiModelProperty(required = true, value = "The instruments used to make the payment.  For refunds and cash back amounts will be negative")
+
+  public List<CustomerTransactionSummaryAllOfInstruments> getInstruments() {
+    return instruments;
+  }
+
+
+  public void setInstruments(List<CustomerTransactionSummaryAllOfInstruments> instruments) {
+    this.instruments = instruments;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,12 +99,13 @@ public class CustomerTransactionSummaryAllOf {
       return false;
     }
     CustomerTransactionSummaryAllOf customerTransactionSummaryAllOf = (CustomerTransactionSummaryAllOf) o;
-    return Objects.equals(this.merchantId, customerTransactionSummaryAllOf.merchantId);
+    return Objects.equals(this.merchantId, customerTransactionSummaryAllOf.merchantId) &&
+        Objects.equals(this.instruments, customerTransactionSummaryAllOf.instruments);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(merchantId);
+    return Objects.hash(merchantId, instruments);
   }
 
 
@@ -79,6 +114,7 @@ public class CustomerTransactionSummaryAllOf {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerTransactionSummaryAllOf {\n");
     sb.append("    merchantId: ").append(toIndentedString(merchantId)).append("\n");
+    sb.append("    instruments: ").append(toIndentedString(instruments)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -26,12 +26,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Summary information of the resulting transaction
  */
 @ApiModel(description = "Summary information of the resulting transaction")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class MerchantTransactionSummary extends CommonTransactionSummary {
   public static final String SERIALIZED_NAME_WALLET_ID = "walletId";
   @SerializedName(SERIALIZED_NAME_WALLET_ID)

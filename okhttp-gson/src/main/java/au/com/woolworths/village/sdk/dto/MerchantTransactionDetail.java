@@ -29,12 +29,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Detailed information for a single transaction
  */
 @ApiModel(description = "Detailed information for a single transaction")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
 public class MerchantTransactionDetail {
   public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
   @SerializedName(SERIALIZED_NAME_TRANSACTION_ID)
@@ -90,6 +91,63 @@ public class MerchantTransactionDetail {
   public static final String SERIALIZED_NAME_TYPE = "type";
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
+
+  public static final String SERIALIZED_NAME_EXECUTION_TIME = "executionTime";
+  @SerializedName(SERIALIZED_NAME_EXECUTION_TIME)
+  private OffsetDateTime executionTime;
+
+  /**
+   * The current status of the transactions
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    PROCESSING("PROCESSING"),
+    
+    APPROVED("APPROVED"),
+    
+    REJECTED("REJECTED");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return StatusEnum.fromValue(value);
+      }
+    }
+  }
+
+  public static final String SERIALIZED_NAME_STATUS = "status";
+  @SerializedName(SERIALIZED_NAME_STATUS)
+  private StatusEnum status;
 
   public static final String SERIALIZED_NAME_REFUND_REASON = "refundReason";
   @SerializedName(SERIALIZED_NAME_REFUND_REASON)
@@ -165,6 +223,50 @@ public class MerchantTransactionDetail {
 
   public void setType(TypeEnum type) {
     this.type = type;
+  }
+
+
+  public MerchantTransactionDetail executionTime(OffsetDateTime executionTime) {
+    
+    this.executionTime = executionTime;
+    return this;
+  }
+
+   /**
+   * Date/time stamp of when the transaction occurred in ISO string format
+   * @return executionTime
+  **/
+  @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", required = true, value = "Date/time stamp of when the transaction occurred in ISO string format")
+
+  public OffsetDateTime getExecutionTime() {
+    return executionTime;
+  }
+
+
+  public void setExecutionTime(OffsetDateTime executionTime) {
+    this.executionTime = executionTime;
+  }
+
+
+  public MerchantTransactionDetail status(StatusEnum status) {
+    
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * The current status of the transactions
+   * @return status
+  **/
+  @ApiModelProperty(required = true, value = "The current status of the transactions")
+
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
   }
 
 
@@ -359,6 +461,8 @@ public class MerchantTransactionDetail {
     MerchantTransactionDetail merchantTransactionDetail = (MerchantTransactionDetail) o;
     return Objects.equals(this.transactionId, merchantTransactionDetail.transactionId) &&
         Objects.equals(this.type, merchantTransactionDetail.type) &&
+        Objects.equals(this.executionTime, merchantTransactionDetail.executionTime) &&
+        Objects.equals(this.status, merchantTransactionDetail.status) &&
         Objects.equals(this.refundReason, merchantTransactionDetail.refundReason) &&
         Objects.equals(this.paymentRequestId, merchantTransactionDetail.paymentRequestId) &&
         Objects.equals(this.merchantReferenceId, merchantTransactionDetail.merchantReferenceId) &&
@@ -371,7 +475,7 @@ public class MerchantTransactionDetail {
 
   @Override
   public int hashCode() {
-    return Objects.hash(transactionId, type, refundReason, paymentRequestId, merchantReferenceId, grossAmount, walletId, basket, posPayload, merchantPayload);
+    return Objects.hash(transactionId, type, executionTime, status, refundReason, paymentRequestId, merchantReferenceId, grossAmount, walletId, basket, posPayload, merchantPayload);
   }
 
 
@@ -381,6 +485,8 @@ public class MerchantTransactionDetail {
     sb.append("class MerchantTransactionDetail {\n");
     sb.append("    transactionId: ").append(toIndentedString(transactionId)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    executionTime: ").append(toIndentedString(executionTime)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    refundReason: ").append(toIndentedString(refundReason)).append("\n");
     sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
     sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");

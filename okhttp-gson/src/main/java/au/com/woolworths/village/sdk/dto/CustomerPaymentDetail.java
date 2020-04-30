@@ -32,7 +32,7 @@ import java.math.BigDecimal;
  * Detailed information for a single payment request
  */
 @ApiModel(description = "Detailed information for a single payment request")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-29T17:25:37.973+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
 public class CustomerPaymentDetail extends CommonPaymentBase {
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)

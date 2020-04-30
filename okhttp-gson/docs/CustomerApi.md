@@ -342,8 +342,8 @@ public class Example {
     defaultClient.setBasePath("http://localhost:3000");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
-    String startTime = 2017-11-06T19:38:09.890+11:00; // String | If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned
-    String endTime = 2017-11-06T19:38:09.890+11:00; // String | If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned
+    OffsetDateTime startTime = 2017-11-06T19:38:09.890+11:00; // OffsetDateTime | If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned
+    OffsetDateTime endTime = 2017-11-06T19:38:09.890+11:00; // OffsetDateTime | If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned
     Integer pageSize = 25; // Integer | The number of records to return for this page.  Defaults to 25 if absent
     Integer page = 1; // Integer | The page of results to return with 1 indicating the first page.  Defaults to 1 if absent
     try {
@@ -364,8 +364,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **startTime** | **String**| If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned | [optional]
- **endTime** | **String**| If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned | [optional]
+ **startTime** | **OffsetDateTime**| If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned | [optional]
+ **endTime** | **OffsetDateTime**| If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned | [optional]
  **pageSize** | **Integer**| The number of records to return for this page.  Defaults to 25 if absent | [optional] [default to 25]
  **page** | **Integer**| The page of results to return with 1 indicating the first page.  Defaults to 1 if absent | [optional] [default to 1]
 

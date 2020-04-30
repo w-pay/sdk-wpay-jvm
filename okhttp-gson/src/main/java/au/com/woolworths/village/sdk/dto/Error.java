@@ -29,7 +29,7 @@ import java.math.BigDecimal;
  * The details of an error that has occurred
  */
 @ApiModel(description = "The details of an error that has occurred")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-29T17:25:37.973+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
 public class Error {
   public static final String SERIALIZED_NAME_HTTP_STATUS_CODE = "httpStatusCode";
   @SerializedName(SERIALIZED_NAME_HTTP_STATUS_CODE)

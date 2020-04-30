@@ -24,11 +24,12 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * GetCustomerPaymentInstrumentsResultsDataCreditCards
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-29T17:25:37.973+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
 public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
   public static final String SERIALIZED_NAME_PAYMENT_INSTRUMENT_ID = "paymentInstrumentId";
   @SerializedName(SERIALIZED_NAME_PAYMENT_INSTRUMENT_ID)
@@ -91,11 +92,11 @@ public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
 
   public static final String SERIALIZED_NAME_LAST_UPDATED = "lastUpdated";
   @SerializedName(SERIALIZED_NAME_LAST_UPDATED)
-  private String lastUpdated;
+  private OffsetDateTime lastUpdated;
 
   public static final String SERIALIZED_NAME_LAST_USED = "lastUsed";
   @SerializedName(SERIALIZED_NAME_LAST_USED)
-  private String lastUsed;
+  private OffsetDateTime lastUsed;
 
   public static final String SERIALIZED_NAME_PRIMARY = "primary";
   @SerializedName(SERIALIZED_NAME_PRIMARY)
@@ -212,7 +213,7 @@ public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
   }
 
 
-  public GetCustomerPaymentInstrumentsResultsDataCreditCards lastUpdated(String lastUpdated) {
+  public GetCustomerPaymentInstrumentsResultsDataCreditCards lastUpdated(OffsetDateTime lastUpdated) {
     
     this.lastUpdated = lastUpdated;
     return this;
@@ -224,17 +225,17 @@ public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
   **/
   @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", required = true, value = "The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.")
 
-  public String getLastUpdated() {
+  public OffsetDateTime getLastUpdated() {
     return lastUpdated;
   }
 
 
-  public void setLastUpdated(String lastUpdated) {
+  public void setLastUpdated(OffsetDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
   }
 
 
-  public GetCustomerPaymentInstrumentsResultsDataCreditCards lastUsed(String lastUsed) {
+  public GetCustomerPaymentInstrumentsResultsDataCreditCards lastUsed(OffsetDateTime lastUsed) {
     
     this.lastUsed = lastUsed;
     return this;
@@ -246,12 +247,12 @@ public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
   **/
   @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", required = true, value = "The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.")
 
-  public String getLastUsed() {
+  public OffsetDateTime getLastUsed() {
     return lastUsed;
   }
 
 
-  public void setLastUsed(String lastUsed) {
+  public void setLastUsed(OffsetDateTime lastUsed) {
     this.lastUsed = lastUsed;
   }
 

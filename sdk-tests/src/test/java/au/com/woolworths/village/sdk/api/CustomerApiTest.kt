@@ -9,6 +9,7 @@ import org.hamcrest.Matchers.*
 import org.hamcrest.text.IsBlankString.blankOrNullString
 import org.junit.BeforeClass
 import org.junit.Test
+import org.threeten.bp.OffsetDateTime
 
 class CustomerApiTest {
     companion object {
@@ -69,8 +70,8 @@ class CustomerApiTest {
 
     @Test
     fun getCustomerTransactionsTest() {
-        val startTime = "2017-11-06T19:38:09.890+11:00"
-        val endTime = "2017-11-06T19:38:09.890+11:00"
+        val startTime = OffsetDateTime.parse("2017-11-06T19:38:09.890+11:00")
+        val endTime = OffsetDateTime.parse("2017-11-06T19:38:09.890+11:00")
         val pageSize = 20
         val page = 2
 

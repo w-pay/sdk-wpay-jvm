@@ -28,7 +28,7 @@ import java.io.IOException;
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-29T17:25:37.973+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T10:56:50.564+10:00[Australia/Melbourne]")
 public class InitiatePaymentInstrumentAdditionResultsData {
   public static final String SERIALIZED_NAME_CARD_CAPTURE_U_R_L = "cardCaptureURL";
   @SerializedName(SERIALIZED_NAME_CARD_CAPTURE_U_R_L)

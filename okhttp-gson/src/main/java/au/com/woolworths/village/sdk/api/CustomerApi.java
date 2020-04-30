@@ -38,6 +38,7 @@ import au.com.woolworths.village.sdk.dto.GetCustomerTransactionsResult;
 import au.com.woolworths.village.sdk.dto.InitiatePaymentInstrumentAdditionResults;
 import au.com.woolworths.village.sdk.dto.InstrumentAdditionDetails;
 import au.com.woolworths.village.sdk.dto.MakeCustomerPaymentResults;
+import org.threeten.bp.OffsetDateTime;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -622,7 +623,7 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCustomerTransactionsCall(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getCustomerTransactionsCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -668,7 +669,7 @@ public class CustomerApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCustomerTransactionsValidateBeforeCall(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getCustomerTransactionsValidateBeforeCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         
 
         okhttp3.Call localVarCall = getCustomerTransactionsCall(startTime, endTime, pageSize, page, _callback);
@@ -691,7 +692,7 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public GetCustomerTransactionsResult getCustomerTransactions(String startTime, String endTime, Integer pageSize, Integer page) throws ApiException {
+    public GetCustomerTransactionsResult getCustomerTransactions(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
         ApiResponse<GetCustomerTransactionsResult> localVarResp = getCustomerTransactionsWithHttpInfo(startTime, endTime, pageSize, page);
         return localVarResp.getData();
     }
@@ -711,7 +712,7 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<GetCustomerTransactionsResult> getCustomerTransactionsWithHttpInfo(String startTime, String endTime, Integer pageSize, Integer page) throws ApiException {
+    public ApiResponse<GetCustomerTransactionsResult> getCustomerTransactionsWithHttpInfo(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
         okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, null);
         Type localVarReturnType = new TypeToken<GetCustomerTransactionsResult>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -733,7 +734,7 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCustomerTransactionsAsync(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback<GetCustomerTransactionsResult> _callback) throws ApiException {
+    public okhttp3.Call getCustomerTransactionsAsync(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback<GetCustomerTransactionsResult> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, _callback);
         Type localVarReturnType = new TypeToken<GetCustomerTransactionsResult>(){}.getType();

@@ -21,9 +21,6 @@ class CustomerPaymentDetailsMatcher : TypeSafeMatcher<CustomerPaymentDetail>() {
         assertThat(item.merchantId, not(blankOrNullString()))
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
         assertThat(item.grossAmount, greaterThan(BigDecimal.ZERO))
-
-        // TODO assertThat(result.data.createdTime).isNotEmpty()
-
         assertThat(item.basket, hasBasketItems())
 
         return true

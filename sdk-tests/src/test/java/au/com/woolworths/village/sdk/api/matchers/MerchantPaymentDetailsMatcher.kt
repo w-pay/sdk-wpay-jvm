@@ -21,7 +21,6 @@ open class MerchantPaymentSummaryMatcher<T: MerchantPaymentSummary>: TypeSafeMat
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
         assertThat(item.grossAmount, not(nullValue()))
         assertThat(item.usesRemaining, not(nullValue()))
-        // TODO: assertThat(item.createdTime, not(blankOrNullString()))
         assertThat(item.expiryTime, not(blankOrNullString()))
         assertThat(item.specificWalletId, not(blankOrNullString()))
 

@@ -31,7 +31,7 @@ import java.math.BigDecimal;
  * Summary information for a single payment request
  */
 @ApiModel(description = "Summary information for a single payment request")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
 public class MerchantPaymentSummary extends CommonPaymentBase {
   public static final String SERIALIZED_NAME_USES_REMAINING = "usesRemaining";
   @SerializedName(SERIALIZED_NAME_USES_REMAINING)

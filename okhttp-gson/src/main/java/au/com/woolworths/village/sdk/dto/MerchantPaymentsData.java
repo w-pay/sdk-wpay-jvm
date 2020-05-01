@@ -32,7 +32,7 @@ import java.math.BigDecimal;
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-30T15:44:28.835+10:00[Australia/Melbourne]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
 public class MerchantPaymentsData {
   public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)

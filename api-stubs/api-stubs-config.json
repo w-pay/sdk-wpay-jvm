@@ -1,4 +1,4 @@
 {
   "plugin": "openapi",
-  "specFile": "village-all.json"
+  "specFile": "village.json"
 }

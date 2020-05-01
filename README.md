@@ -104,15 +104,14 @@ to return data provided by `examples` in the API spec. Therefore the
 A [Docker Compose](https://docs.docker.com/compose/) file is provided to
 run the stubs on `http://localhost:8080`
 
-**Caveat**: Due to a [defect](https://github.com/outofcoffee/imposter/issues/39)
-in the imposter, the examples in the API spec are not loaded if the response
-content is not inline. A workaround is to use [Swagger CLI](https://apitools.dev/swagger-cli/)
-to inline the references for Imposter eg:
+**Caveat**: If using Docker, a symlink to the spec won't work because
+Docker wont be able to resolve the destination of the link from inside
+the container. The file has to be present in the `api-stubs` dir
 
 ```shell
 $ cd api-stubs
-$ swagger-cli bundle -f 4 -r ../village.json > village-all.json
-$ docker-compose up -d --force-recreate
+$ cp `readlink ../village.json` .
+$ docker-compose up --force-recreate
 ```
 
 ### Running tests

@@ -36,6 +36,9 @@ htmlDependencyReport {
 ext {
     packageName = "au.com.woolworths.village"
     spec = "$projectDir/village.json".toString()
+
+    minSdkVersion = 21
+    targetSdkVersion = 28
 }
 
 task clean(type: Delete) {

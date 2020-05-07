@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/secondary_gradient"
     android:orientation="vertical"
-    tools:context=".PaymentConfirm" >
+    tools:context=".PaymentConfirm"
+>
 
     <TextView
         android:id="@+id/action"

@@ -1,10 +1,12 @@
 package au.com.woolworths.village.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
+
 import java.math.BigDecimal
 import java.text.NumberFormat
 
@@ -20,7 +22,6 @@ class PaymentConfirm : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         bindings = PaymentConfirmBinding.inflate(layoutInflater)
-
         setContentView(bindings.root)
 
         bindings.amountToPay.text = currencyFormat.format(payment.amount)
@@ -35,6 +36,10 @@ class PaymentConfirm : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun paymentComplete(button: View) {
+        val intent = Intent(this, PaymentReceipt::class.java).apply {
+            putExtra(PAYMENT, payment)
+        }
 
+        startActivity(intent)
     }
 }

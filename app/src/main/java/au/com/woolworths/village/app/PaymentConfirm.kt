@@ -16,6 +16,7 @@ class PaymentConfirm : AppCompatActivity() {
     private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
     private val payment = Payment().apply {
         amount = BigDecimal("26.00")
+        instrument = PaymentInstrument("Debit Card", "1426")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

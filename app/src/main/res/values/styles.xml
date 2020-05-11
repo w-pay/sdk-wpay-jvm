@@ -9,6 +9,19 @@
 
     <style name="Heading1">
         <item name="android:textSize">32sp</item>
-        <!-- TODO: Make bold for API < 26 -->
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Heading3">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ReceiptRow">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="ReceiptRow.Amount">
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

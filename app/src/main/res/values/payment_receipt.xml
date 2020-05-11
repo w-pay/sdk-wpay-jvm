@@ -2,4 +2,6 @@
 <resources>
     <string name="paid">Paid</string>
     <string name="card_logo">card logo</string>
+    <string name="receipt_heading">Purchased</string>
+    <string name="totals_heading">Total</string>
 </resources>

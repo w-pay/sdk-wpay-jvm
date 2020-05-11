@@ -17,6 +17,15 @@ class PaymentConfirm : AppCompatActivity() {
     private val payment = Payment().apply {
         amount = BigDecimal("26.00")
         instrument = PaymentInstrument("Debit Card", "1426")
+        basket.apply {
+            this.items.add(BasketItem("WW Creamy Pumpkin Soup", BigDecimal("3")))
+            this.items.add(BasketItem("Cheese and Chive Triangle Single", BigDecimal("2.33")))
+            this.items.add(BasketItem("Dairy Farmers Daily 2L", BigDecimal("4.6")))
+            this.items.add(BasketItem("Primo TSMK Bacon 200g", BigDecimal("7.85")))
+            this.items.add(BasketItem("Gourmet Tomatoes per kg 0.100 kg NET @ $6.90/kg", BigDecimal("0.69")))
+        }
+        total = BigDecimal("18.47")
+        tax = BigDecimal("0.72")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

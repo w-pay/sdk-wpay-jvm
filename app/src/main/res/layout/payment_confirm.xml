@@ -1,53 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/secondary_gradient"
-    android:orientation="vertical"
-    tools:context=".PaymentConfirm"
 >
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/secondary_gradient"
+        android:orientation="vertical"
+        tools:context=".PaymentConfirm"
+    >
 
-    <TextView
-        android:id="@+id/action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="133dp"
-        android:layout_marginStart="32dp"
-        style="@style/Heading1"
-        android:alpha="0.8"
-        android:text="@string/pay" />
+        <TextView
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="133dp"
+            android:layout_marginStart="32dp"
+            style="@style/Heading1"
+            android:alpha="0.8"
+            android:text="@string/pay" />
 
-    <TextView
-        android:id="@+id/amountToPay"
-        style="@style/Heading1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/action"
-        android:layout_alignTop="@+id/action"
-        android:layout_marginStart="4dp"
-        android:textColor="#FFFFFF"
-        tools:text="$26.00" />
+        <TextView
+            android:id="@+id/amountToPay"
+            style="@style/Heading1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/action"
+            android:layout_alignTop="@+id/action"
+            android:layout_marginStart="4dp"
+            android:textColor="#FFFFFF"
+            tools:text="$26.00" />
 
-    <Button
-        android:id="@+id/slideToPay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="128dp"
-        android:onClick="makePayment"
-        android:text="Pretend Slide To Pay" />
+        <Button
+            android:id="@+id/slideToPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="128dp"
+            android:onClick="makePayment"
+            android:text="Pretend Slide To Pay" />
 
-    <Button
-        android:id="@+id/paymentComplete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="128dp"
-        android:onClick="paymentComplete"
-        android:visibility="gone"
-        android:text="Pretend To Complete Payment" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/paymentComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="128dp"
+            android:onClick="paymentComplete"
+            android:visibility="gone"
+            android:text="Pretend To Complete Payment" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/payment_method"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        style="@style/BottomSheet">
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

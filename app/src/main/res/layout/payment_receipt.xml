@@ -62,13 +62,8 @@
         android:id="@+id/receipt_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@drawable/receipt_sheet"
         android:orientation="vertical"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="156dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        style="@style/BottomSheet">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

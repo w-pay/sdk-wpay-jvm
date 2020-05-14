@@ -33,12 +33,8 @@ class PaymentConfirm : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bindings = PaymentConfirmBinding.inflate(layoutInflater)
-        setContentView(bindings.root)
-
-        bindings.amountToPay.text = currencyFormat.format(payment.amount)
-
-        updateSheetBehaviour()
+        createView()
+        bindPayment()
     }
 
     fun makePayment(button: View) {
@@ -55,6 +51,17 @@ class PaymentConfirm : AppCompatActivity() {
         }
 
         startActivity(intent)
+    }
+
+    private fun createView() {
+        bindings = PaymentConfirmBinding.inflate(layoutInflater)
+        setContentView(bindings.root)
+
+        updateSheetBehaviour()
+    }
+
+    private fun bindPayment() {
+        bindings.amountToPay.text = currencyFormat.format(payment.amount)
     }
 
     private fun updateSheetBehaviour() {

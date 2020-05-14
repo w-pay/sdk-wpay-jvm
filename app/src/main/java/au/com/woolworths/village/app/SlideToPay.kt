@@ -24,7 +24,7 @@ class SlideToPay: FrameLayout {
     private var swiped: Float = 0f;
 
     /** Whether or not we can move the button */
-    private var active: Boolean = true
+    private var locked: Boolean = false
 
     var listener: OnSwipedListener? = null
 
@@ -63,7 +63,7 @@ class SlideToPay: FrameLayout {
                     return@OnTouchListener true
 
                 MotionEvent.ACTION_MOVE -> {
-                    if (active) {
+                    if (!locked) {
                         moveButton(event)
                     }
 
@@ -130,7 +130,7 @@ class SlideToPay: FrameLayout {
         }
 
         if (button.x >= swiped) {
-            active = false
+            locked = true
 
             listener?.onSwiped()
         }

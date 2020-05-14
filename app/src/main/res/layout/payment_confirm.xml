@@ -33,17 +33,6 @@
             android:layout_marginStart="4dp"
             android:textColor="#FFFFFF"
             tools:text="$26.00" />
-
-        <Button
-            android:id="@+id/paymentComplete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="128dp"
-            android:onClick="paymentComplete"
-            android:visibility="gone"
-            android:text="Pretend To Complete Payment" />
     </RelativeLayout>
 
     <LinearLayout

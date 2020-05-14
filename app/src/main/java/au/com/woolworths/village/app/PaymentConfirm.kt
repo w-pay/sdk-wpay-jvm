@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
@@ -48,11 +49,11 @@ class PaymentConfirm : AppCompatActivity() {
         applyAnimations()
 
         bindings.action.text = getString(R.string.paying)
-        bindings.paymentComplete.visibility = View.VISIBLE
+
+        Handler().postDelayed(this::paymentComplete, 3000)
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun paymentComplete(button: View) {
+    private fun paymentComplete() {
         val intent = Intent(this, PaymentReceipt::class.java).apply {
             putExtra(PAYMENT, payment)
         }

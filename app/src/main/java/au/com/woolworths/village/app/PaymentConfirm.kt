@@ -4,7 +4,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -111,24 +110,31 @@ class PaymentConfirm : AppCompatActivity() {
         /*
          * If we fade the layout, the contents also disappears. So fade the background instead
          */
-        val paymentMethodBackground: Drawable = bindings.paymentMethod.background
-
-        val slideToPayFade = ObjectAnimator.ofFloat(bindings.slideToPay.bindings.background, "alpha", 1f, 0f).apply {
-            duration = animationDuration
-        }
-
         val paymentMethodFade = ValueAnimator.ofFloat(1f, 0f).apply {
             duration = animationDuration
 
             addUpdateListener { animation ->
-                paymentMethodBackground.alpha = 255.times(animation.animatedValue as Float).roundToInt()
+                bindings.paymentMethod.background.alpha = 255.times(animation.animatedValue as Float).roundToInt()
             }
         }
 
+        val slideToPayFade = fadeFactory(bindings.slideToPay.bindings.background)
+        val paymentProgressFade = fadeFactory(bindings.slideToPay.bindings.paymentProgress, 0f, 1f)
+
         val animation = AnimatorSet().apply {
-            play(slideToPayFade).with(paymentMethodFade)
+            play(slideToPayFade)
+                .with(paymentMethodFade)
+                .with(paymentProgressFade)
         }
 
         animation.start()
+    }
+
+    private fun fadeFactory(view: View, start: Float = 1f, end: Float = 0f): ObjectAnimator {
+        view.visibility = View.VISIBLE
+
+        return ObjectAnimator.ofFloat(view, "alpha", start, end).apply {
+            duration = animationDuration
+        }
     }
 }

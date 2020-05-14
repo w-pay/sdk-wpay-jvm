@@ -28,7 +28,7 @@ class SlideToPay: FrameLayout {
 
     var listener: OnSwipedListener? = null
 
-    private lateinit var bindings: SlideToPayBinding
+    lateinit var bindings: SlideToPayBinding
 
     @JvmOverloads
     constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = -1) : super(

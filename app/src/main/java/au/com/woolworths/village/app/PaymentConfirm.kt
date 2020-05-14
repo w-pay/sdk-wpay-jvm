@@ -1,6 +1,10 @@
 package au.com.woolworths.village.app
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +15,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 
 import java.math.BigDecimal
 import java.text.NumberFormat
+import kotlin.math.roundToInt
 
 class PaymentConfirm : AppCompatActivity() {
-    private lateinit var bindings: PaymentConfirmBinding
-
     private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
     private val payment = Payment().apply {
         amount = BigDecimal("26.00")
@@ -30,17 +33,22 @@ class PaymentConfirm : AppCompatActivity() {
         tax = BigDecimal("0.72")
     }
 
+    private lateinit var bindings: PaymentConfirmBinding
+    private var animationDuration: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        animationDuration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
         createView()
         bindPayment()
     }
 
-    fun makePayment(button: View) {
-        bindings.action.text = getString(R.string.paying)
+    fun makePayment() {
+        applyAnimations()
 
-        button.visibility = View.GONE
+        bindings.action.text = getString(R.string.paying)
         bindings.paymentComplete.visibility = View.VISIBLE
     }
 
@@ -58,6 +66,7 @@ class PaymentConfirm : AppCompatActivity() {
         setContentView(bindings.root)
 
         updateSheetBehaviour()
+        bindSlideToPayListener()
     }
 
     private fun bindPayment() {
@@ -88,5 +97,38 @@ class PaymentConfirm : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun bindSlideToPayListener() {
+        bindings.slideToPay.listener = object : OnSwipedListener {
+            override fun onSwiped() {
+               makePayment()
+            }
+        }
+    }
+
+    private fun applyAnimations() {
+        /*
+         * If we fade the layout, the contents also disappears. So fade the background instead
+         */
+        val paymentMethodBackground: Drawable = bindings.paymentMethod.background
+
+        val slideToPayFade = ObjectAnimator.ofFloat(bindings.slideToPay.bindings.background, "alpha", 1f, 0f).apply {
+            duration = animationDuration
+        }
+
+        val paymentMethodFade = ValueAnimator.ofFloat(1f, 0f).apply {
+            duration = animationDuration
+
+            addUpdateListener { animation ->
+                paymentMethodBackground.alpha = 255.times(animation.animatedValue as Float).roundToInt()
+            }
+        }
+
+        val animation = AnimatorSet().apply {
+            play(slideToPayFade).with(paymentMethodFade)
+        }
+
+        animation.start()
     }
 }

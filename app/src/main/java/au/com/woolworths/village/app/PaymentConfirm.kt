@@ -6,6 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -35,6 +37,8 @@ class PaymentConfirm : AppCompatActivity() {
         setContentView(bindings.root)
 
         bindings.amountToPay.text = currencyFormat.format(payment.amount)
+
+        updateSheetBehaviour()
     }
 
     fun makePayment(button: View) {
@@ -51,5 +55,31 @@ class PaymentConfirm : AppCompatActivity() {
         }
 
         startActivity(intent)
+    }
+
+    private fun updateSheetBehaviour() {
+        BottomSheetBehavior.from(bindings.paymentMethod).apply {
+            val behavior = this
+
+            addBottomSheetCallback(object : BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+                    when (newState) {
+                        BottomSheetBehavior.STATE_HIDDEN -> { }
+                        BottomSheetBehavior.STATE_EXPANDED -> { }
+                        BottomSheetBehavior.STATE_COLLAPSED -> { }
+                        BottomSheetBehavior.STATE_DRAGGING -> {
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        }
+                        BottomSheetBehavior.STATE_SETTLING -> { }
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> { }
+                    }
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+                }
+            })
+        }
     }
 }

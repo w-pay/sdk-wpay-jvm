@@ -8,30 +8,26 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import au.com.woolworths.village.app.api.PaymentService
 
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-import java.math.BigDecimal
 import java.text.NumberFormat
 import kotlin.math.roundToInt
 
 class PaymentConfirm : AppCompatActivity() {
     private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
-    private val payment = Payment().apply {
-        amount = BigDecimal("26.00")
-        instrument = PaymentInstrument("Debit Card", "1426")
-        basket.apply {
-            this.items.add(BasketItem("WW Creamy Pumpkin Soup", BigDecimal("3")))
-            this.items.add(BasketItem("Cheese and Chive Triangle Single", BigDecimal("2.33")))
-            this.items.add(BasketItem("Dairy Farmers Daily 2L", BigDecimal("4.6")))
-            this.items.add(BasketItem("Primo TSMK Bacon 200g", BigDecimal("7.85")))
-            this.items.add(BasketItem("Gourmet Tomatoes per kg 0.100 kg NET @ $6.90/kg", BigDecimal("0.69")))
-        }
-        total = BigDecimal("18.47")
-        tax = BigDecimal("0.72")
-    }
+
+    private lateinit var data: ViewModel
 
     private lateinit var bindings: PaymentConfirmBinding
     private var animationDuration: Long = 0
@@ -41,12 +37,12 @@ class PaymentConfirm : AppCompatActivity() {
 
         animationDuration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
+        createViewModel()
         createView()
-        bindPayment()
     }
 
     fun makePayment() {
-        applyAnimations()
+        applyMakingPaymentAnimations()
 
         bindings.action.text = getString(R.string.paying)
 
@@ -54,6 +50,8 @@ class PaymentConfirm : AppCompatActivity() {
     }
 
     private fun paymentComplete() {
+        val payment: Payment = data.payment.value!!
+
         val intent = Intent(this, PaymentReceipt::class.java).apply {
             putExtra(PAYMENT, payment)
         }
@@ -61,16 +59,25 @@ class PaymentConfirm : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun createViewModel() {
+        data = ViewModelProvider(this).get(ViewModel::class.java)
+
+        data.payment.observe(this, Observer { bindPayment() })
+    }
+
     private fun createView() {
         bindings = PaymentConfirmBinding.inflate(layoutInflater)
         setContentView(bindings.root)
 
-        updateSheetBehaviour()
+        bindPayment()
         bindSlideToPayListener()
+        updateSheetBehaviour()
     }
 
     private fun bindPayment() {
-        bindings.amountToPay.text = currencyFormat.format(payment.amount)
+        data.payment.value?.let {
+            bindings.amountToPay.text = currencyFormat.format(it.amount)
+        }
     }
 
     private fun updateSheetBehaviour() {
@@ -107,7 +114,7 @@ class PaymentConfirm : AppCompatActivity() {
         }
     }
 
-    private fun applyAnimations() {
+    private fun applyMakingPaymentAnimations() {
         /*
          * If we fade the layout, the contents also disappears. So fade the background instead
          */
@@ -136,6 +143,23 @@ class PaymentConfirm : AppCompatActivity() {
 
         return ObjectAnimator.ofFloat(view, "alpha", start, end).apply {
             duration = animationDuration
+        }
+    }
+
+}
+
+class ViewModel : androidx.lifecycle.ViewModel() {
+    private val paymentService: PaymentService = PaymentService();
+
+    val payment: MutableLiveData<Payment> = MutableLiveData()
+
+    init {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val paymentDetails = paymentService.retrievePaymentDetails("")
+
+                payment.postValue(paymentDetails)
+            }
         }
     }
 }

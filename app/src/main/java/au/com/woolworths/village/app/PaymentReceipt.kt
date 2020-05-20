@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import au.com.woolworths.village.app.databinding.PaymentReceiptBinding
+import au.com.woolworths.village.sdk.dto.BasketItems
+import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
 import kotlinx.android.synthetic.main.receipt_row.view.*
+import java.math.BigDecimal
 import java.nio.charset.Charset
 import java.text.NumberFormat
 
@@ -28,28 +31,28 @@ class PaymentReceipt : AppCompatActivity() {
         bindings = PaymentReceiptBinding.inflate(layoutInflater)
         setContentView(bindings.root)
 
-        val payment: Payment = intent.getSerializableExtra(PAYMENT) as Payment
-        basketItemsAdapter = BasketItemsAdapter(payment.basket.items)
+        val payment: CustomerPaymentDetail = intent.getSerializableExtra(PAYMENT) as CustomerPaymentDetail
+        basketItemsAdapter = payment.basket?.items?.let { BasketItemsAdapter(it) }!!
         basketItemsManager = LinearLayoutManager(this)
 
-        bindings.amountPaid.text = currencyFormat.format(payment.amount)
-        bindings.paymentInstrument.text = toUtf8("${payment.instrument!!.type} \u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2 ${payment.instrument!!.lastFour}")
+        bindings.amountPaid.text = currencyFormat.format(payment.grossAmount)
+        bindings.paymentInstrument.text = toUtf8("Credit Card \u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2 1234")
         bindings.basketItems.apply {
             layoutManager = basketItemsManager
             adapter = basketItemsAdapter
         }
 
-        bindings.totalRow.item.text = "${payment.basket.items.size} items"
-        bindings.totalRow.amount.text = currencyFormat.format(payment.total)
+        bindings.totalRow.item.text = "${payment.basket?.items?.size} items"
+        bindings.totalRow.amount.text = currencyFormat.format(payment.grossAmount)
 
         bindings.taxRow.item.text = "Including GST"
-        bindings.taxRow.amount.text = currencyFormat.format(payment.tax)
+        bindings.taxRow.amount.text = currencyFormat.format(BigDecimal.ZERO)
     }
 
     private fun toUtf8(str: String) =
         String(str.toByteArray(Charset.forName("ISO-8859-1")), Charset.forName("UTF-8"))
 
-    class BasketItemsAdapter(private val items: List<BasketItem>) : RecyclerView.Adapter<BasketItemsAdapter.ItemViewHolder>() {
+    class BasketItemsAdapter(private val items: List<BasketItems>) : RecyclerView.Adapter<BasketItemsAdapter.ItemViewHolder>() {
         class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
 
         private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
@@ -63,8 +66,8 @@ class PaymentReceipt : AppCompatActivity() {
         override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
             val item = items[position]
 
-            holder.itemView.item.text = item.productName
-            holder.itemView.amount.text = currencyFormat.format(item.price)
+            holder.itemView.item.text = item.label
+            holder.itemView.amount.text = currencyFormat.format(item.totalPrice)
         }
 
         override fun getItemCount(): Int = items.size

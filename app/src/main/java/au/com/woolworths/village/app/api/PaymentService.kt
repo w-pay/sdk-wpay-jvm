@@ -1,24 +1,25 @@
 package au.com.woolworths.village.app.api
 
-import au.com.woolworths.village.app.BasketItem
-import au.com.woolworths.village.app.Payment
-import au.com.woolworths.village.app.PaymentInstrument
-import java.math.BigDecimal
+import au.com.woolworths.village.sdk.api.CustomerApi
+import au.com.woolworths.village.sdk.client.Configuration
+import au.com.woolworths.village.sdk.client.auth.HttpBearerAuth
+import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
 
+// TODO: This may need to be refactored to use a domain model rather than DTOs
 class PaymentService {
-    suspend fun retrievePaymentDetails(paymentId: String): Payment {
-        return Payment().apply {
-            amount = BigDecimal("26.00")
-            instrument = PaymentInstrument("Debit Card", "1426")
-            basket.apply {
-                items.add(BasketItem("WW Creamy Pumpkin Soup", BigDecimal("3")))
-                items.add(BasketItem("Cheese and Chive Triangle Single", BigDecimal("2.33")))
-                items.add(BasketItem("Dairy Farmers Daily 2L", BigDecimal("4.6")))
-                items.add(BasketItem("Primo TSMK Bacon 200g", BigDecimal("7.85")))
-                items.add(BasketItem("Gourmet Tomatoes per kg 0.100 kg NET @ $6.90/kg", BigDecimal("0.69")))
-            }
-            total = BigDecimal("18.47")
-            tax = BigDecimal("0.72")
-        }
+    private val api = CustomerApi()
+
+    init {
+        // TODO: Update with a real way to set bearer tokens
+        val auth: HttpBearerAuth = Configuration.getDefaultApiClient().getAuthentication("bearerAuth") as HttpBearerAuth
+        auth.bearerToken = "ODA4NTYyNDktNjg0Ny00OWY4LWFmMDItOTU1MWEwMzliMjg5OlZJTExBR0VfQ1VTVE9NRVI="
+    }
+
+    fun setHost(host: String) {
+        Configuration.getDefaultApiClient().basePath = host
+    }
+
+    suspend fun retrievePaymentDetails(paymentId: String): CustomerPaymentDetail {
+        return api.getCustomerPaymentDetailsByPaymentId(paymentId).data
     }
 }

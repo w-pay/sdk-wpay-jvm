@@ -29,6 +29,7 @@ Get the details for a specific payment request so that the customer can pay usin
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -36,6 +37,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     String paymentRequestId = "paymentRequestId_example"; // String | The ID of the specific payment request
@@ -65,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -92,6 +97,7 @@ Get the details for a specific payment from a QR Code ID so that the customer ca
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -99,6 +105,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     String qrId = "qrId_example"; // String | The ID of the specific QR Code
@@ -128,7 +138,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -155,6 +165,7 @@ Get the list of payment instruments currently configured for the customer.  Retu
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -162,6 +173,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     try {
@@ -187,7 +202,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -213,6 +228,7 @@ Get the preferences previously set by the customer or merchant (depending on cal
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -220,6 +236,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     try {
@@ -245,7 +265,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -271,6 +291,7 @@ Get the details for a specific transaction previously executed by the customer. 
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -278,6 +299,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     String transactionId = 75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5; // String | The ID of the specific transaction
@@ -307,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -333,6 +358,7 @@ Get a list of the previously executed transactions for the customer.  Note that 
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -340,6 +366,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     OffsetDateTime startTime = 2017-11-06T19:38:09.890+11:00; // OffsetDateTime | If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned
@@ -375,7 +405,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -401,6 +431,7 @@ Initiate the addition of a new payment instrument for this customer.  This API r
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -408,6 +439,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     InstrumentAdditionDetails instrumentAdditionDetails = new InstrumentAdditionDetails(); // InstrumentAdditionDetails | 
@@ -437,7 +472,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -463,6 +498,7 @@ Pay a specific payment using the instrument details provided
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -470,6 +506,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     String paymentRequestId = "paymentRequestId_example"; // String | The ID of the specific payment request
@@ -501,7 +541,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -527,6 +567,7 @@ Change the preferences for the customer or merchant (depending on calling identi
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.CustomerApi;
 
@@ -534,6 +575,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     CustomerApi apiInstance = new CustomerApi(defaultClient);
     CustomerPreferences customerPreferences = new CustomerPreferences(); // CustomerPreferences | 
@@ -562,7 +607,7 @@ null (empty response body)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

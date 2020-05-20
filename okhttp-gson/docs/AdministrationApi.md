@@ -21,6 +21,7 @@ Perform a health check on the Village Wallet implementation
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
+import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
 import au.com.woolworths.village.sdk.api.AdministrationApi;
 
@@ -28,6 +29,10 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost:3000");
+    
+    // Configure HTTP bearer authorization: bearerAuth
+    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+    bearerAuth.setBearerToken("BEARER TOKEN");
 
     AdministrationApi apiInstance = new AdministrationApi(defaultClient);
     try {
@@ -53,7 +58,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

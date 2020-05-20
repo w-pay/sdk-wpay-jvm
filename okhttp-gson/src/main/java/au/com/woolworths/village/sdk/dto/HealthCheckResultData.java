@@ -23,13 +23,16 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
 
-public class HealthCheckResultData {
+public class HealthCheckResultData implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   /**
    * Health check result
    */

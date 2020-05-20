@@ -26,12 +26,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * MerchantPaymentDetailAllOf
  */
 
-public class MerchantPaymentDetailAllOf {
+public class MerchantPaymentDetailAllOf implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_BASKET = "basket";
   @SerializedName(SERIALIZED_NAME_BASKET)
   private Basket basket;

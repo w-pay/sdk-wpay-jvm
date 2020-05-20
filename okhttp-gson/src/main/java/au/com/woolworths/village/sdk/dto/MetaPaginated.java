@@ -23,13 +23,16 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Object to contain any metadata
  */
 @ApiModel(description = "Object to contain any metadata")
 
-public class MetaPaginated {
+public class MetaPaginated implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_RECORD_COUNT = "recordCount";
   @SerializedName(SERIALIZED_NAME_RECORD_COUNT)
   private Integer recordCount;

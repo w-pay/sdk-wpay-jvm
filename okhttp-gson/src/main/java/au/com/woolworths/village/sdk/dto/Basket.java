@@ -26,13 +26,16 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Information provided by the Merchant on the basket of items associated with the payment request.  This payload originates in the payment request and is carried with any resulting transactions
  */
 @ApiModel(description = "Information provided by the Merchant on the basket of items associated with the payment request.  This payload originates in the payment request and is carried with any resulting transactions")
 
-public class Basket {
+public class Basket implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)
   private List<BasketItems> items = null;

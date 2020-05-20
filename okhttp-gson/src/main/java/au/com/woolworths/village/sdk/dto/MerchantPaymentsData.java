@@ -27,13 +27,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
 
-public class MerchantPaymentsData {
+public class MerchantPaymentsData implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
   private String merchantReferenceId;

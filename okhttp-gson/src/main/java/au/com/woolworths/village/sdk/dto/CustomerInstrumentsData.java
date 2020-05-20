@@ -23,13 +23,16 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
 
-public class CustomerInstrumentsData {
+public class CustomerInstrumentsData implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_CLIENT_REFERENCE = "clientReference";
   @SerializedName(SERIALIZED_NAME_CLIENT_REFERENCE)
   private String clientReference;

@@ -25,12 +25,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import org.threeten.bp.OffsetDateTime;
+import java.io.Serializable;
 
 /**
  * GetCustomerPaymentInstrumentsResultsDataCreditCards
  */
 
-public class GetCustomerPaymentInstrumentsResultsDataCreditCards {
+public class GetCustomerPaymentInstrumentsResultsDataCreditCards implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_PAYMENT_INSTRUMENT_ID = "paymentInstrumentId";
   @SerializedName(SERIALIZED_NAME_PAYMENT_INSTRUMENT_ID)
   private String paymentInstrumentId;

@@ -30,13 +30,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.OffsetDateTime;
+import java.io.Serializable;
 
 /**
  * Summary information of the resulting transaction
  */
 @ApiModel(description = "Summary information of the resulting transaction")
 
-public class CustomerTransactionSummary extends CommonTransactionSummary {
+public class CustomerTransactionSummary extends CommonTransactionSummary implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
   private String merchantId;

@@ -23,12 +23,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * GetCustomerPaymentInstrumentsResultsDataStepUp1
  */
 
-public class GetCustomerPaymentInstrumentsResultsDataStepUp1 {
+public class GetCustomerPaymentInstrumentsResultsDataStepUp1 implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_TYPE = "type";
   @SerializedName(SERIALIZED_NAME_TYPE)
   private String type;

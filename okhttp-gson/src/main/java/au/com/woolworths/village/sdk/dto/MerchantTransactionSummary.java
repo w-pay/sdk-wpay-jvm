@@ -27,13 +27,16 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
 import org.threeten.bp.OffsetDateTime;
+import java.io.Serializable;
 
 /**
  * Summary information of the resulting transaction
  */
 @ApiModel(description = "Summary information of the resulting transaction")
 
-public class MerchantTransactionSummary extends CommonTransactionSummary {
+public class MerchantTransactionSummary extends CommonTransactionSummary implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_WALLET_ID = "walletId";
   @SerializedName(SERIALIZED_NAME_WALLET_ID)
   private String walletId;

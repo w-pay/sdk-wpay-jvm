@@ -26,12 +26,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * CommonPaymentSummary
  */
 
-public class CommonPaymentSummary extends CommonPaymentBase {
+public class CommonPaymentSummary extends CommonPaymentBase implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_CREATED_TIME = "createdTime";
   @SerializedName(SERIALIZED_NAME_CREATED_TIME)
   private String createdTime;

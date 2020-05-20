@@ -23,12 +23,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * MerchantTransactionSummaryAllOf
  */
 
-public class MerchantTransactionSummaryAllOf {
+public class MerchantTransactionSummaryAllOf implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_WALLET_ID = "walletId";
   @SerializedName(SERIALIZED_NAME_WALLET_ID)
   private String walletId;

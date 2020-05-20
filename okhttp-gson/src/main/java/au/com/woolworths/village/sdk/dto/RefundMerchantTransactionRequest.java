@@ -27,12 +27,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * RefundMerchantTransactionRequest
  */
 
-public class RefundMerchantTransactionRequest {
+public class RefundMerchantTransactionRequest implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   private MerchantTransactionsTransactionIdRefundData data;

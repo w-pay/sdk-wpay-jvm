@@ -24,12 +24,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * CustomerPaymentDetailAllOf
  */
 
-public class CustomerPaymentDetailAllOf {
+public class CustomerPaymentDetailAllOf implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
   private String merchantId;

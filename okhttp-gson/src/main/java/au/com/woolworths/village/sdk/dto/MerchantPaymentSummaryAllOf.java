@@ -23,12 +23,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * MerchantPaymentSummaryAllOf
  */
 
-public class MerchantPaymentSummaryAllOf {
+public class MerchantPaymentSummaryAllOf implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_USES_REMAINING = "usesRemaining";
   @SerializedName(SERIALIZED_NAME_USES_REMAINING)
   private Integer usesRemaining;

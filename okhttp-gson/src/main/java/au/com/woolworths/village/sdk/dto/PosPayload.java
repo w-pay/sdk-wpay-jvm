@@ -26,13 +26,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * Payload describing the specific POS system.  This payload originates in the payment request and is carried with any resulting transactions.  Provided in a generic schema previous configured by the merchant
  */
 @ApiModel(description = "Payload describing the specific POS system.  This payload originates in the payment request and is carried with any resulting transactions.  Provided in a generic schema previous configured by the merchant")
 
-public class PosPayload {
+public class PosPayload implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_SCHEMA_ID = "schemaId";
   @SerializedName(SERIALIZED_NAME_SCHEMA_ID)
   private String schemaId;

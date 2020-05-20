@@ -24,13 +24,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * An instrument used for this transaction
  */
 @ApiModel(description = "An instrument used for this transaction")
 
-public class CustomerPaymentsPaymentRequestIdDataSecondaryInstruments {
+public class CustomerPaymentsPaymentRequestIdDataSecondaryInstruments implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_INSTRUMENT_ID = "instrumentId";
   @SerializedName(SERIALIZED_NAME_INSTRUMENT_ID)
   private String instrumentId;

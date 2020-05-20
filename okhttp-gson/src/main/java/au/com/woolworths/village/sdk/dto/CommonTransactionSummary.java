@@ -27,12 +27,15 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
 import org.threeten.bp.OffsetDateTime;
+import java.io.Serializable;
 
 /**
  * CommonTransactionSummary
  */
 
-public class CommonTransactionSummary extends CommonPaymentBase {
+public class CommonTransactionSummary extends CommonPaymentBase implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
   @SerializedName(SERIALIZED_NAME_TRANSACTION_ID)
   private String transactionId;

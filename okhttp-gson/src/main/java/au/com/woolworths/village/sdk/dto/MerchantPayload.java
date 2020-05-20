@@ -26,13 +26,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * Payload provided by the merchant to support other types of messaging.  This payload originates in the payment request and is carried with any resulting transactions.  Provided in a generic schema previous configured by the merchant
  */
 @ApiModel(description = "Payload provided by the merchant to support other types of messaging.  This payload originates in the payment request and is carried with any resulting transactions.  Provided in a generic schema previous configured by the merchant")
 
-public class MerchantPayload {
+public class MerchantPayload implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_SCHEMA_ID = "schemaId";
   @SerializedName(SERIALIZED_NAME_SCHEMA_ID)
   private String schemaId;

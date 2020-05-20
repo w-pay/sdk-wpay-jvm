@@ -23,13 +23,16 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
 
-public class InitiatePaymentInstrumentAdditionResultsData {
+public class InitiatePaymentInstrumentAdditionResultsData implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_CARD_CAPTURE_U_R_L = "cardCaptureURL";
   @SerializedName(SERIALIZED_NAME_CARD_CAPTURE_U_R_L)
   private String cardCaptureURL;

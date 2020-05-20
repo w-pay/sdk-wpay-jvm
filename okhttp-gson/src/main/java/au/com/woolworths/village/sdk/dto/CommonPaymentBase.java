@@ -24,12 +24,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * CommonPaymentBase
  */
 
-public class CommonPaymentBase {
+public class CommonPaymentBase implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
   @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
   private String paymentRequestId;

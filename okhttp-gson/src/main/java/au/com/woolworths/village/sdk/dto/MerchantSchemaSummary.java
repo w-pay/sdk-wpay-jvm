@@ -23,12 +23,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * MerchantSchemaSummary
  */
 
-public class MerchantSchemaSummary {
+public class MerchantSchemaSummary implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_SCHEMA_ID = "schemaId";
   @SerializedName(SERIALIZED_NAME_SCHEMA_ID)
   private String schemaId;

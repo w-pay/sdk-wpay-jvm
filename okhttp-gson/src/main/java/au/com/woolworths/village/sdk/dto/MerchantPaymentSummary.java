@@ -26,13 +26,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * Summary information for a single payment request
  */
 @ApiModel(description = "Summary information for a single payment request")
 
-public class MerchantPaymentSummary extends CommonPaymentBase {
+public class MerchantPaymentSummary extends CommonPaymentBase implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_USES_REMAINING = "usesRemaining";
   @SerializedName(SERIALIZED_NAME_USES_REMAINING)
   private Integer usesRemaining;

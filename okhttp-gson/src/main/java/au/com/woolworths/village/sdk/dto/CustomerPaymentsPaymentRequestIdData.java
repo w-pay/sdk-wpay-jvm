@@ -26,13 +26,16 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
 
-public class CustomerPaymentsPaymentRequestIdData {
+public class CustomerPaymentsPaymentRequestIdData implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   public static final String SERIALIZED_NAME_PRIMARY_INSTRUMENT_ID = "primaryInstrumentId";
   @SerializedName(SERIALIZED_NAME_PRIMARY_INSTRUMENT_ID)
   private String primaryInstrumentId;

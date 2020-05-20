@@ -31,7 +31,7 @@ import java.util.List;
  * Information provided by the Merchant on the basket of items associated with the payment request.  This payload originates in the payment request and is carried with any resulting transactions
  */
 @ApiModel(description = "Information provided by the Merchant on the basket of items associated with the payment request.  This payload originates in the payment request and is carried with any resulting transactions")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class Basket {
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)

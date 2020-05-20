@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 /**
  * CommonPaymentSummary
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class CommonPaymentSummary extends CommonPaymentBase {
   public static final String SERIALIZED_NAME_CREATED_TIME = "createdTime";
   @SerializedName(SERIALIZED_NAME_CREATED_TIME)

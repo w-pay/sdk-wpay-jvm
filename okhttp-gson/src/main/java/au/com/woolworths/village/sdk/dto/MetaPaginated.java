@@ -28,7 +28,7 @@ import java.io.IOException;
  * Object to contain any metadata
  */
 @ApiModel(description = "Object to contain any metadata")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class MetaPaginated {
   public static final String SERIALIZED_NAME_RECORD_COUNT = "recordCount";
   @SerializedName(SERIALIZED_NAME_RECORD_COUNT)

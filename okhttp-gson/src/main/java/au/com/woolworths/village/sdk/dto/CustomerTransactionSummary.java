@@ -35,7 +35,7 @@ import org.threeten.bp.OffsetDateTime;
  * Summary information of the resulting transaction
  */
 @ApiModel(description = "Summary information of the resulting transaction")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class CustomerTransactionSummary extends CommonTransactionSummary {
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)

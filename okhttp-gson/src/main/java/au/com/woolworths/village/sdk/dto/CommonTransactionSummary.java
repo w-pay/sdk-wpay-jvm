@@ -31,7 +31,7 @@ import org.threeten.bp.OffsetDateTime;
 /**
  * CommonTransactionSummary
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class CommonTransactionSummary extends CommonPaymentBase {
   public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
   @SerializedName(SERIALIZED_NAME_TRANSACTION_ID)

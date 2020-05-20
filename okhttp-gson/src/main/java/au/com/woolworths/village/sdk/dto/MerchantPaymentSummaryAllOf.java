@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * MerchantPaymentSummaryAllOf
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class MerchantPaymentSummaryAllOf {
   public static final String SERIALIZED_NAME_USES_REMAINING = "usesRemaining";
   @SerializedName(SERIALIZED_NAME_USES_REMAINING)

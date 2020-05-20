@@ -31,7 +31,7 @@ import java.util.Map;
  * Mandatory data object containing response
  */
 @ApiModel(description = "Mandatory data object containing response")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class MerchantSchemaDetailsResultData {
   public static final String SERIALIZED_NAME_TYPE = "type";
   @SerializedName(SERIALIZED_NAME_TYPE)

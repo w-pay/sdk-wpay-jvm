@@ -18,7 +18,7 @@ import au.com.woolworths.village.sdk.client.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-01T10:39:59.330+10:00[Australia/Melbourne]")
+
 public class HttpBearerAuth implements Authentication {
   private final String scheme;
   private String bearerToken;

@@ -149,5 +149,9 @@ libraries.each { lib ->
         generateModelTests = false
         generateModelDocumentation = false
         generateApiTests = false
+
+        configOptions = [
+            hideGenerationTimestamp: "true"
+        ]
     }
 }

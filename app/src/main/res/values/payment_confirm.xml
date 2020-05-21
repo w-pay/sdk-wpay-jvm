@@ -5,4 +5,5 @@
     <string name="payment_error_title">Payment</string>
     <string name="payment_retrieve_details_error">Oops! Can\'t get payment details.</string>
     <string name="payment_instruments_retrieve_error">Oops! Can\'t retrieve payment instruments.</string>
+    <string name="payment_failed">Oops! Something went wrong.</string>
 </resources>

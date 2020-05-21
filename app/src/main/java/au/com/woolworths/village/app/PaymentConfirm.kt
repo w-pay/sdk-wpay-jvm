@@ -20,6 +20,7 @@ import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
 import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsData
 import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
+import au.com.woolworths.village.sdk.dto.MakeCustomerPaymentResults
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.coroutines.Dispatchers
@@ -54,10 +55,18 @@ class PaymentConfirm : AppCompatActivity() {
 
         bindings.action.text = getString(R.string.paying)
 
-        Handler().postDelayed(this::paymentComplete, 3000)
+        data.makePayment()
+        Handler().postDelayed(this::paymentComplete, 2000)
     }
 
     private fun paymentComplete() {
+        data.paymentResult.value ?: run {
+            /*
+             * The payment hasn't completed yet so we need to wait
+             */
+            data.paymentResult.observe(this, Observer { paymentComplete() })
+        }
+
         when(val result = data.paymentRequest.value) {
            is ApiResult.Success -> {
                val intent = Intent(this, PaymentReceipt::class.java).apply {
@@ -66,6 +75,10 @@ class PaymentConfirm : AppCompatActivity() {
 
                startActivity(intent)
            }
+
+            is ApiResult.Error -> {
+                showApiResultError(R.string.payment_failed)
+            }
        }
     }
 
@@ -88,8 +101,10 @@ class PaymentConfirm : AppCompatActivity() {
     private fun bindPaymentRequestDetails() {
         data.paymentRequest.value?.let {
             when (it) {
-                is ApiResult.Success ->
+                is ApiResult.Success -> {
                     bindings.amountToPay.text = currencyFormat.format(it.value.grossAmount)
+                }
+
                 is ApiResult.Error -> {
                     bindings.amountToPay.text = "???"
 
@@ -104,7 +119,6 @@ class PaymentConfirm : AppCompatActivity() {
         data.paymentInstruments.value?.let {
             when (it) {
                 is ApiResult.Success -> {
-                    data.selectedPaymentInstrument = it.value.creditCards[0]
                     bindings.slideToPay.unlock()
                 }
 
@@ -209,6 +223,9 @@ class ViewModel : androidx.lifecycle.ViewModel() {
 
     val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentDetail>> = MutableLiveData()
     val paymentInstruments: MutableLiveData<ApiResult<GetCustomerPaymentInstrumentsResultsData>> = MutableLiveData()
+    val paymentResult: MutableLiveData<ApiResult<MakeCustomerPaymentResults>> = MutableLiveData()
+
+    lateinit var paymentRequestDetails: CustomerPaymentDetail
     lateinit var selectedPaymentInstrument: GetCustomerPaymentInstrumentsResultsDataCreditCards
 
     init {
@@ -217,10 +234,41 @@ class ViewModel : androidx.lifecycle.ViewModel() {
                 // TODO: Should parse from QR code.
                 paymentService.setHost("http://192.168.1.15:3000")
 
-                // TODO: Payment Id should come from QR code.
-                paymentRequest.postValue(paymentService.retrievePaymentRequestDetails("7a104d34-1442-4f02-970c-8ea847533c4b"))
-                paymentInstruments.postValue(paymentService.retrievePaymentInstruments())
+                retrievePaymentDetails()
+                retrievePaymentInstruments()
             }
         }
+    }
+
+    fun makePayment() {
+        viewModelScope.launch {
+             withContext(Dispatchers.IO) {
+                 paymentResult.postValue(paymentService.makePayment(
+                     paymentRequestDetails.paymentRequestId,
+                     selectedPaymentInstrument.paymentInstrumentId
+                 ))
+             }
+        }
+    }
+
+    private suspend fun retrievePaymentDetails() {
+        // TODO: Payment Id should come from QR code.
+        val result = paymentService.retrievePaymentRequestDetails("da26a95a-2ee8-4a44-9efd-2c2430425614")
+
+        when (result) {
+            is ApiResult.Success -> paymentRequestDetails = result.value
+        }
+
+        paymentRequest.postValue(result)
+    }
+
+    private suspend fun retrievePaymentInstruments() {
+        val result = paymentService.retrievePaymentInstruments()
+
+        when (result) {
+            is ApiResult.Success -> selectedPaymentInstrument = result.value.creditCards[0]
+        }
+
+        paymentInstruments.postValue(result)
     }
 }

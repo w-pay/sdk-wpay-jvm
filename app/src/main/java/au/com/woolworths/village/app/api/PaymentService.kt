@@ -20,7 +20,7 @@ class PaymentService {
         Configuration.getDefaultApiClient().basePath = host
     }
 
-    suspend fun retrievePaymentDetails(paymentId: String): ApiResult<CustomerPaymentDetail> {
+    suspend fun retrievePaymentRequestDetails(paymentId: String): ApiResult<CustomerPaymentDetail> {
         return try {
             val data = api.getCustomerPaymentDetailsByPaymentId(paymentId).data
 

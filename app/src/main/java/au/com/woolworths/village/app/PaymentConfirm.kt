@@ -53,7 +53,7 @@ class PaymentConfirm : AppCompatActivity() {
     }
 
     private fun paymentComplete() {
-        when(val result = data.payment.value) {
+        when(val result = data.paymentRequest.value) {
            is ApiResult.Success -> {
                val intent = Intent(this, PaymentReceipt::class.java).apply {
                    putExtra(PAYMENT, result.value)
@@ -67,21 +67,21 @@ class PaymentConfirm : AppCompatActivity() {
     private fun createViewModel() {
         data = ViewModelProvider(this).get(ViewModel::class.java)
 
-        data.payment.observe(this, Observer { bindPayment() })
-        data.payment.observe(this, Observer { showApiResultError() })
+        data.paymentRequest.observe(this, Observer { bindPaymentRequestDetails() })
+        data.paymentRequest.observe(this, Observer { showApiResultError() })
     }
 
     private fun createView() {
         bindings = PaymentConfirmBinding.inflate(layoutInflater)
         setContentView(bindings.root)
 
-        bindPayment()
+        bindPaymentRequestDetails()
         bindSlideToPayListener()
         updateSheetBehaviour()
     }
 
-    private fun bindPayment() {
-        data.payment.value?.let {
+    private fun bindPaymentRequestDetails() {
+        data.paymentRequest.value?.let {
             when (it) {
                 is ApiResult.Success ->
                     bindings.amountToPay.text = currencyFormat.format(it.value.grossAmount)
@@ -158,7 +158,7 @@ class PaymentConfirm : AppCompatActivity() {
     }
 
     private fun showApiResultError() {
-        when(data.payment.value) {
+        when(data.paymentRequest.value) {
             is ApiResult.Error -> {
                 val builder: AlertDialog.Builder? = this.let {
                     AlertDialog.Builder(it)
@@ -184,7 +184,7 @@ class PaymentConfirm : AppCompatActivity() {
 class ViewModel : androidx.lifecycle.ViewModel() {
     private val paymentService: PaymentService = PaymentService()
 
-    val payment: MutableLiveData<ApiResult<CustomerPaymentDetail>> = MutableLiveData()
+    val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentDetail>> = MutableLiveData()
 
     init {
         viewModelScope.launch {
@@ -193,9 +193,9 @@ class ViewModel : androidx.lifecycle.ViewModel() {
                 paymentService.setHost("http://192.168.1.15:3000")
 
                 // TODO: Payment Id should come from QR code.
-                val result: ApiResult<CustomerPaymentDetail> = paymentService.retrievePaymentDetails("220eb683-6131-45f0-864d-6722f5d0486c")
+                val result: ApiResult<CustomerPaymentDetail> = paymentService.retrievePaymentRequestDetails("b30e2d7d-da7e-46b4-b50f-a702d527d1fd")
 
-                payment.postValue(result)
+                paymentRequest.postValue(result)
             }
         }
     }

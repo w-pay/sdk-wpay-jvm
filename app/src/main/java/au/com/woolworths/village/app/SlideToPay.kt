@@ -49,6 +49,14 @@ class SlideToPay: FrameLayout {
         init(context, attrs, defStyleAttr, defStyleRes)
     }
 
+    fun lock() {
+        this.locked = true
+    }
+
+    fun unlock() {
+        this.locked = false
+    }
+
     @Suppress("UNUSED_PARAMETER")
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
         bindings = SlideToPayBinding.inflate(LayoutInflater.from(context), this, true)

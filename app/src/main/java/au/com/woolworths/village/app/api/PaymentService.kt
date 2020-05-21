@@ -5,6 +5,7 @@ import au.com.woolworths.village.sdk.client.ApiException
 import au.com.woolworths.village.sdk.client.Configuration
 import au.com.woolworths.village.sdk.client.auth.HttpBearerAuth
 import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
+import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsData
 
 // TODO: This may need to be refactored to use a domain model rather than DTOs
 class PaymentService {
@@ -23,6 +24,17 @@ class PaymentService {
     suspend fun retrievePaymentRequestDetails(paymentId: String): ApiResult<CustomerPaymentDetail> {
         return try {
             val data = api.getCustomerPaymentDetailsByPaymentId(paymentId).data
+
+            ApiResult.Success(data)
+        }
+        catch (e: ApiException) {
+            ApiResult.Error(e)
+        }
+    }
+
+    suspend fun retrievePaymentInstruments(): ApiResult<GetCustomerPaymentInstrumentsResultsData> {
+        return try {
+            val data = api.customerPaymentInstruments.data
 
             ApiResult.Success(data)
         }

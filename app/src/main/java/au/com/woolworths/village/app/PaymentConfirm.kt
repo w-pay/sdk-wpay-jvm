@@ -18,6 +18,8 @@ import au.com.woolworths.village.app.api.PaymentService
 
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
+import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsData
+import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +44,9 @@ class PaymentConfirm : AppCompatActivity() {
 
         createViewModel()
         createView()
+
+        // can't pay until we have the payment instruments.
+        bindings.slideToPay.lock()
     }
 
     fun makePayment() {
@@ -68,7 +73,7 @@ class PaymentConfirm : AppCompatActivity() {
         data = ViewModelProvider(this).get(ViewModel::class.java)
 
         data.paymentRequest.observe(this, Observer { bindPaymentRequestDetails() })
-        data.paymentRequest.observe(this, Observer { showApiResultError() })
+        data.paymentInstruments.observe(this, Observer { bindPaymentInstrument() })
     }
 
     private fun createView() {
@@ -85,8 +90,26 @@ class PaymentConfirm : AppCompatActivity() {
             when (it) {
                 is ApiResult.Success ->
                     bindings.amountToPay.text = currencyFormat.format(it.value.grossAmount)
-                is ApiResult.Error ->
+                is ApiResult.Error -> {
                     bindings.amountToPay.text = "???"
+
+                    showApiResultError(R.string.payment_retrieve_details_error)
+                }
+            }
+        }
+    }
+
+    private fun bindPaymentInstrument() {
+        // TODO: We pick a card be default.
+        data.paymentInstruments.value?.let {
+            when (it) {
+                is ApiResult.Success -> {
+                    data.selectedPaymentInstrument = it.value.creditCards[0]
+                    bindings.slideToPay.unlock()
+                }
+
+                is ApiResult.Error ->
+                    showApiResultError(R.string.payment_instruments_retrieve_error)
             }
         }
     }
@@ -157,7 +180,7 @@ class PaymentConfirm : AppCompatActivity() {
         }
     }
 
-    private fun showApiResultError() {
+    private fun showApiResultError(messageId: Int) {
         when(data.paymentRequest.value) {
             is ApiResult.Error -> {
                 val builder: AlertDialog.Builder? = this.let {
@@ -166,7 +189,7 @@ class PaymentConfirm : AppCompatActivity() {
 
                 builder?.apply {
                     setCancelable(false)
-                    setMessage(R.string.payment_retrieve_details_error)
+                    setMessage(messageId)
                     setTitle(R.string.payment_error_title)
 
                     setPositiveButton(R.string.ok) { _, _ ->
@@ -185,6 +208,8 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     private val paymentService: PaymentService = PaymentService()
 
     val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentDetail>> = MutableLiveData()
+    val paymentInstruments: MutableLiveData<ApiResult<GetCustomerPaymentInstrumentsResultsData>> = MutableLiveData()
+    lateinit var selectedPaymentInstrument: GetCustomerPaymentInstrumentsResultsDataCreditCards
 
     init {
         viewModelScope.launch {
@@ -193,9 +218,8 @@ class ViewModel : androidx.lifecycle.ViewModel() {
                 paymentService.setHost("http://192.168.1.15:3000")
 
                 // TODO: Payment Id should come from QR code.
-                val result: ApiResult<CustomerPaymentDetail> = paymentService.retrievePaymentRequestDetails("b30e2d7d-da7e-46b4-b50f-a702d527d1fd")
-
-                paymentRequest.postValue(result)
+                paymentRequest.postValue(paymentService.retrievePaymentRequestDetails("7a104d34-1442-4f02-970c-8ea847533c4b"))
+                paymentInstruments.postValue(paymentService.retrievePaymentInstruments())
             }
         }
     }

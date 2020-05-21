@@ -17,6 +17,7 @@ import java.nio.charset.Charset
 import java.text.NumberFormat
 
 const val PAYMENT = "au.com.woolworths.village.app.Payment"
+const val INSTRUMENT = "au.com.woolworths.village.app.Instrument"
 
 class PaymentReceipt : AppCompatActivity() {
     private lateinit var bindings: PaymentReceiptBinding

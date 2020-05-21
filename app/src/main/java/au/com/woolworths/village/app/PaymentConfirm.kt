@@ -67,10 +67,13 @@ class PaymentConfirm : AppCompatActivity() {
             data.paymentResult.observe(this, Observer { paymentComplete() })
         }
 
-        when(val result = data.paymentRequest.value) {
+        val paymentData = data
+
+        when(data.paymentRequest.value) {
            is ApiResult.Success -> {
                val intent = Intent(this, PaymentReceipt::class.java).apply {
-                   putExtra(PAYMENT, result.value)
+                   putExtra(PAYMENT, paymentData.paymentRequestDetails)
+                   putExtra(INSTRUMENT, paymentData.selectedPaymentInstrument)
                }
 
                startActivity(intent)
@@ -253,7 +256,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
 
     private suspend fun retrievePaymentDetails() {
         // TODO: Payment Id should come from QR code.
-        val result = paymentService.retrievePaymentRequestDetails("da26a95a-2ee8-4a44-9efd-2c2430425614")
+        val result = paymentService.retrievePaymentRequestDetails("f13121b4-87bc-46ef-a972-74337cc14bb8")
 
         when (result) {
             is ApiResult.Success -> paymentRequestDetails = result.value

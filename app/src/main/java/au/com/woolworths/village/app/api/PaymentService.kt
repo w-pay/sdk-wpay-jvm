@@ -20,9 +20,9 @@ class PaymentService {
         Configuration.getDefaultApiClient().basePath = host
     }
 
-    suspend fun retrievePaymentRequestDetails(paymentId: String): ApiResult<CustomerPaymentDetail> {
+    suspend fun retrievePaymentRequestDetails(qrCodeId: String): ApiResult<CustomerPaymentDetail> {
         return try {
-            val data = api.getCustomerPaymentDetailsByPaymentId(paymentId).data
+            val data = api.getCustomerPaymentDetailsByQRCodeId(qrCodeId).data
 
             ApiResult.Success(data)
         }

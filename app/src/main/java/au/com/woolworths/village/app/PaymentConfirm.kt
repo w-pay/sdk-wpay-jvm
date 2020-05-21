@@ -4,8 +4,10 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -34,9 +36,10 @@ class PaymentConfirm : AppCompatActivity() {
     private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
 
     private lateinit var data: ViewModel
-
     private lateinit var bindings: PaymentConfirmBinding
+
     private var animationDuration: Long = 0
+    private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,12 @@ class PaymentConfirm : AppCompatActivity() {
 
         // can't pay until we have the payment instruments.
         bindings.slideToPay.lock()
+    }
+
+    override fun onDestroy() {
+        dialog?.dismiss()
+
+        super.onDestroy()
     }
 
     fun makePayment() {
@@ -80,7 +89,7 @@ class PaymentConfirm : AppCompatActivity() {
            }
 
             is ApiResult.Error -> {
-                showApiResultError(R.string.payment_failed)
+                showErrorDialog(R.string.payment_failed)
             }
        }
     }
@@ -90,6 +99,14 @@ class PaymentConfirm : AppCompatActivity() {
 
         data.paymentRequest.observe(this, Observer { bindPaymentRequestDetails() })
         data.paymentInstruments.observe(this, Observer { bindPaymentInstrument() })
+        data.qrCodeId.observe(this, Observer {
+            it?.let {
+                data.retrievePaymentDetails(it)
+                data.retrievePaymentInstruments()
+            } ?: showMissingDetailsError(R.string.missing_qr_code)
+        })
+
+        intent?.let { data.parseQRCodeDetails(it.data) } ?: run { data.qrCodeId.value = null }
     }
 
     private fun createView() {
@@ -109,9 +126,7 @@ class PaymentConfirm : AppCompatActivity() {
                 }
 
                 is ApiResult.Error -> {
-                    bindings.amountToPay.text = "???"
-
-                    showApiResultError(R.string.payment_retrieve_details_error)
+                    showMissingDetailsError(R.string.payment_retrieve_details_error)
                 }
             }
         }
@@ -126,7 +141,7 @@ class PaymentConfirm : AppCompatActivity() {
                 }
 
                 is ApiResult.Error ->
-                    showApiResultError(R.string.payment_instruments_retrieve_error)
+                    showMissingDetailsError(R.string.payment_instruments_retrieve_error)
             }
         }
     }
@@ -197,26 +212,33 @@ class PaymentConfirm : AppCompatActivity() {
         }
     }
 
-    private fun showApiResultError(messageId: Int) {
-        when(data.paymentRequest.value) {
-            is ApiResult.Error -> {
-                val builder: AlertDialog.Builder? = this.let {
-                    AlertDialog.Builder(it)
-                }
+    private fun showMissingDetailsError(messageId: Int) {
+        bindings.amountToPay.text = "???"
 
-                builder?.apply {
-                    setCancelable(false)
-                    setMessage(messageId)
-                    setTitle(R.string.payment_error_title)
+        showErrorDialog(messageId)
+    }
 
-                    setPositiveButton(R.string.ok) { _, _ ->
-                        finish()
-                    }
-                }
-
-                val dialog: AlertDialog? = builder?.create()
-                dialog?.show()
+    private fun showErrorDialog(messageId: Int) {
+        if (dialog == null) {
+            val builder: AlertDialog.Builder? = this.let {
+                AlertDialog.Builder(it)
             }
+
+            builder?.apply {
+                setCancelable(false)
+                setMessage(messageId)
+                setTitle(R.string.payment_error_title)
+
+                setPositiveButton(R.string.ok) { _, _ ->
+                    finish()
+                }
+            }
+
+            dialog = builder?.create()
+            dialog?.show()
+        }
+        else {
+            Log.w("PaymentConfirm", "Trying to show error dialog but already shown")
         }
     }
 }
@@ -224,24 +246,13 @@ class PaymentConfirm : AppCompatActivity() {
 class ViewModel : androidx.lifecycle.ViewModel() {
     private val paymentService: PaymentService = PaymentService()
 
+    val qrCodeId: MutableLiveData<String?> = MutableLiveData()
     val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentDetail>> = MutableLiveData()
     val paymentInstruments: MutableLiveData<ApiResult<GetCustomerPaymentInstrumentsResultsData>> = MutableLiveData()
     val paymentResult: MutableLiveData<ApiResult<MakeCustomerPaymentResults>> = MutableLiveData()
 
     lateinit var paymentRequestDetails: CustomerPaymentDetail
     lateinit var selectedPaymentInstrument: GetCustomerPaymentInstrumentsResultsDataCreditCards
-
-    init {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                // TODO: Should parse from QR code.
-                paymentService.setHost("http://192.168.1.15:3000")
-
-                retrievePaymentDetails()
-                retrievePaymentInstruments()
-            }
-        }
-    }
 
     fun makePayment() {
         viewModelScope.launch {
@@ -254,24 +265,49 @@ class ViewModel : androidx.lifecycle.ViewModel() {
         }
     }
 
-    private suspend fun retrievePaymentDetails() {
-        // TODO: Payment Id should come from QR code.
-        val result = paymentService.retrievePaymentRequestDetails("0214c16b-7018-4dbf-8988-2888a450aab4")
+    fun retrievePaymentDetails(qrCodeId: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = paymentService.retrievePaymentRequestDetails(qrCodeId)
 
-        when (result) {
-            is ApiResult.Success -> paymentRequestDetails = result.value
+                when (result) {
+                    is ApiResult.Success -> paymentRequestDetails = result.value
+                }
+
+                paymentRequest.postValue(result)
+            }
         }
-
-        paymentRequest.postValue(result)
     }
 
-    private suspend fun retrievePaymentInstruments() {
-        val result = paymentService.retrievePaymentInstruments()
+    fun parseQRCodeDetails(qrCodeContents: Uri?) {
+        if (qrCodeContents != null) {
+            setHostname(qrCodeContents)
 
-        when (result) {
-            is ApiResult.Success -> selectedPaymentInstrument = result.value.creditCards[0]
+            qrCodeId.value = qrCodeContents.pathSegments.last()
         }
+        else {
+            qrCodeId.value = null
+        }
+    }
 
-        paymentInstruments.postValue(result)
+    private fun setHostname(qrCodeContents: Uri) {
+        val port: String = if (qrCodeContents.port > -1) ":${qrCodeContents.port}" else ""
+        val hostname = "${qrCodeContents.scheme}://${qrCodeContents.host}${port}"
+
+        paymentService.setHost(hostname)
+    }
+
+    fun retrievePaymentInstruments() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = paymentService.retrievePaymentInstruments()
+
+                when (result) {
+                    is ApiResult.Success -> selectedPaymentInstrument = result.value.creditCards[0]
+                }
+
+                paymentInstruments.postValue(result)
+            }
+        }
     }
 }

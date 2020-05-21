@@ -256,7 +256,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
 
     private suspend fun retrievePaymentDetails() {
         // TODO: Payment Id should come from QR code.
-        val result = paymentService.retrievePaymentRequestDetails("f13121b4-87bc-46ef-a972-74337cc14bb8")
+        val result = paymentService.retrievePaymentRequestDetails("0214c16b-7018-4dbf-8988-2888a450aab4")
 
         when (result) {
             is ApiResult.Success -> paymentRequestDetails = result.value

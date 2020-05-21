@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import au.com.woolworths.village.app.databinding.PaymentReceiptBinding
 import au.com.woolworths.village.sdk.dto.BasketItems
 import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
+import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
 import kotlinx.android.synthetic.main.receipt_row.view.*
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.nio.charset.Charset
 import java.text.NumberFormat
 
@@ -32,22 +34,38 @@ class PaymentReceipt : AppCompatActivity() {
         bindings = PaymentReceiptBinding.inflate(layoutInflater)
         setContentView(bindings.root)
 
+        bindPaymentToReceipt()
+        bindInstrumentToReceipt()
+    }
+
+    private fun bindPaymentToReceipt() {
         val payment: CustomerPaymentDetail = intent.getSerializableExtra(PAYMENT) as CustomerPaymentDetail
         basketItemsAdapter = payment.basket?.items?.let { BasketItemsAdapter(it) }!!
         basketItemsManager = LinearLayoutManager(this)
 
-        bindings.amountPaid.text = currencyFormat.format(payment.grossAmount)
-        bindings.paymentInstrument.text = toUtf8("Credit Card \u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2\u00E2\u0080\u00A2 1234")
+        val amount = currencyFormat.format(payment.grossAmount)
+        bindings.amountPaid.text = amount
         bindings.basketItems.apply {
             layoutManager = basketItemsManager
             adapter = basketItemsAdapter
         }
 
-        bindings.totalRow.item.text = "${payment.basket?.items?.size} items"
-        bindings.totalRow.amount.text = currencyFormat.format(payment.grossAmount)
+        bindings.totalRow.item.text = getString(R.string.items_count).format(payment.basket?.items?.size)
+        bindings.totalRow.amount.text = amount
 
-        bindings.taxRow.item.text = "Including GST"
-        bindings.taxRow.amount.text = currencyFormat.format(BigDecimal.ZERO)
+        bindings.taxRow.item.text = getString(R.string.gst_heading)
+        bindings.taxRow.amount.text = currencyFormat.format(calculateGST(payment.grossAmount))
+    }
+
+    private fun bindInstrumentToReceipt() {
+        val paymentInstrument: GetCustomerPaymentInstrumentsResultsDataCreditCards
+                = intent.getSerializableExtra(INSTRUMENT) as GetCustomerPaymentInstrumentsResultsDataCreditCards
+
+        bindings.paymentInstrument.text = toUtf8(getString(R.string.instrument_details).format(paymentInstrument.cardSuffix))
+    }
+
+    private fun calculateGST(amount: BigDecimal): BigDecimal {
+        return amount.divide(BigDecimal(11), 2, RoundingMode.HALF_UP)
     }
 
     private fun toUtf8(str: String) =

@@ -20,7 +20,7 @@ android {
             qr_scheme: properties.getProperty('qr.scheme'),
             qr_hostname: properties.getProperty('qr.hostname'),
             qr_port: properties.getProperty('qr.port'),
-            qr_pattern: "/phone/payment/.*"
+            qr_pattern: "/customer/qr/.*"
         ]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

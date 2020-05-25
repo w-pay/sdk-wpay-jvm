@@ -69,6 +69,7 @@ dependencies {
 
     implementation "com.microsoft.appcenter:appcenter-analytics:${app_center_version}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${app_center_version}"
+    implementation "com.microsoft.appcenter:appcenter-distribute:${app_center_version}"
 
     // TODO: Update to use repository
     implementation project(':okhttp-gson')

@@ -101,6 +101,8 @@ class PaymentConfirm : AppCompatActivity() {
                }
 
                startActivity(intent)
+
+               finish()
            }
 
             is ApiResult.Error -> {

@@ -33,6 +33,7 @@ import com.microsoft.appcenter.distribute.UpdateTrack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 import java.text.NumberFormat
 import kotlin.math.roundToInt
@@ -317,10 +318,17 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     fun retrievePaymentInstruments() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val result = paymentService.retrievePaymentInstruments()
+                var result = paymentService.retrievePaymentInstruments()
 
                 when (result) {
-                    is ApiResult.Success -> selectedPaymentInstrument = result.value.creditCards[0]
+                    is ApiResult.Success -> {
+                        if (result.value.creditCards.isEmpty()) {
+                            result = ApiResult.Error(Exception("No payment instruments"))
+                        }
+                        else {
+                            selectedPaymentInstrument = result.value.creditCards[0]
+                        }
+                    }
                 }
 
                 paymentInstruments.postValue(result)

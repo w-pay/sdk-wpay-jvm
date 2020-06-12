@@ -13,6 +13,7 @@ The supported variants are:
  - `okhttp-gson` - Uses the [OkHttp](https://square.github.io/okhttp/)
      framework with [GSON](https://github.com/google/gson) for JSON
      (de)serialisation.
+ - `objc` - Generates a SDK for use in an XCode project.
 
 Each variant's README contains more details on how to use the SDK, however
 the variants follow a naming pattern so that it's easy to swap variants
@@ -38,6 +39,8 @@ A symlink will suffice.
 
 ## Building an SDK variant
 
+### Gradle projects
+
 The project takes advantage of Gradle [Multi Project Builds](https://docs.gradle.org/current/userguide/multi_project_builds.html)
 to allow configuration and execution of the tasks to build/test/publish
 an SDK variant.
@@ -53,7 +56,18 @@ For example, to build only the SDK using "OkHTTP with GSON" run
 $ ./gradlew :okhttp-gson:build
 ```
 
+### XCode
+
+Using the ObjC variant requires the use of [CocoaPods](https://cocoapods.org/)
+as a Pod Spec is generated to include the library in an XCode project.
+
+See the `objc` README for more information about how to integrate the
+library.
+
 ## Testing an SDK variant
+
+**NOTE:** Tests currently are only available for the Java based SDK
+variants.
 
 For each SDK variant we want to create a "virtual test project", that
 mixes the source of the SDK library, the Android tools, and the tests
@@ -144,11 +158,11 @@ the task allowing the test to be run in the IDE.
 
 ## Adding a new variant
 
-1. Add the Open API generator library name to the root `libraries` array. A
+1. Add the Open API generator details to the root `sdks` dictionary. A
 new task will be added to the "SDK Generators" task group.
 2. Run the generation task
-3. Add the project to the `settings.gradle` so that the top level build
-can "load" the project
+3. For Java/Gradle projects, add the project to the `settings.gradle`
+so that the top level build can "load" the project
 4. Run tasks to build, test, etc
 5. Commit the new SDK variant.
 

@@ -62,7 +62,16 @@ def camelCase = { it ->
     return "${pc[0].toLowerCase()}${pc.substring(1)}"
 }
 
-def libraries = [ "okhttp-gson" ]
+def sdks = [
+    "okhttp-gson": [
+        language: "java",
+        library: "okhttp-gson"
+    ],
+    "objc": [
+        language: "objc",
+        library: null
+    ]
+]
 def sdkTestsProject = null
 def evaluatedProjects = []
 
@@ -124,23 +133,21 @@ subprojects.each { sub ->
     }
 }
 
-libraries.each { lib ->
-    def name = pascalCase(lib)
+sdks.each { name, sdk ->
+    def outputLoc = "${projectDir}/${name}".toString()
 
-    def outputLoc = "${projectDir}/${lib}".toString()
-
-    task("generate${name}Sdk", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    task("generate${pascalCase(name)}Sdk", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
         group = "SDK Generators"
-        description = "Generates the Village SDK using the ${lib} framework"
-        generatorName = "java"
+        description = "Generates the Village SDK using the ${name} framework"
+        generatorName = sdk.language
         validateSpec = true
-        library = lib
+        library = sdk.library
 
         inputSpec = project.ext.spec
         outputDir = outputLoc
 
         groupId = project.ext.packageName
-        id = "sdk-${lib}"
+        id = "sdk-${name}"
         packageName = "${project.ext.packageName}.sdk"
         apiPackage = "${packageName.get()}.api"
         invokerPackage = "${packageName.get()}.client"

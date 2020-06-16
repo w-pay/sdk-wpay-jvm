@@ -1,5 +1,6 @@
 package au.com.woolworths.village.app.api
 
+import au.com.woolworths.village.app.BuildConfig
 import au.com.woolworths.village.sdk.api.CustomerApi
 import au.com.woolworths.village.sdk.client.ApiException
 import au.com.woolworths.village.sdk.client.Configuration
@@ -11,13 +12,16 @@ class PaymentService {
     private val api = CustomerApi()
 
     init {
+        val apiClient = Configuration.getDefaultApiClient()
+        apiClient.addDefaultHeader("x-api-key", "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC")
+
         // TODO: Update with a real way to set bearer tokens
-        val auth: HttpBearerAuth = Configuration.getDefaultApiClient().getAuthentication("bearerAuth") as HttpBearerAuth
+        val auth: HttpBearerAuth = apiClient.getAuthentication("bearerAuth") as HttpBearerAuth
         auth.bearerToken = "ODA4NTYyNDktNjg0Ny00OWY4LWFmMDItOTU1MWEwMzliMjg5OlZJTExBR0VfQ1VTVE9NRVI="
     }
 
     fun setHost(host: String) {
-        Configuration.getDefaultApiClient().basePath = host
+        Configuration.getDefaultApiClient().basePath = "${host}${BuildConfig.API_CONTEXT_ROOT}"
     }
 
     suspend fun retrievePaymentRequestDetails(qrCodeId: String): ApiResult<CustomerPaymentDetail> {

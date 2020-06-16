@@ -29,7 +29,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="woolies-village.appspot.com"
+                    android:host="dev.mobile-api.woolworths.com.au"
                     android:pathPattern="${qr_pattern}" />
             </intent-filter>
         </activity>

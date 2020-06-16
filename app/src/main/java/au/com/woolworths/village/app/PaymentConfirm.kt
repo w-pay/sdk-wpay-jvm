@@ -144,6 +144,7 @@ class PaymentConfirm : AppCompatActivity() {
                 }
 
                 is ApiResult.Error -> {
+                    Log.e("PaymentConfirm", "Error getting payment details", it.e)
                     showMissingDetailsError(R.string.payment_retrieve_details_error)
                 }
             }
@@ -158,8 +159,10 @@ class PaymentConfirm : AppCompatActivity() {
                     bindings.slideToPay.unlock()
                 }
 
-                is ApiResult.Error ->
+                is ApiResult.Error -> {
+                    Log.e("PaymentConfirm", "Error getting payment instruments", it.e)
                     showMissingDetailsError(R.string.payment_instruments_retrieve_error)
+                }
             }
         }
     }

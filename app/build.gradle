@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def contextRoot = properties.getProperty('qr.context.root', "/wow/v1/dpwallet")
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -20,8 +21,11 @@ android {
             qr_scheme: properties.getProperty('qr.scheme'),
             qr_hostname: properties.getProperty('qr.hostname'),
             qr_port: properties.getProperty('qr.port'),
-            qr_pattern: "/customer/qr/.*"
+            qr_context_root: contextRoot,
+            qr_pattern: "${contextRoot}/customer/qr/.*"
         ]
+
+        buildConfigField 'String', 'API_CONTEXT_ROOT', "\"${contextRoot.toString()}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

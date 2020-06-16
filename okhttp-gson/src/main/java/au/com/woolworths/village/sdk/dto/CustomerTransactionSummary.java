@@ -37,8 +37,136 @@ import java.io.Serializable;
  */
 @ApiModel(description = "Summary information of the resulting transaction")
 
-public class CustomerTransactionSummary extends CommonTransactionSummary implements Serializable {
+public class CustomerTransactionSummary implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
+  @SerializedName(SERIALIZED_NAME_TRANSACTION_ID)
+  private String transactionId;
+
+  /**
+   * The type of transaction: PAYMENT or REFUND
+   */
+  @JsonAdapter(TypeEnum.Adapter.class)
+  public enum TypeEnum {
+    PAYMENT("PAYMENT"),
+    
+    REFUND("REFUND");
+
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static TypeEnum fromValue(String value) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<TypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final TypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return TypeEnum.fromValue(value);
+      }
+    }
+  }
+
+  public static final String SERIALIZED_NAME_TYPE = "type";
+  @SerializedName(SERIALIZED_NAME_TYPE)
+  private TypeEnum type;
+
+  public static final String SERIALIZED_NAME_EXECUTION_TIME = "executionTime";
+  @SerializedName(SERIALIZED_NAME_EXECUTION_TIME)
+  private OffsetDateTime executionTime;
+
+  /**
+   * The current status of the transactions
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    PROCESSING("PROCESSING"),
+    
+    APPROVED("APPROVED"),
+    
+    REJECTED("REJECTED");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return StatusEnum.fromValue(value);
+      }
+    }
+  }
+
+  public static final String SERIALIZED_NAME_STATUS = "status";
+  @SerializedName(SERIALIZED_NAME_STATUS)
+  private StatusEnum status;
+
+  public static final String SERIALIZED_NAME_REFUND_REASON = "refundReason";
+  @SerializedName(SERIALIZED_NAME_REFUND_REASON)
+  private String refundReason;
+
+  public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
+  @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
+  private String paymentRequestId;
+
+  public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
+  @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
+  private String merchantReferenceId;
+
+  public static final String SERIALIZED_NAME_GROSS_AMOUNT = "grossAmount";
+  @SerializedName(SERIALIZED_NAME_GROSS_AMOUNT)
+  private BigDecimal grossAmount;
 
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
@@ -47,6 +175,183 @@ public class CustomerTransactionSummary extends CommonTransactionSummary impleme
   public static final String SERIALIZED_NAME_INSTRUMENTS = "instruments";
   @SerializedName(SERIALIZED_NAME_INSTRUMENTS)
   private List<CustomerTransactionSummaryAllOfInstruments> instruments = new ArrayList<CustomerTransactionSummaryAllOfInstruments>();
+
+
+  public CustomerTransactionSummary transactionId(String transactionId) {
+    
+    this.transactionId = transactionId;
+    return this;
+  }
+
+   /**
+   * The ID of the transaction
+   * @return transactionId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of the transaction")
+
+  public String getTransactionId() {
+    return transactionId;
+  }
+
+
+  public void setTransactionId(String transactionId) {
+    this.transactionId = transactionId;
+  }
+
+
+  public CustomerTransactionSummary type(TypeEnum type) {
+    
+    this.type = type;
+    return this;
+  }
+
+   /**
+   * The type of transaction: PAYMENT or REFUND
+   * @return type
+  **/
+  @ApiModelProperty(required = true, value = "The type of transaction: PAYMENT or REFUND")
+
+  public TypeEnum getType() {
+    return type;
+  }
+
+
+  public void setType(TypeEnum type) {
+    this.type = type;
+  }
+
+
+  public CustomerTransactionSummary executionTime(OffsetDateTime executionTime) {
+    
+    this.executionTime = executionTime;
+    return this;
+  }
+
+   /**
+   * Date/time stamp of when the transaction occurred in ISO string format
+   * @return executionTime
+  **/
+  @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", required = true, value = "Date/time stamp of when the transaction occurred in ISO string format")
+
+  public OffsetDateTime getExecutionTime() {
+    return executionTime;
+  }
+
+
+  public void setExecutionTime(OffsetDateTime executionTime) {
+    this.executionTime = executionTime;
+  }
+
+
+  public CustomerTransactionSummary status(StatusEnum status) {
+    
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * The current status of the transactions
+   * @return status
+  **/
+  @ApiModelProperty(required = true, value = "The current status of the transactions")
+
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+
+  public CustomerTransactionSummary refundReason(String refundReason) {
+    
+    this.refundReason = refundReason;
+    return this;
+  }
+
+   /**
+   * The reason provided for the refund.  Only provided for REFUND transactions
+   * @return refundReason
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The reason provided for the refund.  Only provided for REFUND transactions")
+
+  public String getRefundReason() {
+    return refundReason;
+  }
+
+
+  public void setRefundReason(String refundReason) {
+    this.refundReason = refundReason;
+  }
+
+
+  public CustomerTransactionSummary paymentRequestId(String paymentRequestId) {
+    
+    this.paymentRequestId = paymentRequestId;
+    return this;
+  }
+
+   /**
+   * The ID of this payment request
+   * @return paymentRequestId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of this payment request")
+
+  public String getPaymentRequestId() {
+    return paymentRequestId;
+  }
+
+
+  public void setPaymentRequestId(String paymentRequestId) {
+    this.paymentRequestId = paymentRequestId;
+  }
+
+
+  public CustomerTransactionSummary merchantReferenceId(String merchantReferenceId) {
+    
+    this.merchantReferenceId = merchantReferenceId;
+    return this;
+  }
+
+   /**
+   * The unique reference for the payment as defined by the Merchant
+   * @return merchantReferenceId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The unique reference for the payment as defined by the Merchant")
+
+  public String getMerchantReferenceId() {
+    return merchantReferenceId;
+  }
+
+
+  public void setMerchantReferenceId(String merchantReferenceId) {
+    this.merchantReferenceId = merchantReferenceId;
+  }
+
+
+  public CustomerTransactionSummary grossAmount(BigDecimal grossAmount) {
+    
+    this.grossAmount = grossAmount;
+    return this;
+  }
+
+   /**
+   * The gross amount to be paid.  Must be positive except for refunds
+   * @return grossAmount
+  **/
+  @ApiModelProperty(required = true, value = "The gross amount to be paid.  Must be positive except for refunds")
+
+  public BigDecimal getGrossAmount() {
+    return grossAmount;
+  }
+
+
+  public void setGrossAmount(BigDecimal grossAmount) {
+    this.grossAmount = grossAmount;
+  }
 
 
   public CustomerTransactionSummary merchantId(String merchantId) {
@@ -107,14 +412,21 @@ public class CustomerTransactionSummary extends CommonTransactionSummary impleme
       return false;
     }
     CustomerTransactionSummary customerTransactionSummary = (CustomerTransactionSummary) o;
-    return Objects.equals(this.merchantId, customerTransactionSummary.merchantId) &&
-        Objects.equals(this.instruments, customerTransactionSummary.instruments) &&
-        super.equals(o);
+    return Objects.equals(this.transactionId, customerTransactionSummary.transactionId) &&
+        Objects.equals(this.type, customerTransactionSummary.type) &&
+        Objects.equals(this.executionTime, customerTransactionSummary.executionTime) &&
+        Objects.equals(this.status, customerTransactionSummary.status) &&
+        Objects.equals(this.refundReason, customerTransactionSummary.refundReason) &&
+        Objects.equals(this.paymentRequestId, customerTransactionSummary.paymentRequestId) &&
+        Objects.equals(this.merchantReferenceId, customerTransactionSummary.merchantReferenceId) &&
+        Objects.equals(this.grossAmount, customerTransactionSummary.grossAmount) &&
+        Objects.equals(this.merchantId, customerTransactionSummary.merchantId) &&
+        Objects.equals(this.instruments, customerTransactionSummary.instruments);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(merchantId, instruments, super.hashCode());
+    return Objects.hash(transactionId, type, executionTime, status, refundReason, paymentRequestId, merchantReferenceId, grossAmount, merchantId, instruments);
   }
 
 
@@ -122,7 +434,14 @@ public class CustomerTransactionSummary extends CommonTransactionSummary impleme
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerTransactionSummary {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    transactionId: ").append(toIndentedString(transactionId)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    executionTime: ").append(toIndentedString(executionTime)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    refundReason: ").append(toIndentedString(refundReason)).append("\n");
+    sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
+    sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");
+    sb.append("    grossAmount: ").append(toIndentedString(grossAmount)).append("\n");
     sb.append("    merchantId: ").append(toIndentedString(merchantId)).append("\n");
     sb.append("    instruments: ").append(toIndentedString(instruments)).append("\n");
     sb.append("}");

@@ -36,8 +36,32 @@ import java.io.Serializable;
  */
 @ApiModel(description = "Detailed information for a single payment request")
 
-public class MerchantPaymentDetail extends MerchantPaymentSummary implements Serializable {
+public class MerchantPaymentDetail implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
+  @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
+  private String paymentRequestId;
+
+  public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
+  @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
+  private String merchantReferenceId;
+
+  public static final String SERIALIZED_NAME_GROSS_AMOUNT = "grossAmount";
+  @SerializedName(SERIALIZED_NAME_GROSS_AMOUNT)
+  private BigDecimal grossAmount;
+
+  public static final String SERIALIZED_NAME_USES_REMAINING = "usesRemaining";
+  @SerializedName(SERIALIZED_NAME_USES_REMAINING)
+  private Integer usesRemaining;
+
+  public static final String SERIALIZED_NAME_EXPIRY_TIME = "expiryTime";
+  @SerializedName(SERIALIZED_NAME_EXPIRY_TIME)
+  private String expiryTime;
+
+  public static final String SERIALIZED_NAME_SPECIFIC_WALLET_ID = "specificWalletId";
+  @SerializedName(SERIALIZED_NAME_SPECIFIC_WALLET_ID)
+  private String specificWalletId;
 
   public static final String SERIALIZED_NAME_BASKET = "basket";
   @SerializedName(SERIALIZED_NAME_BASKET)
@@ -50,6 +74,142 @@ public class MerchantPaymentDetail extends MerchantPaymentSummary implements Ser
   public static final String SERIALIZED_NAME_MERCHANT_PAYLOAD = "merchantPayload";
   @SerializedName(SERIALIZED_NAME_MERCHANT_PAYLOAD)
   private MerchantPayload merchantPayload;
+
+
+  public MerchantPaymentDetail paymentRequestId(String paymentRequestId) {
+    
+    this.paymentRequestId = paymentRequestId;
+    return this;
+  }
+
+   /**
+   * The ID of this payment request
+   * @return paymentRequestId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of this payment request")
+
+  public String getPaymentRequestId() {
+    return paymentRequestId;
+  }
+
+
+  public void setPaymentRequestId(String paymentRequestId) {
+    this.paymentRequestId = paymentRequestId;
+  }
+
+
+  public MerchantPaymentDetail merchantReferenceId(String merchantReferenceId) {
+    
+    this.merchantReferenceId = merchantReferenceId;
+    return this;
+  }
+
+   /**
+   * The unique reference for the payment as defined by the Merchant
+   * @return merchantReferenceId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The unique reference for the payment as defined by the Merchant")
+
+  public String getMerchantReferenceId() {
+    return merchantReferenceId;
+  }
+
+
+  public void setMerchantReferenceId(String merchantReferenceId) {
+    this.merchantReferenceId = merchantReferenceId;
+  }
+
+
+  public MerchantPaymentDetail grossAmount(BigDecimal grossAmount) {
+    
+    this.grossAmount = grossAmount;
+    return this;
+  }
+
+   /**
+   * The gross amount to be paid.  Must be positive except for refunds
+   * @return grossAmount
+  **/
+  @ApiModelProperty(required = true, value = "The gross amount to be paid.  Must be positive except for refunds")
+
+  public BigDecimal getGrossAmount() {
+    return grossAmount;
+  }
+
+
+  public void setGrossAmount(BigDecimal grossAmount) {
+    this.grossAmount = grossAmount;
+  }
+
+
+  public MerchantPaymentDetail usesRemaining(Integer usesRemaining) {
+    
+    this.usesRemaining = usesRemaining;
+    return this;
+  }
+
+   /**
+   * The number of times that the payment request can be used to create a payment. If basent then request can be used an unlimited number of times
+   * minimum: 0
+   * @return usesRemaining
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The number of times that the payment request can be used to create a payment. If basent then request can be used an unlimited number of times")
+
+  public Integer getUsesRemaining() {
+    return usesRemaining;
+  }
+
+
+  public void setUsesRemaining(Integer usesRemaining) {
+    this.usesRemaining = usesRemaining;
+  }
+
+
+  public MerchantPaymentDetail expiryTime(String expiryTime) {
+    
+    this.expiryTime = expiryTime;
+    return this;
+  }
+
+   /**
+   * The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted
+   * @return expiryTime
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted")
+
+  public String getExpiryTime() {
+    return expiryTime;
+  }
+
+
+  public void setExpiryTime(String expiryTime) {
+    this.expiryTime = expiryTime;
+  }
+
+
+  public MerchantPaymentDetail specificWalletId(String specificWalletId) {
+    
+    this.specificWalletId = specificWalletId;
+    return this;
+  }
+
+   /**
+   * The ID of a specific wallet for which the payment is intended.  If present then the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request
+   * @return specificWalletId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The ID of a specific wallet for which the payment is intended.  If present then the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request")
+
+  public String getSpecificWalletId() {
+    return specificWalletId;
+  }
+
+
+  public void setSpecificWalletId(String specificWalletId) {
+    this.specificWalletId = specificWalletId;
+  }
 
 
   public MerchantPaymentDetail basket(Basket basket) {
@@ -130,15 +290,20 @@ public class MerchantPaymentDetail extends MerchantPaymentSummary implements Ser
       return false;
     }
     MerchantPaymentDetail merchantPaymentDetail = (MerchantPaymentDetail) o;
-    return Objects.equals(this.basket, merchantPaymentDetail.basket) &&
+    return Objects.equals(this.paymentRequestId, merchantPaymentDetail.paymentRequestId) &&
+        Objects.equals(this.merchantReferenceId, merchantPaymentDetail.merchantReferenceId) &&
+        Objects.equals(this.grossAmount, merchantPaymentDetail.grossAmount) &&
+        Objects.equals(this.usesRemaining, merchantPaymentDetail.usesRemaining) &&
+        Objects.equals(this.expiryTime, merchantPaymentDetail.expiryTime) &&
+        Objects.equals(this.specificWalletId, merchantPaymentDetail.specificWalletId) &&
+        Objects.equals(this.basket, merchantPaymentDetail.basket) &&
         Objects.equals(this.posPayload, merchantPaymentDetail.posPayload) &&
-        Objects.equals(this.merchantPayload, merchantPaymentDetail.merchantPayload) &&
-        super.equals(o);
+        Objects.equals(this.merchantPayload, merchantPaymentDetail.merchantPayload);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(basket, posPayload, merchantPayload, super.hashCode());
+    return Objects.hash(paymentRequestId, merchantReferenceId, grossAmount, usesRemaining, expiryTime, specificWalletId, basket, posPayload, merchantPayload);
   }
 
 
@@ -146,7 +311,12 @@ public class MerchantPaymentDetail extends MerchantPaymentSummary implements Ser
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MerchantPaymentDetail {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
+    sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");
+    sb.append("    grossAmount: ").append(toIndentedString(grossAmount)).append("\n");
+    sb.append("    usesRemaining: ").append(toIndentedString(usesRemaining)).append("\n");
+    sb.append("    expiryTime: ").append(toIndentedString(expiryTime)).append("\n");
+    sb.append("    specificWalletId: ").append(toIndentedString(specificWalletId)).append("\n");
     sb.append("    basket: ").append(toIndentedString(basket)).append("\n");
     sb.append("    posPayload: ").append(toIndentedString(posPayload)).append("\n");
     sb.append("    merchantPayload: ").append(toIndentedString(merchantPayload)).append("\n");

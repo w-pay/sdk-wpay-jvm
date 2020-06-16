@@ -29,8 +29,32 @@
 @protocol OAICustomerTransactionSummary
 @end
 
-@interface OAICustomerTransactionSummary : OAICommonTransactionSummary
+@interface OAICustomerTransactionSummary : OAIObject
 
+/* The ID of the transaction 
+ */
+@property(nonatomic) NSString* transactionId;
+/* The type of transaction: PAYMENT or REFUND 
+ */
+@property(nonatomic) NSString* type;
+/* Date/time stamp of when the transaction occurred in ISO string format 
+ */
+@property(nonatomic) NSDate* executionTime;
+/* The current status of the transactions 
+ */
+@property(nonatomic) NSString* status;
+/* The reason provided for the refund.  Only provided for REFUND transactions [optional]
+ */
+@property(nonatomic) NSString* refundReason;
+/* The ID of this payment request 
+ */
+@property(nonatomic) NSString* paymentRequestId;
+/* The unique reference for the payment as defined by the Merchant 
+ */
+@property(nonatomic) NSString* merchantReferenceId;
+/* The gross amount to be paid.  Must be positive except for refunds 
+ */
+@property(nonatomic) NSNumber* grossAmount;
 /* The ID of the merchant associated with this transaction 
  */
 @property(nonatomic) NSString* merchantId;

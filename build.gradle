@@ -19,7 +19,7 @@ buildscript {
 
 plugins {
     id 'project-report'
-    id 'org.openapi.generator' version '4.3.0'
+    id 'org.openapi.generator' version '4.3.1'
 }
 
 allprojects {

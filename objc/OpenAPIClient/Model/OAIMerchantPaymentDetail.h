@@ -35,8 +35,26 @@
 @protocol OAIMerchantPaymentDetail
 @end
 
-@interface OAIMerchantPaymentDetail : OAIMerchantPaymentSummary
+@interface OAIMerchantPaymentDetail : OAIObject
 
+/* The ID of this payment request 
+ */
+@property(nonatomic) NSString* paymentRequestId;
+/* The unique reference for the payment as defined by the Merchant 
+ */
+@property(nonatomic) NSString* merchantReferenceId;
+/* The gross amount to be paid.  Must be positive except for refunds 
+ */
+@property(nonatomic) NSNumber* grossAmount;
+/* The number of times that the payment request can be used to create a payment. If basent then request can be used an unlimited number of times [optional]
+ */
+@property(nonatomic) NSNumber* usesRemaining;
+/* The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted [optional]
+ */
+@property(nonatomic) NSString* expiryTime;
+/* The ID of a specific wallet for which the payment is intended.  If present then the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request [optional]
+ */
+@property(nonatomic) NSString* specificWalletId;
 
 @property(nonatomic) OAIBasket* basket;
 

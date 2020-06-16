@@ -33,7 +33,7 @@ import java.io.Serializable;
  * CommonTransactionSummary
  */
 
-public class CommonTransactionSummary extends CommonPaymentBase implements Serializable {
+public class CommonTransactionSummary implements Serializable {
   private static final long serialVersionUID = 1L;
 
   public static final String SERIALIZED_NAME_TRANSACTION_ID = "transactionId";
@@ -152,6 +152,18 @@ public class CommonTransactionSummary extends CommonPaymentBase implements Seria
   @SerializedName(SERIALIZED_NAME_REFUND_REASON)
   private String refundReason;
 
+  public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
+  @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
+  private String paymentRequestId;
+
+  public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
+  @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
+  private String merchantReferenceId;
+
+  public static final String SERIALIZED_NAME_GROSS_AMOUNT = "grossAmount";
+  @SerializedName(SERIALIZED_NAME_GROSS_AMOUNT)
+  private BigDecimal grossAmount;
+
 
   public CommonTransactionSummary transactionId(String transactionId) {
     
@@ -264,6 +276,72 @@ public class CommonTransactionSummary extends CommonPaymentBase implements Seria
   }
 
 
+  public CommonTransactionSummary paymentRequestId(String paymentRequestId) {
+    
+    this.paymentRequestId = paymentRequestId;
+    return this;
+  }
+
+   /**
+   * The ID of this payment request
+   * @return paymentRequestId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of this payment request")
+
+  public String getPaymentRequestId() {
+    return paymentRequestId;
+  }
+
+
+  public void setPaymentRequestId(String paymentRequestId) {
+    this.paymentRequestId = paymentRequestId;
+  }
+
+
+  public CommonTransactionSummary merchantReferenceId(String merchantReferenceId) {
+    
+    this.merchantReferenceId = merchantReferenceId;
+    return this;
+  }
+
+   /**
+   * The unique reference for the payment as defined by the Merchant
+   * @return merchantReferenceId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The unique reference for the payment as defined by the Merchant")
+
+  public String getMerchantReferenceId() {
+    return merchantReferenceId;
+  }
+
+
+  public void setMerchantReferenceId(String merchantReferenceId) {
+    this.merchantReferenceId = merchantReferenceId;
+  }
+
+
+  public CommonTransactionSummary grossAmount(BigDecimal grossAmount) {
+    
+    this.grossAmount = grossAmount;
+    return this;
+  }
+
+   /**
+   * The gross amount to be paid.  Must be positive except for refunds
+   * @return grossAmount
+  **/
+  @ApiModelProperty(required = true, value = "The gross amount to be paid.  Must be positive except for refunds")
+
+  public BigDecimal getGrossAmount() {
+    return grossAmount;
+  }
+
+
+  public void setGrossAmount(BigDecimal grossAmount) {
+    this.grossAmount = grossAmount;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -278,12 +356,14 @@ public class CommonTransactionSummary extends CommonPaymentBase implements Seria
         Objects.equals(this.executionTime, commonTransactionSummary.executionTime) &&
         Objects.equals(this.status, commonTransactionSummary.status) &&
         Objects.equals(this.refundReason, commonTransactionSummary.refundReason) &&
-        super.equals(o);
+        Objects.equals(this.paymentRequestId, commonTransactionSummary.paymentRequestId) &&
+        Objects.equals(this.merchantReferenceId, commonTransactionSummary.merchantReferenceId) &&
+        Objects.equals(this.grossAmount, commonTransactionSummary.grossAmount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(transactionId, type, executionTime, status, refundReason, super.hashCode());
+    return Objects.hash(transactionId, type, executionTime, status, refundReason, paymentRequestId, merchantReferenceId, grossAmount);
   }
 
 
@@ -291,12 +371,14 @@ public class CommonTransactionSummary extends CommonPaymentBase implements Seria
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CommonTransactionSummary {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    transactionId: ").append(toIndentedString(transactionId)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    executionTime: ").append(toIndentedString(executionTime)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    refundReason: ").append(toIndentedString(refundReason)).append("\n");
+    sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
+    sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");
+    sb.append("    grossAmount: ").append(toIndentedString(grossAmount)).append("\n");
     sb.append("}");
     return sb.toString();
   }

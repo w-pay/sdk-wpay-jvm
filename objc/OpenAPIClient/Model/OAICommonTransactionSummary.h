@@ -26,7 +26,7 @@
 @protocol OAICommonTransactionSummary
 @end
 
-@interface OAICommonTransactionSummary : OAICommonPaymentBase
+@interface OAICommonTransactionSummary : OAIObject
 
 /* The ID of the transaction 
  */
@@ -43,5 +43,14 @@
 /* The reason provided for the refund.  Only provided for REFUND transactions [optional]
  */
 @property(nonatomic) NSString* refundReason;
+/* The ID of this payment request 
+ */
+@property(nonatomic) NSString* paymentRequestId;
+/* The unique reference for the payment as defined by the Merchant 
+ */
+@property(nonatomic) NSString* merchantReferenceId;
+/* The gross amount to be paid.  Must be positive except for refunds 
+ */
+@property(nonatomic) NSNumber* grossAmount;
 
 @end

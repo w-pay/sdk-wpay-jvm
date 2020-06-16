@@ -34,8 +34,20 @@ import java.io.Serializable;
  */
 @ApiModel(description = "Detailed information for a single payment request")
 
-public class CustomerPaymentDetail extends CommonPaymentBase implements Serializable {
+public class CustomerPaymentDetail implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
+  @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
+  private String paymentRequestId;
+
+  public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
+  @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
+  private String merchantReferenceId;
+
+  public static final String SERIALIZED_NAME_GROSS_AMOUNT = "grossAmount";
+  @SerializedName(SERIALIZED_NAME_GROSS_AMOUNT)
+  private BigDecimal grossAmount;
 
   public static final String SERIALIZED_NAME_MERCHANT_ID = "merchantId";
   @SerializedName(SERIALIZED_NAME_MERCHANT_ID)
@@ -44,6 +56,72 @@ public class CustomerPaymentDetail extends CommonPaymentBase implements Serializ
   public static final String SERIALIZED_NAME_BASKET = "basket";
   @SerializedName(SERIALIZED_NAME_BASKET)
   private Basket basket;
+
+
+  public CustomerPaymentDetail paymentRequestId(String paymentRequestId) {
+    
+    this.paymentRequestId = paymentRequestId;
+    return this;
+  }
+
+   /**
+   * The ID of this payment request
+   * @return paymentRequestId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of this payment request")
+
+  public String getPaymentRequestId() {
+    return paymentRequestId;
+  }
+
+
+  public void setPaymentRequestId(String paymentRequestId) {
+    this.paymentRequestId = paymentRequestId;
+  }
+
+
+  public CustomerPaymentDetail merchantReferenceId(String merchantReferenceId) {
+    
+    this.merchantReferenceId = merchantReferenceId;
+    return this;
+  }
+
+   /**
+   * The unique reference for the payment as defined by the Merchant
+   * @return merchantReferenceId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The unique reference for the payment as defined by the Merchant")
+
+  public String getMerchantReferenceId() {
+    return merchantReferenceId;
+  }
+
+
+  public void setMerchantReferenceId(String merchantReferenceId) {
+    this.merchantReferenceId = merchantReferenceId;
+  }
+
+
+  public CustomerPaymentDetail grossAmount(BigDecimal grossAmount) {
+    
+    this.grossAmount = grossAmount;
+    return this;
+  }
+
+   /**
+   * The gross amount to be paid.  Must be positive except for refunds
+   * @return grossAmount
+  **/
+  @ApiModelProperty(required = true, value = "The gross amount to be paid.  Must be positive except for refunds")
+
+  public BigDecimal getGrossAmount() {
+    return grossAmount;
+  }
+
+
+  public void setGrossAmount(BigDecimal grossAmount) {
+    this.grossAmount = grossAmount;
+  }
 
 
   public CustomerPaymentDetail merchantId(String merchantId) {
@@ -100,14 +178,16 @@ public class CustomerPaymentDetail extends CommonPaymentBase implements Serializ
       return false;
     }
     CustomerPaymentDetail customerPaymentDetail = (CustomerPaymentDetail) o;
-    return Objects.equals(this.merchantId, customerPaymentDetail.merchantId) &&
-        Objects.equals(this.basket, customerPaymentDetail.basket) &&
-        super.equals(o);
+    return Objects.equals(this.paymentRequestId, customerPaymentDetail.paymentRequestId) &&
+        Objects.equals(this.merchantReferenceId, customerPaymentDetail.merchantReferenceId) &&
+        Objects.equals(this.grossAmount, customerPaymentDetail.grossAmount) &&
+        Objects.equals(this.merchantId, customerPaymentDetail.merchantId) &&
+        Objects.equals(this.basket, customerPaymentDetail.basket);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(merchantId, basket, super.hashCode());
+    return Objects.hash(paymentRequestId, merchantReferenceId, grossAmount, merchantId, basket);
   }
 
 
@@ -115,7 +195,9 @@ public class CustomerPaymentDetail extends CommonPaymentBase implements Serializ
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerPaymentDetail {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
+    sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");
+    sb.append("    grossAmount: ").append(toIndentedString(grossAmount)).append("\n");
     sb.append("    merchantId: ").append(toIndentedString(merchantId)).append("\n");
     sb.append("    basket: ").append(toIndentedString(basket)).append("\n");
     sb.append("}");

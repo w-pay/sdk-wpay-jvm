@@ -32,12 +32,90 @@ import java.io.Serializable;
  * CommonPaymentSummary
  */
 
-public class CommonPaymentSummary extends CommonPaymentBase implements Serializable {
+public class CommonPaymentSummary implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  public static final String SERIALIZED_NAME_PAYMENT_REQUEST_ID = "paymentRequestId";
+  @SerializedName(SERIALIZED_NAME_PAYMENT_REQUEST_ID)
+  private String paymentRequestId;
+
+  public static final String SERIALIZED_NAME_MERCHANT_REFERENCE_ID = "merchantReferenceId";
+  @SerializedName(SERIALIZED_NAME_MERCHANT_REFERENCE_ID)
+  private String merchantReferenceId;
+
+  public static final String SERIALIZED_NAME_GROSS_AMOUNT = "grossAmount";
+  @SerializedName(SERIALIZED_NAME_GROSS_AMOUNT)
+  private BigDecimal grossAmount;
 
   public static final String SERIALIZED_NAME_CREATED_TIME = "createdTime";
   @SerializedName(SERIALIZED_NAME_CREATED_TIME)
   private String createdTime;
+
+
+  public CommonPaymentSummary paymentRequestId(String paymentRequestId) {
+    
+    this.paymentRequestId = paymentRequestId;
+    return this;
+  }
+
+   /**
+   * The ID of this payment request
+   * @return paymentRequestId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The ID of this payment request")
+
+  public String getPaymentRequestId() {
+    return paymentRequestId;
+  }
+
+
+  public void setPaymentRequestId(String paymentRequestId) {
+    this.paymentRequestId = paymentRequestId;
+  }
+
+
+  public CommonPaymentSummary merchantReferenceId(String merchantReferenceId) {
+    
+    this.merchantReferenceId = merchantReferenceId;
+    return this;
+  }
+
+   /**
+   * The unique reference for the payment as defined by the Merchant
+   * @return merchantReferenceId
+  **/
+  @ApiModelProperty(example = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5", required = true, value = "The unique reference for the payment as defined by the Merchant")
+
+  public String getMerchantReferenceId() {
+    return merchantReferenceId;
+  }
+
+
+  public void setMerchantReferenceId(String merchantReferenceId) {
+    this.merchantReferenceId = merchantReferenceId;
+  }
+
+
+  public CommonPaymentSummary grossAmount(BigDecimal grossAmount) {
+    
+    this.grossAmount = grossAmount;
+    return this;
+  }
+
+   /**
+   * The gross amount to be paid.  Must be positive except for refunds
+   * @return grossAmount
+  **/
+  @ApiModelProperty(required = true, value = "The gross amount to be paid.  Must be positive except for refunds")
+
+  public BigDecimal getGrossAmount() {
+    return grossAmount;
+  }
+
+
+  public void setGrossAmount(BigDecimal grossAmount) {
+    this.grossAmount = grossAmount;
+  }
 
 
   public CommonPaymentSummary createdTime(String createdTime) {
@@ -71,13 +149,15 @@ public class CommonPaymentSummary extends CommonPaymentBase implements Serializa
       return false;
     }
     CommonPaymentSummary commonPaymentSummary = (CommonPaymentSummary) o;
-    return Objects.equals(this.createdTime, commonPaymentSummary.createdTime) &&
-        super.equals(o);
+    return Objects.equals(this.paymentRequestId, commonPaymentSummary.paymentRequestId) &&
+        Objects.equals(this.merchantReferenceId, commonPaymentSummary.merchantReferenceId) &&
+        Objects.equals(this.grossAmount, commonPaymentSummary.grossAmount) &&
+        Objects.equals(this.createdTime, commonPaymentSummary.createdTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(createdTime, super.hashCode());
+    return Objects.hash(paymentRequestId, merchantReferenceId, grossAmount, createdTime);
   }
 
 
@@ -85,7 +165,9 @@ public class CommonPaymentSummary extends CommonPaymentBase implements Serializa
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CommonPaymentSummary {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    paymentRequestId: ").append(toIndentedString(paymentRequestId)).append("\n");
+    sb.append("    merchantReferenceId: ").append(toIndentedString(merchantReferenceId)).append("\n");
+    sb.append("    grossAmount: ").append(toIndentedString(grossAmount)).append("\n");
     sb.append("    createdTime: ").append(toIndentedString(createdTime)).append("\n");
     sb.append("}");
     return sb.toString();

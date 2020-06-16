@@ -11,12 +11,12 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.text.IsBlankString.blankOrNullString
 
-fun withMerchantPaymentSummary(): MerchantPaymentSummaryMatcher<MerchantPaymentSummary> {
+fun withMerchantPaymentSummary(): MerchantPaymentSummaryMatcher {
     return MerchantPaymentSummaryMatcher()
 }
 
-open class MerchantPaymentSummaryMatcher<T: MerchantPaymentSummary>: TypeSafeMatcher<T>() {
-    override fun matchesSafely(item: T): Boolean {
+open class MerchantPaymentSummaryMatcher: TypeSafeMatcher<MerchantPaymentSummary>() {
+    override fun matchesSafely(item: MerchantPaymentSummary): Boolean {
         assertThat(item.paymentRequestId, not(blankOrNullString()))
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
         assertThat(item.grossAmount, not(nullValue()))
@@ -28,7 +28,7 @@ open class MerchantPaymentSummaryMatcher<T: MerchantPaymentSummary>: TypeSafeMat
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("Merchant payment summary")
+        description.appendText("Merchant Payment Summary")
     }
 }
 
@@ -36,17 +36,23 @@ fun hasMerchantPaymentDetails(): MerchantPaymentDetailsMatcher {
     return MerchantPaymentDetailsMatcher()
 }
 
-class MerchantPaymentDetailsMatcher: MerchantPaymentSummaryMatcher<MerchantPaymentDetail>() {
+class MerchantPaymentDetailsMatcher: TypeSafeMatcher<MerchantPaymentDetail>() {
     override fun matchesSafely(item: MerchantPaymentDetail): Boolean {
+        assertThat(item.paymentRequestId, not(blankOrNullString()))
+        assertThat(item.merchantReferenceId, not(blankOrNullString()))
+        assertThat(item.grossAmount, not(nullValue()))
+        assertThat(item.usesRemaining, not(nullValue()))
+        assertThat(item.expiryTime, not(blankOrNullString()))
+        assertThat(item.specificWalletId, not(blankOrNullString()))
         assertThat(item.basket, hasBasketItems())
         assertThat(item.posPayload, isPosPayload())
         assertThat(item.merchantPayload, isMerchantPayload())
 
-        return super.matchesSafely(item)
+        return true
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("Merchant payment details")
+        description.appendText("Merchant Payment Details")
     }
 }
 

@@ -63,7 +63,7 @@ class CustomerApiTest {
         val transactionId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
 
         val result = api.getCustomerTransactionDetails(transactionId)
-        assertThat(result.data, hasCustomerTransactionSummary())
+        assertThat(result.data, hasCustomerTransactionDetails())
         assertThat(result.data.basket, hasBasketItems())
         assertThat(result.meta, not(nullValue()))
     }

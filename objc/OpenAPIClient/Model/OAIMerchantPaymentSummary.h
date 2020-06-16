@@ -26,8 +26,17 @@
 @protocol OAIMerchantPaymentSummary
 @end
 
-@interface OAIMerchantPaymentSummary : OAICommonPaymentBase
+@interface OAIMerchantPaymentSummary : OAIObject
 
+/* The ID of this payment request 
+ */
+@property(nonatomic) NSString* paymentRequestId;
+/* The unique reference for the payment as defined by the Merchant 
+ */
+@property(nonatomic) NSString* merchantReferenceId;
+/* The gross amount to be paid.  Must be positive except for refunds 
+ */
+@property(nonatomic) NSNumber* grossAmount;
 /* The number of times that the payment request can be used to create a payment. If basent then request can be used an unlimited number of times [optional]
  */
 @property(nonatomic) NSNumber* usesRemaining;

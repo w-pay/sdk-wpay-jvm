@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.api.matchers
 
+import au.com.woolworths.village.sdk.dto.CustomerTransactionDetail
 import au.com.woolworths.village.sdk.dto.CustomerTransactionSummary
 import au.com.woolworths.village.sdk.dto.CustomerTransactionSummaryAllOfInstruments
 import au.com.woolworths.village.sdk.dto.GetCustomerTransactionsResultData
@@ -14,13 +15,17 @@ fun hasCustomerTransactions(): CustomerTransactionsMatcher {
     return CustomerTransactionsMatcher()
 }
 
-fun hasCustomerTransactionSummary(): CustomerTransactionMatcher {
-    return CustomerTransactionMatcher()
+fun hasCustomerTransactionDetails(): CustomerTransactionDetailMatcher {
+    return CustomerTransactionDetailMatcher()
+}
+
+fun hasCustomerTransactionSummary(): CustomerTransactionSummaryMatcher {
+    return CustomerTransactionSummaryMatcher()
 }
 
 class CustomerTransactionsMatcher: TypeSafeMatcher<GetCustomerTransactionsResultData>() {
     override fun matchesSafely(item: GetCustomerTransactionsResultData): Boolean {
-        val transactionMatcher = CustomerTransactionMatcher()
+        val transactionMatcher = CustomerTransactionSummaryMatcher()
 
         assertThat(item.transactions.size, greaterThan(0))
 
@@ -34,7 +39,29 @@ class CustomerTransactionsMatcher: TypeSafeMatcher<GetCustomerTransactionsResult
     }
 }
 
-class CustomerTransactionMatcher: TypeSafeMatcher<CustomerTransactionSummary>() {
+class CustomerTransactionDetailMatcher: TypeSafeMatcher<CustomerTransactionDetail>() {
+    override fun matchesSafely(item: CustomerTransactionDetail): Boolean {
+        assertThat(item.transactionId, not(blankOrNullString()))
+        assertThat(item.type, not(nullValue()))
+        assertThat(item.executionTime, not(nullValue()))
+        assertThat(item.status, not(nullValue()))
+        assertThat(item.refundReason, blankOrNullString())
+        assertThat(item.paymentRequestId, not(blankOrNullString()))
+        assertThat(item.merchantReferenceId, not(blankOrNullString()))
+        assertThat(item.grossAmount, not(nullValue()))
+        assertThat(item.merchantId, not(blankOrNullString()))
+        assertThat(item.instruments, hasItems(withCustomerPaymentInstruments()))
+        assertThat(item.basket, hasBasketItems())
+
+        return true
+    }
+
+    override fun describeTo(description: Description) {
+        description.appendText("A Customer Transaction Detail")
+    }
+}
+
+class CustomerTransactionSummaryMatcher: TypeSafeMatcher<CustomerTransactionSummary>() {
     override fun matchesSafely(item: CustomerTransactionSummary): Boolean {
         assertThat(item.merchantId, not(blankOrNullString()))
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
@@ -51,7 +78,7 @@ class CustomerTransactionMatcher: TypeSafeMatcher<CustomerTransactionSummary>() 
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("A Customer Transaction")
+        description.appendText("A Customer Transaction Summary")
     }
 }
 

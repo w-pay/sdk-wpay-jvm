@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import au.com.woolworths.village.app.databinding.PaymentReceiptBinding
-import au.com.woolworths.village.sdk.dto.BasketItems
-import au.com.woolworths.village.sdk.dto.CustomerPaymentDetail
-import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
+import au.com.woolworths.village.sdk.model.Basket
+import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
+import au.com.woolworths.village.sdk.model.PaymentInstrument
 import kotlinx.android.synthetic.main.receipt_row.view.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -39,29 +39,28 @@ class PaymentReceipt : AppCompatActivity() {
     }
 
     private fun bindPaymentToReceipt() {
-        val payment: CustomerPaymentDetail = intent.getSerializableExtra(PAYMENT) as CustomerPaymentDetail
-        basketItemsAdapter = payment.basket?.items?.let { BasketItemsAdapter(it) }!!
+        val payment: CustomerPaymentDetails = intent.getSerializableExtra(PAYMENT) as CustomerPaymentDetails
+        basketItemsAdapter = payment.basket()?.items()?.let { BasketItemsAdapter(it) }!!
         basketItemsManager = LinearLayoutManager(this)
 
-        val amount = currencyFormat.format(payment.grossAmount)
+        val amount = currencyFormat.format(payment.grossAmount())
         bindings.amountPaid.text = amount
         bindings.basketItems.apply {
             layoutManager = basketItemsManager
             adapter = basketItemsAdapter
         }
 
-        bindings.totalRow.item.text = getString(R.string.items_count).format(payment.basket?.items?.size)
+        bindings.totalRow.item.text = getString(R.string.items_count).format(payment.basket()?.items()?.size)
         bindings.totalRow.amount.text = amount
 
         bindings.taxRow.item.text = getString(R.string.gst_heading)
-        bindings.taxRow.amount.text = currencyFormat.format(calculateGST(payment.grossAmount))
+        bindings.taxRow.amount.text = currencyFormat.format(calculateGST(payment.grossAmount()))
     }
 
     private fun bindInstrumentToReceipt() {
-        val paymentInstrument: GetCustomerPaymentInstrumentsResultsDataCreditCards
-                = intent.getSerializableExtra(INSTRUMENT) as GetCustomerPaymentInstrumentsResultsDataCreditCards
+        val paymentInstrument: PaymentInstrument = intent.getSerializableExtra(INSTRUMENT) as PaymentInstrument
 
-        bindings.paymentInstrument.text = toUtf8(getString(R.string.instrument_details).format(paymentInstrument.cardSuffix))
+        bindings.paymentInstrument.text = toUtf8(getString(R.string.instrument_details).format(paymentInstrument.cardSuffix()))
     }
 
     private fun calculateGST(amount: BigDecimal): BigDecimal {
@@ -71,7 +70,7 @@ class PaymentReceipt : AppCompatActivity() {
     private fun toUtf8(str: String) =
         String(str.toByteArray(Charset.forName("ISO-8859-1")), Charset.forName("UTF-8"))
 
-    class BasketItemsAdapter(private val items: List<BasketItems>) : RecyclerView.Adapter<BasketItemsAdapter.ItemViewHolder>() {
+    class BasketItemsAdapter(private val items: List<Basket.Items>) : RecyclerView.Adapter<BasketItemsAdapter.ItemViewHolder>() {
         class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
 
         private val currencyFormat: NumberFormat = NumberFormat.getCurrencyInstance()
@@ -85,8 +84,8 @@ class PaymentReceipt : AppCompatActivity() {
         override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
             val item = items[position]
 
-            holder.itemView.item.text = item.label
-            holder.itemView.amount.text = currencyFormat.format(item.totalPrice)
+            holder.itemView.item.text = item.label()
+            holder.itemView.amount.text = currencyFormat.format(item.totalPrice())
         }
 
         override fun getItemCount(): Int = items.size

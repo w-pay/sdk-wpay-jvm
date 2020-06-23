@@ -76,7 +76,7 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-distribute:${app_center_version}"
 
     // TODO: Update to use repository
-    implementation project(':okhttp-gson')
+    implementation project(':sdk')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

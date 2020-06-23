@@ -1,4 +1,4 @@
-package au.com.woolworths.village.app.api
+package au.com.woolworths.village.sdk
 
 /*
  * The beginning of a poor mans Monad.

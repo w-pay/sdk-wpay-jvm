@@ -20,6 +20,9 @@ import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
 
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import au.com.woolworths.village.sdk.*
+import au.com.woolworths.village.sdk.auth.CustomerLoginApiAuthenticator
+import au.com.woolworths.village.sdk.auth.IdmTokenDetails
+import au.com.woolworths.village.sdk.auth.StoringApiAuthenticator
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
 import au.com.woolworths.village.sdk.model.PaymentResult
@@ -34,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.lang.IllegalStateException
 
 import java.text.NumberFormat
 import kotlin.math.roundToInt
@@ -115,13 +119,23 @@ class PaymentConfirm : AppCompatActivity() {
     private fun createViewModel() {
         data = ViewModelProvider(this).get(ViewModel::class.java)
 
+        data.authenticationDetails.observe(this, Observer {
+            when (it) {
+                is ApiResult.Success -> {
+                    val qrCodeId = data.qrCodeId.value ?: throw IllegalStateException("Parse QR Code before authenticating")
+
+                    data.retrievePaymentDetails(qrCodeId)
+                    data.retrievePaymentInstruments()
+                }
+
+                is ApiResult.Error -> showMissingDetailsError(R.string.authentication_failed)
+            }
+        })
+
         data.paymentRequest.observe(this, Observer { bindPaymentRequestDetails() })
         data.paymentInstruments.observe(this, Observer { bindPaymentInstrument() })
         data.qrCodeId.observe(this, Observer {
-            it?.let {
-                data.retrievePaymentDetails(it)
-                data.retrievePaymentInstruments()
-            } ?: showMissingDetailsError(R.string.missing_qr_code)
+            it?.let { data.retrieveAuthToken() } ?: showMissingDetailsError(R.string.missing_qr_code)
         })
 
         intent?.let { data.parseQRCodeDetails(it.data) } ?: run { data.qrCodeId.value = null }
@@ -265,21 +279,27 @@ class PaymentConfirm : AppCompatActivity() {
 }
 
 class ViewModel : androidx.lifecycle.ViewModel() {
-    private val options =
-        VillageOptions("haTdoUWVhnXm5n75u6d0VG67vCCvKjQC")
+    private val options = VillageOptions("haTdoUWVhnXm5n75u6d0VG67vCCvKjQC")
+    private val apiKeyRequestHeader = ApiKeyRequestHeader(options)
+    private val bearerTokenRequestHeader = BearerTokenRequestHeader()
     private val api =
         OpenApiVillageApiRepository(
             RequestHeaderChain(
                 arrayOf(
-                    ApiKeyRequestHeader(options),
-                    BearerTokenRequestHeader()
+                    apiKeyRequestHeader,
+                    bearerTokenRequestHeader
                 )
             )
-        ).apply {
+        )
+        .apply {
             contextRoot = BuildConfig.API_CONTEXT_ROOT
         }
-    private val village = Village(api)
 
+    private val village = Village(api)
+    private val customerLogin = CustomerLoginApiAuthenticator(RequestHeaderChain(arrayOf(apiKeyRequestHeader)))
+    private val authentication = StoringApiAuthenticator(customerLogin, bearerTokenRequestHeader)
+
+    val authenticationDetails: MutableLiveData<ApiResult<IdmTokenDetails>> = MutableLiveData()
     val qrCodeId: MutableLiveData<String?> = MutableLiveData()
     val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentDetails>> = MutableLiveData()
     val paymentInstruments: MutableLiveData<ApiResult<PaymentInstruments>> = MutableLiveData()
@@ -299,6 +319,13 @@ class ViewModel : androidx.lifecycle.ViewModel() {
         }
     }
 
+    fun retrieveAuthToken() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                authenticationDetails.postValue(authentication.authenticate())
+            }
+        }
+    }
     fun retrievePaymentDetails(qrCodeId: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -324,13 +351,6 @@ class ViewModel : androidx.lifecycle.ViewModel() {
         }
     }
 
-    private fun setHostname(qrCodeContents: Uri) {
-        val port: String = if (qrCodeContents.port > -1) ":${qrCodeContents.port}" else ""
-        val hostname = "${qrCodeContents.scheme}://${qrCodeContents.host}${port}"
-
-        api.host = hostname
-    }
-
     fun retrievePaymentInstruments() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -350,5 +370,13 @@ class ViewModel : androidx.lifecycle.ViewModel() {
                 paymentInstruments.postValue(result)
             }
         }
+    }
+
+    private fun setHostname(qrCodeContents: Uri) {
+        val port: String = if (qrCodeContents.port > -1) ":${qrCodeContents.port}" else ""
+        val hostname = "${qrCodeContents.scheme}://${qrCodeContents.host}${port}"
+
+        api.host = hostname
+        customerLogin.origin = hostname
     }
 }

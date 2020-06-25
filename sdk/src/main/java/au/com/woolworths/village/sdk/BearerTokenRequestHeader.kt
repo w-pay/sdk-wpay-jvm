@@ -1,8 +1,19 @@
 package au.com.woolworths.village.sdk
 
-class BearerTokenRequestHeader: RequestHeaderFactory {
+import au.com.woolworths.village.sdk.auth.CredentialsStore
+import au.com.woolworths.village.sdk.auth.IdmTokenDetails
+import java.lang.IllegalStateException
+
+class BearerTokenRequestHeader(
+    private var token: String? = null
+) : RequestHeaderFactory, CredentialsStore<IdmTokenDetails> {
     override fun addHeaders(headers: MutableMap<String, String>) {
-        // TODO: Update with a real way to set bearer tokens
-        headers["Authorization"] = "Bearer ODA4NTYyNDktNjg0Ny00OWY4LWFmMDItOTU1MWEwMzliMjg5OlZJTExBR0VfQ1VTVE9NRVI="
+        val token = this.token ?: throw IllegalStateException("Must set bearer token before calling API")
+
+        headers["Authorization"] = "Bearer $token"
+    }
+
+    override fun storeCredentials(credentials: IdmTokenDetails) {
+        token = credentials.accessToken
     }
 }

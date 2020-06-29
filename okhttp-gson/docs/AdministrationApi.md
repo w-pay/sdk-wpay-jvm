@@ -17,8 +17,9 @@ Perform a health check on the Village Wallet implementation
 
 ### Example
 ```java
+```java
 // Import classes:
-import au.com.woolworths.village.sdk.client.ApiClient;
+import au.com.woolworths.village.sdk.openapi.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;

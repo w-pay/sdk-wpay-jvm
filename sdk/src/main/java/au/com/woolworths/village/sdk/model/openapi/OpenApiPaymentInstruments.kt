@@ -1,7 +1,7 @@
 package au.com.woolworths.village.sdk.model.openapi
 
-import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsData
-import au.com.woolworths.village.sdk.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
+import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsData
+import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
 import au.com.woolworths.village.sdk.model.CreditCard
 import au.com.woolworths.village.sdk.model.GiftCard
 import au.com.woolworths.village.sdk.model.PaymentInstruments

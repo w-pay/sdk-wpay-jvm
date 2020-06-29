@@ -31,13 +31,14 @@ Cancel an existing QC code.  Effectively expires the QR code
 
 ### Example
 ```java
+```java
 // Import classes:
-import au.com.woolworths.village.sdk.client.ApiClient;
+import au.com.woolworths.village.sdk.openapi.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -98,13 +99,14 @@ Add a new schema that can be used in schema based payloads for this merchant
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -165,13 +167,14 @@ Create a new QR code for an existing payment
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -233,13 +236,14 @@ Create a new payment request that can then be presented to a customer for paymen
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -300,13 +304,14 @@ Cancel an existing payment by setting the expiration date/time to now and settin
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -367,13 +372,14 @@ Get the details for a specific payment.  Provides all types of payments and all 
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -435,13 +441,14 @@ Get a list of the payments initiated by the merchant, both pending and complete
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -506,13 +513,14 @@ Get the preferences previously set by the customer or merchant (depending on cal
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -569,13 +577,14 @@ Get the list of currently usable schema previously added for the merchant
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -636,13 +645,14 @@ Get the list of currently usable schema previously added for the merchant
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -699,13 +709,14 @@ Get the details for a specific transaction previously executed with the merchant
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -766,13 +777,14 @@ Get a list of the previously executed transactions with the merchant.  Note that
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -839,13 +851,14 @@ Obtain the content or an image for an existing QR code.  If requested content ty
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -907,13 +920,14 @@ Refund a previously executed transaction
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -977,13 +991,14 @@ Change the preferences for the customer or merchant (depending on calling identi
 
 ### Example
 ```java
+```java
 // Import classes:
 import au.com.woolworths.village.sdk.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.auth.*;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.MerchantApi;
+import au.com.woolworths.village.sdk.openapi.api.MerchantApi;
 
 public class Example {
   public static void main(String[] args) {

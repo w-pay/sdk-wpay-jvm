@@ -3,11 +3,11 @@ package au.com.woolworths.village.sdk.openapi
 import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.RequestHeadersFactory
 import au.com.woolworths.village.sdk.VillageApiRepository
-import au.com.woolworths.village.sdk.api.CustomerApi
-import au.com.woolworths.village.sdk.client.ApiClient
-import au.com.woolworths.village.sdk.client.ApiException
-import au.com.woolworths.village.sdk.dto.CustomerPaymentsPaymentRequestIdData
-import au.com.woolworths.village.sdk.dto.MakeCustomerPaymentResults
+import au.com.woolworths.village.sdk.openapi.api.CustomerApi
+import au.com.woolworths.village.sdk.openapi.client.ApiClient
+import au.com.woolworths.village.sdk.openapi.client.ApiException
+import au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentsPaymentRequestIdData
+import au.com.woolworths.village.sdk.openapi.dto.MakeCustomerPaymentResults
 import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
@@ -57,7 +57,7 @@ class OpenApiVillageApiRepository(
         val api = createCustomerApi()
 
         return try {
-            val body = au.com.woolworths.village.sdk.dto.CustomerPaymentDetails()
+            val body = au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentDetails()
             body.data = CustomerPaymentsPaymentRequestIdData()
             body.data.primaryInstrumentId = instrument.paymentInstrumentId()
             body.data.secondaryInstruments = listOf()

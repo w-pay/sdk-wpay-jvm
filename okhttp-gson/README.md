@@ -71,13 +71,14 @@ Then manually install the following JARs:
 Please follow the [installation](#installation) instruction and execute the following Java code:
 
 ```java
+```java
 
 // Import classes:
-import au.com.woolworths.village.sdk.client.ApiClient;
+import au.com.woolworths.village.sdk.openapi.client.ApiClient;
 import au.com.woolworths.village.sdk.client.ApiException;
 import au.com.woolworths.village.sdk.client.Configuration;
 import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.AdministrationApi;
+import au.com.woolworths.village.sdk.openapi.api.AdministrationApi;
 
 public class Example {
   public static void main(String[] args) {

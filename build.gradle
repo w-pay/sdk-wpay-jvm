@@ -62,7 +62,7 @@ def camelCase = { it ->
     return "${pc[0].toLowerCase()}${pc.substring(1)}"
 }
 
-def sdks = [
+def apis = [
     "okhttp-gson": [
         language: "java",
         library: "okhttp-gson"
@@ -75,7 +75,7 @@ def sdks = [
 def sdkTestsProject = null
 def evaluatedProjects = []
 
-def createSdkFlavor = { prj ->
+def createApiFlavor = { prj ->
     logger.info("Creating SDK flavor for ${prj.path}")
 
     project.configure(sdkTestsProject, {
@@ -84,7 +84,7 @@ def createSdkFlavor = { prj ->
         }
 
         /*
-         * Add the SDK project as a dependency for the flavour testing
+         * Add the SDK API project as a dependency for the flavour testing
          */
         dependencies {
             "test${pascalCase(prj.name)}Implementation" prj
@@ -93,7 +93,7 @@ def createSdkFlavor = { prj ->
 }
 
 /*
- * Configure the SDK tests project to have a flavour for each SDK variant.
+ * Configure the SDK API tests project to have a flavour for each API variant.
  *
  * See the README for further explanation.
  */
@@ -105,7 +105,7 @@ subprojects.each { sub ->
     sub.afterEvaluate { prj ->
         /*
          * Because we don't know the order Gradle will evaluate (load) sub projects we can't guarantee
-         * that the SDK tests project will have been evaluated when other sub projects are. What we
+         * that the SDK API tests project will have been evaluated when other sub projects are. What we
          * therefore do is:
          *
          * 1. If the SDK tests project has been evaluated, create a flavour for the newly evaluated project.
@@ -118,11 +118,11 @@ subprojects.each { sub ->
             logger.debug("${prj.path} is evaluated; creating flavours for any saved projects")
             sdkTestsProject = prj
 
-            evaluatedProjects.each(createSdkFlavor)
+            evaluatedProjects.each(createApiFlavor)
         }
         else {
             if (sdkTestsProject != null) {
-                createSdkFlavor(prj)
+                createApiFlavor(prj)
             }
             else {
                 logger.debug("Saving ${prj.path} for later configuration")
@@ -133,22 +133,22 @@ subprojects.each { sub ->
     }
 }
 
-sdks.each { name, sdk ->
+apis.each { name, api ->
     def outputLoc = "${projectDir}/${name}".toString()
 
-    task("generate${pascalCase(name)}Sdk", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-        group = "SDK Generators"
-        description = "Generates the Village SDK using the ${name} framework"
-        generatorName = sdk.language
+    task("generate${pascalCase(name)}SdkApi", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+        group = "SDK API Generators"
+        description = "Generates a Village SDK API client using the ${name} framework"
+        generatorName = api.language
         validateSpec = true
-        library = sdk.library
+        library = api.library
 
         inputSpec = project.ext.spec
         outputDir = outputLoc
 
         groupId = project.ext.packageName
-        id = "sdk-${name}"
-        packageName = "${project.ext.packageName}.sdk"
+        id = "sdk-api-${name}"
+        packageName = "${project.ext.packageName}.sdk.openapi"
         apiPackage = "${packageName.get()}.api"
         invokerPackage = "${packageName.get()}.client"
         modelPackage = "${packageName.get()}.dto"

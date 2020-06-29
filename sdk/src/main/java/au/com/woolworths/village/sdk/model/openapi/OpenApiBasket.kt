@@ -1,11 +1,11 @@
 package au.com.woolworths.village.sdk.model.openapi
 
-import au.com.woolworths.village.sdk.dto.BasketItems
+import au.com.woolworths.village.sdk.openapi.dto.BasketItems
 import au.com.woolworths.village.sdk.model.Basket
 import java.math.BigDecimal
 
 class OpenApiBasket(
-    private val basket: au.com.woolworths.village.sdk.dto.Basket
+    private val basket: au.com.woolworths.village.sdk.openapi.dto.Basket
 ) : Basket {
     override fun items(): List<Basket.Items> {
         if (basket.items != null && basket.items!!.size > 0) {

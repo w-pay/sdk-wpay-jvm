@@ -103,6 +103,13 @@ subprojects.each { sub ->
      * manipulate it.
      */
     sub.afterEvaluate { prj ->
+        // we don't care about other projects except API/tests
+        if (!apis.containsKey(prj.name) && prj.name != "sdk-tests") {
+            logger.info("Ignoring ${prj.name}")
+
+            return
+        }
+
         /*
          * Because we don't know the order Gradle will evaluate (load) sub projects we can't guarantee
          * that the SDK API tests project will have been evaluated when other sub projects are. What we

@@ -292,7 +292,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
             )
         )
         .apply {
-            contextRoot = BuildConfig.API_CONTEXT_ROOT
+            setContextRoot(BuildConfig.API_CONTEXT_ROOT)
         }
 
     private val village = Village(api)
@@ -376,7 +376,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
         val port: String = if (qrCodeContents.port > -1) ":${qrCodeContents.port}" else ""
         val hostname = "${qrCodeContents.scheme}://${qrCodeContents.host}${port}"
 
-        api.host = hostname
+        api.setHost(hostname)
         customerLogin.origin = hostname
     }
 }

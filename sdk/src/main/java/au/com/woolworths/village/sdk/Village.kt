@@ -1,6 +1,5 @@
 package au.com.woolworths.village.sdk
 
-import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
@@ -12,7 +11,15 @@ import au.com.woolworths.village.sdk.model.PaymentResult
  */
 class Village(
     private val api: VillageApiRepository
-) {
+): Configurable {
+    override fun setHost(host: String) {
+        api.setHost(host)
+    }
+
+    override fun setContextRoot(contextRoot: String) {
+        api.setContextRoot(contextRoot)
+    }
+
     fun retrievePaymentDetails(qrCode: String): ApiResult<CustomerPaymentDetails> {
         return api.retrievePaymentRequestDetails(qrCode)
     }

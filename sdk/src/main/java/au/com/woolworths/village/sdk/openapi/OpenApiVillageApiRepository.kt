@@ -22,8 +22,8 @@ import au.com.woolworths.village.sdk.model.openapi.OpenApiPaymentResult
 class OpenApiVillageApiRepository(
     private val requestHeadersFactory: RequestHeadersFactory
 ): VillageApiRepository {
-    var host: String = "localhost:3000"
-    var contextRoot: String = ""
+    private var host: String = "localhost:3000"
+    private var contextRoot: String = ""
 
     override fun retrievePaymentRequestDetails(qrCodeId: String): ApiResult<CustomerPaymentDetails> {
         val api = createCustomerApi()
@@ -72,6 +72,14 @@ class OpenApiVillageApiRepository(
         catch (e: ApiException) {
             ApiResult.Error(e)
         }
+    }
+
+    override fun setHost(host: String) {
+        this.host = host
+    }
+
+    override fun setContextRoot(contextRoot: String) {
+        this.contextRoot = contextRoot
     }
 
     private fun createCustomerApi(): CustomerApi {

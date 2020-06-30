@@ -15,14 +15,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import au.com.woolworths.village.sdk.openapi.OpenApiVillageApiRepository
-import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
-
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
-import au.com.woolworths.village.sdk.*
-import au.com.woolworths.village.sdk.auth.CustomerLoginApiAuthenticator
+import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.auth.IdmTokenDetails
-import au.com.woolworths.village.sdk.auth.StoringApiAuthenticator
+import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
 import au.com.woolworths.village.sdk.model.PaymentResult
@@ -36,9 +32,6 @@ import com.microsoft.appcenter.distribute.UpdateTrack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
-import java.lang.IllegalStateException
-
 import java.text.NumberFormat
 import kotlin.math.roundToInt
 
@@ -279,26 +272,7 @@ class PaymentConfirm : AppCompatActivity() {
 }
 
 class ViewModel : androidx.lifecycle.ViewModel() {
-    private val options = VillageOptions("haTdoUWVhnXm5n75u6d0VG67vCCvKjQC")
-    private val apiKeyRequestHeader = ApiKeyRequestHeader(options)
-    private val bearerTokenRequestHeader = BearerTokenRequestHeader()
-    private val api =
-        OpenApiVillageApiRepository(
-            RequestHeaderChain(
-                arrayOf(
-                    apiKeyRequestHeader,
-                    bearerTokenRequestHeader
-                )
-            ),
-            BuildConfig.API_CONTEXT_ROOT
-        )
-
-    private val customerLogin = CustomerLoginApiAuthenticator(
-        RequestHeaderChain(arrayOf(apiKeyRequestHeader)),
-        "/wow/v1/idm/servers/token"
-    )
-    private val authentication = StoringApiAuthenticator(customerLogin, bearerTokenRequestHeader)
-    private val village = Village(api, authentication)
+    private val village = createVillage()
 
     val authenticationDetails: MutableLiveData<ApiResult<IdmTokenDetails>> = MutableLiveData()
     val qrCodeId: MutableLiveData<String?> = MutableLiveData()

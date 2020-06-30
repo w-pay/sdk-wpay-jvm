@@ -289,15 +289,16 @@ class ViewModel : androidx.lifecycle.ViewModel() {
                     apiKeyRequestHeader,
                     bearerTokenRequestHeader
                 )
-            )
+            ),
+            BuildConfig.API_CONTEXT_ROOT
         )
-        .apply {
-            setContextRoot(BuildConfig.API_CONTEXT_ROOT)
-        }
 
-    private val village = Village(api)
-    private val customerLogin = CustomerLoginApiAuthenticator(RequestHeaderChain(arrayOf(apiKeyRequestHeader)))
+    private val customerLogin = CustomerLoginApiAuthenticator(
+        RequestHeaderChain(arrayOf(apiKeyRequestHeader)),
+        "/wow/v1/idm/servers/token"
+    )
     private val authentication = StoringApiAuthenticator(customerLogin, bearerTokenRequestHeader)
+    private val village = Village(api, authentication)
 
     val authenticationDetails: MutableLiveData<ApiResult<IdmTokenDetails>> = MutableLiveData()
     val qrCodeId: MutableLiveData<String?> = MutableLiveData()
@@ -322,10 +323,11 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     fun retrieveAuthToken() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                authenticationDetails.postValue(authentication.authenticate())
+                authenticationDetails.postValue(village.authenticate())
             }
         }
     }
+
     fun retrievePaymentDetails(qrCodeId: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -376,7 +378,6 @@ class ViewModel : androidx.lifecycle.ViewModel() {
         val port: String = if (qrCodeContents.port > -1) ":${qrCodeContents.port}" else ""
         val hostname = "${qrCodeContents.scheme}://${qrCodeContents.host}${port}"
 
-        api.setHost(hostname)
-        customerLogin.origin = hostname
+        village.setHost(hostname)
     }
 }

@@ -14,10 +14,9 @@ import java.lang.IllegalStateException
 
 class CustomerLoginApiAuthenticator(
     private val requestHeaders: RequestHeadersFactory,
-    var origin: String? = null
+    private var path: String
 ): ApiAuthenticator<IdmTokenDetails> {
-    // TODO: Make configurable
-    private val path: String = "/wow/v1/idm/servers/token"
+    private var origin: String? = null
 
     override fun authenticate(): ApiResult<IdmTokenDetails> {
         val origin = this.origin ?: throw IllegalStateException("Origin server must be set")
@@ -52,5 +51,9 @@ class CustomerLoginApiAuthenticator(
         catch (e: Exception) {
             return ApiResult.Error(e)
         }
+    }
+
+    override fun setHost(host: String) {
+       origin = host
     }
 }

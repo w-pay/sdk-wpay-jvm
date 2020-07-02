@@ -12,19 +12,11 @@ class OpenApiPaymentInstruments(
     private val instruments: GetCustomerPaymentInstrumentsResultsData
 ): PaymentInstruments {
     override fun creditCards(): List<CreditCard> {
-        if (instruments.creditCards != null && instruments.creditCards.size > 0) {
-            return instruments.creditCards.map { OpenApiCreditCard(it) }
-        }
-
-        return emptyList()
+        return instruments.creditCards?.let { card -> card.map { OpenApiCreditCard(it) } } ?: emptyList()
     }
 
     override fun giftCards(): List<GiftCard> {
-        if (instruments.giftCards != null && instruments.giftCards.size > 0) {
-            return instruments.giftCards.map { OpenApiGiftCard(it) }
-        }
-
-        return emptyList()
+        return instruments.giftCards?.let { card -> card.map { OpenApiGiftCard(it) } } ?: emptyList()
     }
 }
 

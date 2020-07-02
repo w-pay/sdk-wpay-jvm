@@ -8,11 +8,7 @@ class OpenApiBasket(
     private val basket: au.com.woolworths.village.sdk.openapi.dto.Basket
 ) : Basket {
     override fun items(): List<Basket.Items> {
-        if (basket.items != null && basket.items!!.size > 0) {
-            return basket.items!!.map { OpenApiBasketItem(it) }
-        }
-
-        return emptyList()
+        return basket.items?.let { item -> item.map { OpenApiBasketItem(it) } } ?: emptyList()
     }
 }
 
@@ -44,10 +40,6 @@ class OpenApiBasketItem(
     }
 
     override fun tags(): Map<String, String> {
-        if (item.tags != null) {
-            return item.tags as Map<String, String>
-        }
-
-        return emptyMap()
+        return item.tags?.let { item.tags as Map<String, String> } ?: emptyMap()
     }
 }

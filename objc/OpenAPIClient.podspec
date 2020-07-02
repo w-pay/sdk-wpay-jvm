@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
     s.name             = "OpenAPIClient"
-    s.version          = "1.0.0"
+    s.version          = "0.0.4.0"
 
     s.summary          = "Village Wallet"
     s.description      = <<-DESC

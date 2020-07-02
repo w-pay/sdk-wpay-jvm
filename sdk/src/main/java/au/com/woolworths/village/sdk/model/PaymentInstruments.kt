@@ -1,6 +1,8 @@
 package au.com.woolworths.village.sdk.model
 
+import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
+import java.net.URL
 
 interface PaymentInstruments: Serializable {
     fun creditCards(): List<CreditCard>
@@ -8,16 +10,39 @@ interface PaymentInstruments: Serializable {
 }
 
 interface PaymentInstrument: Serializable {
-    fun paymentInstrumentId(): String
+    enum class InstrumentStatus {
+        UNVERIFIED_PERSISTENT,
+        VERIFIED
+    }
+
+    fun allowed(): Boolean
     fun cardSuffix(): String
+    fun lastUpdated(): OffsetDateTime
+    fun lastUsed(): OffsetDateTime
+    fun paymentInstrumentId(): String
+    fun paymentToken(): String
+    fun primary(): Boolean
+    fun status(): InstrumentStatus
 }
 
-// TODO: Flesh out to meet API spec.
 interface CreditCard: PaymentInstrument {
-
+    fun cardName(): String
+    fun cvvValidated(): Boolean
+    fun expired(): Boolean
+    fun expiryMonth(): String
+    fun expiryYear(): String
+    fun requiresCVV(): Boolean
+    fun scheme(): String
+    fun stepUp(): PaymentInstrumentStepUp
+    fun updateURL(): URL
 }
 
-// TODO: Flesh out to meet API spec.
 interface GiftCard: PaymentInstrument {
+    fun programName(): String
+}
 
+interface PaymentInstrumentStepUp {
+    fun type(): String
+    fun mandatory(): Boolean
+    fun url(): URL
 }

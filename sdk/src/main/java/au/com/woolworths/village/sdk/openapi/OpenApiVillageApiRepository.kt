@@ -8,11 +8,11 @@ import au.com.woolworths.village.sdk.openapi.client.ApiClient
 import au.com.woolworths.village.sdk.openapi.client.ApiException
 import au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentsPaymentRequestIdData
 import au.com.woolworths.village.sdk.openapi.dto.MakeCustomerPaymentResults
-import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
+import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
 import au.com.woolworths.village.sdk.model.PaymentResult
-import au.com.woolworths.village.sdk.model.openapi.OpenApiCustomerPaymentDetails
+import au.com.woolworths.village.sdk.model.openapi.OpenApiCustomerPaymentRequest
 import au.com.woolworths.village.sdk.model.openapi.OpenApiPaymentInstruments
 import au.com.woolworths.village.sdk.model.openapi.OpenApiPaymentResult
 
@@ -25,12 +25,12 @@ class OpenApiVillageApiRepository(
 ): VillageApiRepository {
     private var host: String = "localhost:3000"
 
-    override fun retrievePaymentRequestDetails(qrCodeId: String): ApiResult<CustomerPaymentDetails> {
+    override fun retrievePaymentRequestDetails(qrCodeId: String): ApiResult<CustomerPaymentRequest> {
         val api = createCustomerApi()
         return try {
             val data = api.getCustomerPaymentDetailsByQRCodeId(qrCodeId).data
 
-            ApiResult.Success(OpenApiCustomerPaymentDetails(data))
+            ApiResult.Success(OpenApiCustomerPaymentRequest(data))
         }
         catch (e: ApiException) {
             ApiResult.Error(e)
@@ -51,7 +51,7 @@ class OpenApiVillageApiRepository(
     }
 
     override fun makePayment(
-        paymentDetails: CustomerPaymentDetails,
+        paymentRequest: CustomerPaymentRequest,
         instrument: PaymentInstrument
     ): ApiResult<PaymentResult> {
         val api = createCustomerApi()
@@ -63,7 +63,7 @@ class OpenApiVillageApiRepository(
             body.data.secondaryInstruments = listOf()
 
             val result: MakeCustomerPaymentResults = api.makeCustomerPayment(
-                paymentDetails.paymentRequestId(),
+                paymentRequest.paymentRequestId(),
                 body
             )
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import au.com.woolworths.village.app.databinding.PaymentReceiptBinding
 import au.com.woolworths.village.sdk.model.Basket
-import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
+import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import kotlinx.android.synthetic.main.receipt_row.view.*
 import java.math.BigDecimal
@@ -39,7 +39,7 @@ class PaymentReceipt : AppCompatActivity() {
     }
 
     private fun bindPaymentToReceipt() {
-        val payment: CustomerPaymentDetails = intent.getSerializableExtra(PAYMENT) as CustomerPaymentDetails
+        val payment: CustomerPaymentRequest = intent.getSerializableExtra(PAYMENT) as CustomerPaymentRequest
         basketItemsAdapter = payment.basket()?.items()?.let { BasketItemsAdapter(it) }!!
         basketItemsManager = LinearLayoutManager(this)
 

@@ -1,12 +1,12 @@
 package au.com.woolworths.village.sdk.model.openapi
 
 import au.com.woolworths.village.sdk.model.Basket
-import au.com.woolworths.village.sdk.model.CustomerPaymentDetails
+import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
 import java.math.BigDecimal
 
-class OpenApiCustomerPaymentDetails(
+class OpenApiCustomerPaymentRequest(
     private val customerPaymentDetails: au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentDetail
-): CustomerPaymentDetails {
+): CustomerPaymentRequest {
 
     override fun paymentRequestId(): String {
         return customerPaymentDetails.paymentRequestId

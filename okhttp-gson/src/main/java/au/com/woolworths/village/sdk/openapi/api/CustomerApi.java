@@ -13,16 +13,22 @@
 
 package au.com.woolworths.village.sdk.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
+
+import org.threeten.bp.OffsetDateTime;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import au.com.woolworths.village.sdk.openapi.client.ApiCallback;
 import au.com.woolworths.village.sdk.openapi.client.ApiClient;
 import au.com.woolworths.village.sdk.openapi.client.ApiException;
 import au.com.woolworths.village.sdk.openapi.client.ApiResponse;
 import au.com.woolworths.village.sdk.openapi.client.Configuration;
 import au.com.woolworths.village.sdk.openapi.client.Pair;
-
-import com.google.gson.reflect.TypeToken;
-
-
 import au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentDetails;
 import au.com.woolworths.village.sdk.openapi.dto.CustomerPreferences;
 import au.com.woolworths.village.sdk.openapi.dto.CustomerPreferencesResult;
@@ -33,13 +39,6 @@ import au.com.woolworths.village.sdk.openapi.dto.GetCustomerTransactionsResult;
 import au.com.woolworths.village.sdk.openapi.dto.InitiatePaymentInstrumentAdditionResults;
 import au.com.woolworths.village.sdk.openapi.dto.InstrumentAdditionDetails;
 import au.com.woolworths.village.sdk.openapi.dto.MakeCustomerPaymentResults;
-import org.threeten.bp.OffsetDateTime;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CustomerApi {
     private ApiClient localVarApiClient;
@@ -605,6 +604,7 @@ public class CustomerApi {
     }
     /**
      * Build call for getCustomerTransactions
+     * @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
      * @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
      * @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
      * @param pageSize The number of records to return for this page.  Defaults to 25 if absent (optional, default to 25)
@@ -618,7 +618,7 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCustomerTransactionsCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getCustomerTransactionsCall(String paymentRequestId, OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -626,6 +626,10 @@ public class CustomerApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (paymentRequestId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("paymentRequestId", paymentRequestId));
+        }
+
         if (startTime != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("start-time", startTime));
         }
@@ -664,10 +668,10 @@ public class CustomerApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCustomerTransactionsValidateBeforeCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getCustomerTransactionsValidateBeforeCall(String paymentRequestId, OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = getCustomerTransactionsCall(startTime, endTime, pageSize, page, _callback);
+        okhttp3.Call localVarCall = getCustomerTransactionsCall(paymentRequestId, startTime, endTime, pageSize, page, _callback);
         return localVarCall;
 
     }
@@ -675,6 +679,7 @@ public class CustomerApi {
     /**
      * Get Transaction List
      * Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant
+     * @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
      * @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
      * @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
      * @param pageSize The number of records to return for this page.  Defaults to 25 if absent (optional, default to 25)
@@ -687,14 +692,15 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public GetCustomerTransactionsResult getCustomerTransactions(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
-        ApiResponse<GetCustomerTransactionsResult> localVarResp = getCustomerTransactionsWithHttpInfo(startTime, endTime, pageSize, page);
+    public GetCustomerTransactionsResult getCustomerTransactions(String paymentRequestId, OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
+        ApiResponse<GetCustomerTransactionsResult> localVarResp = getCustomerTransactionsWithHttpInfo(paymentRequestId, startTime, endTime, pageSize, page);
         return localVarResp.getData();
     }
 
     /**
      * Get Transaction List
      * Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant
+     * @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
      * @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
      * @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
      * @param pageSize The number of records to return for this page.  Defaults to 25 if absent (optional, default to 25)
@@ -707,8 +713,8 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<GetCustomerTransactionsResult> getCustomerTransactionsWithHttpInfo(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
-        okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, null);
+    public ApiResponse<GetCustomerTransactionsResult> getCustomerTransactionsWithHttpInfo(String paymentRequestId, OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
+        okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(paymentRequestId, startTime, endTime, pageSize, page, null);
         Type localVarReturnType = new TypeToken<GetCustomerTransactionsResult>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -716,6 +722,7 @@ public class CustomerApi {
     /**
      * Get Transaction List (asynchronously)
      * Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant
+     * @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
      * @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
      * @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
      * @param pageSize The number of records to return for this page.  Defaults to 25 if absent (optional, default to 25)
@@ -729,9 +736,9 @@ public class CustomerApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCustomerTransactionsAsync(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback<GetCustomerTransactionsResult> _callback) throws ApiException {
+    public okhttp3.Call getCustomerTransactionsAsync(String paymentRequestId, OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback<GetCustomerTransactionsResult> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, _callback);
+        okhttp3.Call localVarCall = getCustomerTransactionsValidateBeforeCall(paymentRequestId, startTime, endTime, pageSize, page, _callback);
         Type localVarReturnType = new TypeToken<GetCustomerTransactionsResult>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

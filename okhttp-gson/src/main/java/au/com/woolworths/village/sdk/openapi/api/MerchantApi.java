@@ -13,16 +13,22 @@
 
 package au.com.woolworths.village.sdk.openapi.api;
 
+import com.google.gson.reflect.TypeToken;
+
+import org.threeten.bp.OffsetDateTime;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import au.com.woolworths.village.sdk.openapi.client.ApiCallback;
 import au.com.woolworths.village.sdk.openapi.client.ApiClient;
 import au.com.woolworths.village.sdk.openapi.client.ApiException;
 import au.com.woolworths.village.sdk.openapi.client.ApiResponse;
 import au.com.woolworths.village.sdk.openapi.client.Configuration;
 import au.com.woolworths.village.sdk.openapi.client.Pair;
-
-import com.google.gson.reflect.TypeToken;
-
-
 import au.com.woolworths.village.sdk.openapi.dto.CreateMerchantSchemaResults;
 import au.com.woolworths.village.sdk.openapi.dto.CreatePaymentQRCodeResults;
 import au.com.woolworths.village.sdk.openapi.dto.CreatePaymentRequestResults;
@@ -39,12 +45,6 @@ import au.com.woolworths.village.sdk.openapi.dto.MerchantSchemaResult;
 import au.com.woolworths.village.sdk.openapi.dto.PaymentQRCodeDetails;
 import au.com.woolworths.village.sdk.openapi.dto.RefundMerchantTransactionRequest;
 import au.com.woolworths.village.sdk.openapi.dto.RefundMerchantTransactionResults;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MerchantApi {
     private ApiClient localVarApiClient;
@@ -1300,7 +1300,7 @@ public class MerchantApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMerchantTransactionsCall(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getMerchantTransactionsCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1346,7 +1346,7 @@ public class MerchantApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getMerchantTransactionsValidateBeforeCall(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getMerchantTransactionsValidateBeforeCall(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback _callback) throws ApiException {
         
 
         okhttp3.Call localVarCall = getMerchantTransactionsCall(startTime, endTime, pageSize, page, _callback);
@@ -1369,7 +1369,7 @@ public class MerchantApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public GetMerchantTransactionsResults getMerchantTransactions(String startTime, String endTime, Integer pageSize, Integer page) throws ApiException {
+    public GetMerchantTransactionsResults getMerchantTransactions(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
         ApiResponse<GetMerchantTransactionsResults> localVarResp = getMerchantTransactionsWithHttpInfo(startTime, endTime, pageSize, page);
         return localVarResp.getData();
     }
@@ -1389,7 +1389,7 @@ public class MerchantApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<GetMerchantTransactionsResults> getMerchantTransactionsWithHttpInfo(String startTime, String endTime, Integer pageSize, Integer page) throws ApiException {
+    public ApiResponse<GetMerchantTransactionsResults> getMerchantTransactionsWithHttpInfo(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page) throws ApiException {
         okhttp3.Call localVarCall = getMerchantTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, null);
         Type localVarReturnType = new TypeToken<GetMerchantTransactionsResults>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -1411,7 +1411,7 @@ public class MerchantApi {
         <tr><td> 200 </td><td> Successful response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getMerchantTransactionsAsync(String startTime, String endTime, Integer pageSize, Integer page, final ApiCallback<GetMerchantTransactionsResults> _callback) throws ApiException {
+    public okhttp3.Call getMerchantTransactionsAsync(OffsetDateTime startTime, OffsetDateTime endTime, Integer pageSize, Integer page, final ApiCallback<GetMerchantTransactionsResults> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getMerchantTransactionsValidateBeforeCall(startTime, endTime, pageSize, page, _callback);
         Type localVarReturnType = new TypeToken<GetMerchantTransactionsResults>(){}.getType();

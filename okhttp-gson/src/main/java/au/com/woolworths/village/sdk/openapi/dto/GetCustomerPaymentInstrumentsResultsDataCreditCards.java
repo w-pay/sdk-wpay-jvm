@@ -13,18 +13,19 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import org.threeten.bp.OffsetDateTime;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * GetCustomerPaymentInstrumentsResultsDataCreditCards

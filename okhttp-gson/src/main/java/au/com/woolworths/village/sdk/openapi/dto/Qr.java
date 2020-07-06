@@ -13,17 +13,20 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import org.threeten.bp.OffsetDateTime;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Detail of a QR code
@@ -102,7 +105,7 @@ public class Qr implements Serializable {
 
   public static final String SERIALIZED_NAME_EXPIRY_TIME = "expiryTime";
   @SerializedName(SERIALIZED_NAME_EXPIRY_TIME)
-  private String expiryTime;
+  private OffsetDateTime expiryTime;
 
 
   public Qr qrId(String qrId) {
@@ -215,7 +218,7 @@ public class Qr implements Serializable {
   }
 
 
-  public Qr expiryTime(String expiryTime) {
+  public Qr expiryTime(OffsetDateTime expiryTime) {
     
     this.expiryTime = expiryTime;
     return this;
@@ -226,14 +229,14 @@ public class Qr implements Serializable {
    * @return expiryTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "ISO date/time string indicating when the QR code will expire and become ineffective.  If absent then the QR code will not expire until it is deleted")
+  @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", value = "ISO date/time string indicating when the QR code will expire and become ineffective.  If absent then the QR code will not expire until it is deleted")
 
-  public String getExpiryTime() {
+  public OffsetDateTime getExpiryTime() {
     return expiryTime;
   }
 
 
-  public void setExpiryTime(String expiryTime) {
+  public void setExpiryTime(OffsetDateTime expiryTime) {
     this.expiryTime = expiryTime;
   }
 

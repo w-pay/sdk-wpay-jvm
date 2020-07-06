@@ -21,7 +21,7 @@ class QrCodeMatcher: TypeSafeMatcher<Qr>() {
         assertThat(item.referenceType, not(nullValue()))
         assertThat(item.content, not(blankOrNullString()))
         assertThat(item.image, not(blankOrNullString()))
-        assertThat(item.expiryTime, not(blankOrNullString()))
+        assertThat(item.expiryTime, not(nullValue()))
 
         return true
     }

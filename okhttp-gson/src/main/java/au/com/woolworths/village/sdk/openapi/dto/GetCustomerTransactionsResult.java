@@ -13,13 +13,12 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
+import java.util.Objects;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * GetCustomerTransactionsResult

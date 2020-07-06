@@ -13,23 +13,21 @@
 
 package au.com.woolworths.village.sdk.openapi.api;
 
-import au.com.woolworths.village.sdk.openapi.client.ApiCallback;
-import au.com.woolworths.village.sdk.openapi.client.ApiClient;
-import au.com.woolworths.village.sdk.openapi.client.ApiException;
-import au.com.woolworths.village.sdk.openapi.client.ApiResponse;
-import au.com.woolworths.village.sdk.openapi.client.Configuration;
-import au.com.woolworths.village.sdk.openapi.client.Pair;
-
 import com.google.gson.reflect.TypeToken;
-
-
-import au.com.woolworths.village.sdk.openapi.dto.HealthCheckResult;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import au.com.woolworths.village.sdk.openapi.client.ApiCallback;
+import au.com.woolworths.village.sdk.openapi.client.ApiClient;
+import au.com.woolworths.village.sdk.openapi.client.ApiException;
+import au.com.woolworths.village.sdk.openapi.client.ApiResponse;
+import au.com.woolworths.village.sdk.openapi.client.Configuration;
+import au.com.woolworths.village.sdk.openapi.client.Pair;
+import au.com.woolworths.village.sdk.openapi.dto.HealthCheckResult;
 
 public class AdministrationApi {
     private ApiClient localVarApiClient;

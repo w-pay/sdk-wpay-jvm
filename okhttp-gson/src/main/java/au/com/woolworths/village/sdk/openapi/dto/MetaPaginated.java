@@ -13,14 +13,13 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
 
 /**
  * Object to contain any metadata

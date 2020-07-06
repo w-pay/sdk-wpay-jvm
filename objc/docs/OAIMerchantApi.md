@@ -622,8 +622,8 @@ Name | Type | Description  | Notes
 
 # **getMerchantTransactions**
 ```objc
--(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSString*) startTime
-    endTime: (NSString*) endTime
+-(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSDate*) startTime
+    endTime: (NSDate*) endTime
     pageSize: (NSNumber*) pageSize
     page: (NSNumber*) page
         completionHandler: (void (^)(OAIGetMerchantTransactionsResults* output, NSError* error)) handler;
@@ -641,8 +641,8 @@ OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
 [apiConfig setPassword:@"YOUR_PASSWORD"];
 
 
-NSString* startTime = @"startTime_example"; // If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
-NSString* endTime = @"endTime_example"; // If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
+NSDate* startTime = 2017-11-06T19:38:09.890+11:00; // If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
+NSDate* endTime = 2017-11-06T19:38:09.890+11:00; // If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
 NSNumber* pageSize = @25; // The number of records to return for this page.  Defaults to 25 if absent (optional) (default to @25)
 NSNumber* page = @1; // The page of results to return with 1 indicating the first page.  Defaults to 1 if absent (optional) (default to @1)
 
@@ -667,8 +667,8 @@ OAIMerchantApi*apiInstance = [[OAIMerchantApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **startTime** | **NSString***| If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned | [optional] 
- **endTime** | **NSString***| If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned | [optional] 
+ **startTime** | **NSDate***| If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned | [optional] 
+ **endTime** | **NSDate***| If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned | [optional] 
  **pageSize** | **NSNumber***| The number of records to return for this page.  Defaults to 25 if absent | [optional] [default to @25]
  **page** | **NSNumber***| The page of results to return with 1 indicating the first page.  Defaults to 1 if absent | [optional] [default to @1]
 

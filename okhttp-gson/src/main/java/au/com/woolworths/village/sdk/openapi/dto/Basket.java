@@ -13,16 +13,15 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.io.Serializable;
 
 /**
  * Information provided by the Merchant on the basket of items associated with the payment request.  This payload originates in the payment request and is carried with any resulting transactions

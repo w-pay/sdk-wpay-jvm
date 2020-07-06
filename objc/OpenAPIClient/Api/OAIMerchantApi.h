@@ -188,8 +188,8 @@ extern NSInteger kOAIMerchantApiMissingParamErrorCode;
 ///  code:200 message:"Successful response"
 ///
 /// @return OAIGetMerchantTransactionsResults*
--(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSString*) startTime
-    endTime: (NSString*) endTime
+-(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSDate*) startTime
+    endTime: (NSDate*) endTime
     pageSize: (NSNumber*) pageSize
     page: (NSNumber*) page
     completionHandler: (void (^)(OAIGetMerchantTransactionsResults* output, NSError* error)) handler;

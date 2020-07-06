@@ -17,14 +17,13 @@ Perform a health check on the Village Wallet implementation
 
 ### Example
 ```java
-```java
 // Import classes:
 import au.com.woolworths.village.sdk.openapi.client.ApiClient;
-import au.com.woolworths.village.sdk.client.ApiException;
-import au.com.woolworths.village.sdk.client.Configuration;
-import au.com.woolworths.village.sdk.client.auth.*;
-import au.com.woolworths.village.sdk.client.models.*;
-import au.com.woolworths.village.sdk.api.AdministrationApi;
+import au.com.woolworths.village.sdk.openapi.client.ApiException;
+import au.com.woolworths.village.sdk.openapi.client.Configuration;
+import au.com.woolworths.village.sdk.openapi.client.auth.*;
+import au.com.woolworths.village.sdk.openapi.client.models.*;
+import au.com.woolworths.village.sdk.openapi.api.AdministrationApi;
 
 public class Example {
   public static void main(String[] args) {

@@ -13,10 +13,10 @@
 
 package au.com.woolworths.village.sdk.openapi.client.auth;
 
-import au.com.woolworths.village.sdk.openapi.client.Pair;
-
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+
+import au.com.woolworths.village.sdk.openapi.client.Pair;
 
 
 public class ApiKeyAuth implements Authentication {

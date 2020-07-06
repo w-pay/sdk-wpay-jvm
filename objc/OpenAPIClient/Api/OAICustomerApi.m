@@ -370,6 +370,8 @@ NSInteger kOAICustomerApiMissingParamErrorCode = 234513;
 ///
 /// Get Transaction List
 /// Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant
+///  @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
+///
 ///  @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
 ///
 ///  @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
@@ -380,7 +382,8 @@ NSInteger kOAICustomerApiMissingParamErrorCode = 234513;
 ///
 ///  @returns OAIGetCustomerTransactionsResult*
 ///
--(NSURLSessionTask*) getCustomerTransactionsWithStartTime: (NSDate*) startTime
+-(NSURLSessionTask*) getCustomerTransactionsWithPaymentRequestId: (NSString*) paymentRequestId
+    startTime: (NSDate*) startTime
     endTime: (NSDate*) endTime
     pageSize: (NSNumber*) pageSize
     page: (NSNumber*) page
@@ -390,6 +393,9 @@ NSInteger kOAICustomerApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (paymentRequestId != nil) {
+        queryParams[@"paymentRequestId"] = paymentRequestId;
+    }
     if (startTime != nil) {
         queryParams[@"start-time"] = startTime;
     }

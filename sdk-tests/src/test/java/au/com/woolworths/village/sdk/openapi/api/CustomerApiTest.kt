@@ -3,9 +3,9 @@ package au.com.woolworths.village.sdk.openapi.api
 import au.com.woolworths.village.sdk.openapi.api.matchers.*
 import au.com.woolworths.village.sdk.openapi.client.Configuration
 import au.com.woolworths.village.sdk.openapi.dto.*
-
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.hamcrest.text.IsBlankString.blankOrNullString
 import org.junit.BeforeClass
 import org.junit.Test
@@ -70,12 +70,13 @@ class CustomerApiTest {
 
     @Test
     fun getCustomerTransactionsTest() {
+        val paymentRequestId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
         val startTime = OffsetDateTime.parse("2017-11-06T19:38:09.890+11:00")
         val endTime = OffsetDateTime.parse("2017-11-06T19:38:09.890+11:00")
         val pageSize = 20
         val page = 2
 
-        val results = api.getCustomerTransactions(startTime, endTime, pageSize, page)
+        val results = api.getCustomerTransactions(paymentRequestId, startTime, endTime, pageSize, page)
         assertThat(results.data, hasCustomerTransactions())
         assertThat(results.meta, isPaginatedMeta())
     }

@@ -789,8 +789,8 @@ NSInteger kOAIMerchantApiMissingParamErrorCode = 234513;
 ///
 ///  @returns OAIGetMerchantTransactionsResults*
 ///
--(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSString*) startTime
-    endTime: (NSString*) endTime
+-(NSURLSessionTask*) getMerchantTransactionsWithStartTime: (NSDate*) startTime
+    endTime: (NSDate*) endTime
     pageSize: (NSNumber*) pageSize
     page: (NSNumber*) page
     completionHandler: (void (^)(OAIGetMerchantTransactionsResults* output, NSError* error)) handler {

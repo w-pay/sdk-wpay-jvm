@@ -96,6 +96,7 @@ extern NSInteger kOAICustomerApiMissingParamErrorCode;
 /// Get Transaction List
 /// Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant
 ///
+/// @param paymentRequestId If present, limits the list of transactions to those that relate to the payment request (optional)
 /// @param startTime If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned (optional)
 /// @param endTime If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned (optional)
 /// @param pageSize The number of records to return for this page.  Defaults to 25 if absent (optional) (default to @25)
@@ -104,7 +105,8 @@ extern NSInteger kOAICustomerApiMissingParamErrorCode;
 ///  code:200 message:"Successful response"
 ///
 /// @return OAIGetCustomerTransactionsResult*
--(NSURLSessionTask*) getCustomerTransactionsWithStartTime: (NSDate*) startTime
+-(NSURLSessionTask*) getCustomerTransactionsWithPaymentRequestId: (NSString*) paymentRequestId
+    startTime: (NSDate*) startTime
     endTime: (NSDate*) endTime
     pageSize: (NSNumber*) pageSize
     page: (NSNumber*) page

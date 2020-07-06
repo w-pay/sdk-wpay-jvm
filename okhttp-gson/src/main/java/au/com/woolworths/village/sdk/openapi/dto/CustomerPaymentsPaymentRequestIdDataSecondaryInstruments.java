@@ -13,15 +13,14 @@
 
 package au.com.woolworths.village.sdk.openapi.dto;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
 
 /**
  * An instrument used for this transaction

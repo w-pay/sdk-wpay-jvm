@@ -39,6 +39,6 @@
 @property(nonatomic) NSString* image;
 /* ISO date/time string indicating when the QR code will expire and become ineffective.  If absent then the QR code will not expire until it is deleted [optional]
  */
-@property(nonatomic) NSString* expiryTime;
+@property(nonatomic) NSDate* expiryTime;
 
 @end

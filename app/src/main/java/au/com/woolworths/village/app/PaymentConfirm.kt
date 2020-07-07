@@ -19,9 +19,9 @@ import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.auth.IdmTokenDetails
 import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
+import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
-import au.com.woolworths.village.sdk.model.PaymentResult
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.microsoft.appcenter.AppCenter
@@ -278,7 +278,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     val qrCodeId: MutableLiveData<String?> = MutableLiveData()
     val paymentRequest: MutableLiveData<ApiResult<CustomerPaymentRequest>> = MutableLiveData()
     val paymentInstruments: MutableLiveData<ApiResult<PaymentInstruments>> = MutableLiveData()
-    val paymentResult: MutableLiveData<ApiResult<PaymentResult>> = MutableLiveData()
+    val paymentResult: MutableLiveData<ApiResult<CustomerTransactionSummary>> = MutableLiveData()
 
     lateinit var paymentRequestRequest: CustomerPaymentRequest
     lateinit var selectedPaymentInstrument: PaymentInstrument

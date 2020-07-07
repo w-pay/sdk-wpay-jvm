@@ -10,7 +10,6 @@ import au.com.woolworths.village.sdk.openapi.client.ApiException
 import au.com.woolworths.village.sdk.openapi.dto.CustomerInstrumentsData
 import au.com.woolworths.village.sdk.openapi.dto.CustomerPaymentsPaymentRequestIdData
 import au.com.woolworths.village.sdk.openapi.dto.InstrumentAdditionDetails
-import au.com.woolworths.village.sdk.openapi.dto.MakeCustomerPaymentResults
 import org.threeten.bp.OffsetDateTime
 
 /**
@@ -148,7 +147,7 @@ class OpenApiVillageCustomerApiRepository(
     override fun makePayment(
         paymentRequest: CustomerPaymentRequest,
         instrument: PaymentInstrument
-    ): ApiResult<PaymentResult> {
+    ): ApiResult<CustomerTransactionSummary> {
         val api = createCustomerApi()
 
         return try {
@@ -158,12 +157,12 @@ class OpenApiVillageCustomerApiRepository(
                 secondaryInstruments = listOf()
             }
 
-            val result: MakeCustomerPaymentResults = api.makeCustomerPayment(
+            val data = api.makeCustomerPayment(
                 paymentRequest.paymentRequestId(),
                 body
-            )
+            ).data
 
-            ApiResult.Success(OpenApiPaymentResult())
+            ApiResult.Success(OpenApiCustomerTransactionSummary(data))
         }
         catch (e: ApiException) {
             ApiResult.Error(e)

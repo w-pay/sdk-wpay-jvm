@@ -21,7 +21,7 @@ open class MerchantPaymentSummaryMatcher: TypeSafeMatcher<MerchantPaymentSummary
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
         assertThat(item.grossAmount, not(nullValue()))
         assertThat(item.usesRemaining, not(nullValue()))
-        assertThat(item.expiryTime, not(blankOrNullString()))
+        assertThat(item.expiryTime, not(nullValue()))
         assertThat(item.specificWalletId, not(blankOrNullString()))
 
         return true
@@ -42,7 +42,7 @@ class MerchantPaymentDetailsMatcher: TypeSafeMatcher<MerchantPaymentDetail>() {
         assertThat(item.merchantReferenceId, not(blankOrNullString()))
         assertThat(item.grossAmount, not(nullValue()))
         assertThat(item.usesRemaining, not(nullValue()))
-        assertThat(item.expiryTime, not(blankOrNullString()))
+        assertThat(item.expiryTime, not(nullValue()))
         assertThat(item.specificWalletId, not(blankOrNullString()))
         assertThat(item.basket, hasBasketItems())
         assertThat(item.posPayload, isPosPayload())

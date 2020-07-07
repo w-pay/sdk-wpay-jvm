@@ -2,9 +2,9 @@ package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
+import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstruments
-import au.com.woolworths.village.sdk.model.PaymentResult
 
 /**
  * Entry point into the SDK. It is responsible for managing the relationship between app
@@ -34,7 +34,7 @@ class CustomerVillage<A : Any>(
     fun makePayment(
         paymentRequest: CustomerPaymentRequest,
         instrument: PaymentInstrument
-    ): ApiResult<PaymentResult> {
+    ): ApiResult<CustomerTransactionSummary> {
         return api.makePayment(paymentRequest, instrument)
     }
 }

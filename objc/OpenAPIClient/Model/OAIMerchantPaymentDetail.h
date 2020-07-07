@@ -51,7 +51,7 @@
 @property(nonatomic) NSNumber* usesRemaining;
 /* The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted [optional]
  */
-@property(nonatomic) NSString* expiryTime;
+@property(nonatomic) NSDate* expiryTime;
 /* The ID of a specific wallet for which the payment is intended.  If present then the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request [optional]
  */
 @property(nonatomic) NSString* specificWalletId;

@@ -15,6 +15,8 @@ package au.com.woolworths.village.sdk.openapi.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.threeten.bp.OffsetDateTime;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -48,7 +50,7 @@ public class MerchantPaymentDetail implements Serializable {
 
   public static final String SERIALIZED_NAME_EXPIRY_TIME = "expiryTime";
   @SerializedName(SERIALIZED_NAME_EXPIRY_TIME)
-  private String expiryTime;
+  private OffsetDateTime expiryTime;
 
   public static final String SERIALIZED_NAME_SPECIFIC_WALLET_ID = "specificWalletId";
   @SerializedName(SERIALIZED_NAME_SPECIFIC_WALLET_ID)
@@ -157,7 +159,7 @@ public class MerchantPaymentDetail implements Serializable {
   }
 
 
-  public MerchantPaymentDetail expiryTime(String expiryTime) {
+  public MerchantPaymentDetail expiryTime(OffsetDateTime expiryTime) {
     
     this.expiryTime = expiryTime;
     return this;
@@ -168,14 +170,14 @@ public class MerchantPaymentDetail implements Serializable {
    * @return expiryTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted")
+  @ApiModelProperty(example = "2017-11-06T19:38:09.890+11:00", value = "The ISO date/time for when the payment request will expire and become unusable for payments.  If absent then the payment request will not expire until it is deleted")
 
-  public String getExpiryTime() {
+  public OffsetDateTime getExpiryTime() {
     return expiryTime;
   }
 
 
-  public void setExpiryTime(String expiryTime) {
+  public void setExpiryTime(OffsetDateTime expiryTime) {
     this.expiryTime = expiryTime;
   }
 

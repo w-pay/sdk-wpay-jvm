@@ -272,7 +272,7 @@ class PaymentConfirm : AppCompatActivity() {
 }
 
 class ViewModel : androidx.lifecycle.ViewModel() {
-    private val village = createVillage()
+    private val village = createCustomerVillage()
 
     val authenticationDetails: MutableLiveData<ApiResult<IdmTokenDetails>> = MutableLiveData()
     val qrCodeId: MutableLiveData<String?> = MutableLiveData()

@@ -10,8 +10,8 @@ import au.com.woolworths.village.sdk.model.PaymentResult
  * Entry point into the SDK. It is responsible for managing the relationship between app
  * concerns, and calling the API.
  */
-class Village<A : Any>(
-    private val api: VillageApiRepository,
+class CustomerVillage<A : Any>(
+    private val api: VillageCustomerApiRepository,
     private val authenticator: ApiAuthenticator<A>
 ): Configurable {
     override fun setHost(host: String) {
@@ -24,7 +24,7 @@ class Village<A : Any>(
     }
 
     fun retrievePaymentDetails(qrCode: String): ApiResult<CustomerPaymentRequest> {
-        return api.retrievePaymentRequestDetails(qrCode)
+        return api.retrievePaymentRequestDetailsByQRCode(qrCode)
     }
 
     fun retrievePaymentInstruments(): ApiResult<PaymentInstruments> {

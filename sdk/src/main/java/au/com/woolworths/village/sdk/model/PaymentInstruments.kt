@@ -23,6 +23,7 @@ interface PaymentInstrument: Serializable {
     fun paymentToken(): String
     fun primary(): Boolean
     fun status(): InstrumentStatus
+    fun stepUp(): PaymentInstrumentStepUp?
 }
 
 interface CreditCard: PaymentInstrument {
@@ -33,8 +34,10 @@ interface CreditCard: PaymentInstrument {
     fun expiryYear(): String
     fun requiresCVV(): Boolean
     fun scheme(): String
-    fun stepUp(): PaymentInstrumentStepUp
     fun updateURL(): URL
+
+    // setup is mandatory for credit cards
+    override fun stepUp(): PaymentInstrumentStepUp
 }
 
 interface GiftCard: PaymentInstrument {

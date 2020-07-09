@@ -18,15 +18,12 @@ fun hasBasketItems(): BasketItemsMatcher {
 class BasketItemsMatcher : TypeSafeMatcher<Basket>() {
     override fun matchesSafely(basket: Basket): Boolean {
         val matcher = BasketItemMatcher()
-        var result = true
 
-        assertThat(basket.items, not(nullValue()))
+        val items = basket.items!!
+        assertThat(items, not(nullValue()))
+        assertThat(items.size, greaterThanOrEqualTo(1))
 
-        for (item in basket.items!!) {
-            result = result and matcher.matches(item)
-        }
-
-        return result
+        return items.fold(true, { result, item -> result and matcher.matches(item) })
     }
 
     override fun describeTo(description: Description) {

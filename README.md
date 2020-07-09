@@ -175,7 +175,7 @@ correctly and the Open API implementation source will not be found. The project
 will either fail to compile or throw a `ClassNotFoundException` at runtime.
 
 The IDE `Gradle` [Run Configuration](https://www.jetbrains.com/help/idea/create-run-debug-configuration-gradle-tasks.html)
-should be used with the `--test` option in the `Arguments`. This will run
+should be used with the `--tests` option in the `Arguments`. This will run
 the task allowing the test to be run in the IDE.
 
 #### Publishing a Open API implementation version

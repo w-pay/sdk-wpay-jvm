@@ -3,6 +3,7 @@ package au.com.woolworths.village.sdk.model.openapi
 import au.com.woolworths.village.sdk.model.*
 import org.threeten.bp.OffsetDateTime
 import java.math.BigDecimal
+import java.util.*
 
 class OpenApiMerchantTransactionSummaries(
     private val transactions: List<au.com.woolworths.village.sdk.openapi.dto.MerchantTransactionSummary>
@@ -24,7 +25,7 @@ class OpenApiMerchantTransactionSummary(
     }
 
     override fun type(): TransactionSummary.PaymentType {
-        return TransactionSummary.PaymentType.valueOf(summary.type.value)
+        return TransactionSummary.PaymentType.valueOf(summary.type.value.toUpperCase(Locale.ROOT))
     }
 
     override fun executionTime(): OffsetDateTime {
@@ -32,7 +33,7 @@ class OpenApiMerchantTransactionSummary(
     }
 
     override fun status(): TransactionSummary.PaymentStatus {
-        return TransactionSummary.PaymentStatus.valueOf(summary.status.value)
+        return TransactionSummary.PaymentStatus.valueOf(summary.status.value.toUpperCase(Locale.ROOT))
     }
 
     override fun refundReason(): String? {

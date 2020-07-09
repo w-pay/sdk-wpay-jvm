@@ -1,12 +1,10 @@
 package au.com.woolworths.village.sdk.model.openapi
 
 import au.com.woolworths.village.sdk.model.*
-import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsData
-import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsDataCreditCards
-import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsDataGiftCards
-import au.com.woolworths.village.sdk.openapi.dto.GetCustomerPaymentInstrumentsResultsDataStepUp
+import au.com.woolworths.village.sdk.openapi.dto.*
 import org.threeten.bp.OffsetDateTime
 import java.net.URL
+import java.util.*
 
 class OpenApiPaymentInstruments(
     private val instruments: GetCustomerPaymentInstrumentsResultsData
@@ -36,7 +34,7 @@ class OpenApiCreditCard(
     }
 
     override fun status(): PaymentInstrument.InstrumentStatus {
-        return PaymentInstrument.InstrumentStatus.valueOf(card.status.value)
+        return PaymentInstrument.InstrumentStatus.valueOf(card.status.value.toUpperCase(Locale.ROOT))
     }
 
     override fun cardName(): String {
@@ -130,10 +128,31 @@ class OpenApiGiftCard(
     override fun status(): PaymentInstrument.InstrumentStatus {
         return PaymentInstrument.InstrumentStatus.valueOf(card.status.value)
     }
+
+    override fun stepUp(): PaymentInstrumentStepUp? {
+        return card.stepUp?.let { OpenApiPaymentInstrumentStepUp1(it) }
+    }
 }
 
 class OpenApiPaymentInstrumentStepUp(
     private val stepUp: GetCustomerPaymentInstrumentsResultsDataStepUp
+): PaymentInstrumentStepUp {
+    override fun type(): String {
+        return stepUp.type
+    }
+
+    override fun mandatory(): Boolean {
+        return stepUp.mandatory
+    }
+
+    override fun url(): URL {
+        return URL(stepUp.url)
+    }
+}
+
+// TODO: Fix spec and remove me
+class OpenApiPaymentInstrumentStepUp1(
+    private val stepUp: GetCustomerPaymentInstrumentsResultsDataStepUp1
 ): PaymentInstrumentStepUp {
     override fun type(): String {
         return stepUp.type

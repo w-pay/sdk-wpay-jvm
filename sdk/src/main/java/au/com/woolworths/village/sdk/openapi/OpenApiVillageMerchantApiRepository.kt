@@ -54,8 +54,12 @@ class OpenApiVillageMerchantApiRepository(
             val body = PaymentQRCodeDetails()
             body.data = MerchantQrData().apply {
                 referenceId = details.referenceId()
-                referenceType = MerchantQrData.ReferenceTypeEnum.valueOf(details.referenceType().toString())
                 timeToLive = details.timeToLive()
+
+                referenceType = when (details.referenceType()) {
+                    QRCodePaymentReferenceType.PAYMENT_POINT -> MerchantQrData.ReferenceTypeEnum.POINT
+                    QRCodePaymentReferenceType.PAYMENT_REQUEST -> MerchantQrData.ReferenceTypeEnum.REQUEST
+                }
             }
 
             val data = api.createPaymentQRCode(body).data
@@ -109,6 +113,7 @@ class OpenApiVillageMerchantApiRepository(
             val body = MerchantPaymentRequest()
             body.data = MerchantPaymentsData().apply {
                 merchantReferenceId = paymentRequest.merchantReferenceId()
+                grossAmount = paymentRequest.grossAmount()
                 generateQR = paymentRequest.generateQR()
                 paymentRequest.maxUses()?.let { maxUses = it }
                 paymentRequest.timeToLivePayment()?.let { timeToLivePayment = it }

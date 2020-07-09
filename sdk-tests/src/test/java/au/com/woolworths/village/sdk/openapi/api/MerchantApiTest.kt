@@ -80,13 +80,15 @@ class MerchantApiTest {
         merchantPaymentRequest.data.specificWalletId = ""
         merchantPaymentRequest.data.basket = basketWithItem()
 
-        merchantPaymentRequest.data.posPayload = PosPayload()
-        merchantPaymentRequest.data.posPayload!!.schemaId = "abc123def0"
-        merchantPaymentRequest.data.posPayload!!.payload = HashMap()
+        merchantPaymentRequest.data.posPayload = PosPayload().apply {
+            schemaId = "abc123def0"
+            payload = HashMap()
+        }
 
-        merchantPaymentRequest.data.merchantPayload = MerchantPayload()
-        merchantPaymentRequest.data.merchantPayload!!.schemaId = "abc123def0"
-        merchantPaymentRequest.data.merchantPayload!!.payload = HashMap()
+        merchantPaymentRequest.data.merchantPayload = MerchantPayload().apply {
+            schemaId = "abc123def0"
+            payload = HashMap()
+        }
 
         val result = api.createPaymentRequest(merchantPaymentRequest)
 

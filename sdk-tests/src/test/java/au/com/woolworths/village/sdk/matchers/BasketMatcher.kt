@@ -9,7 +9,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.text.IsBlankString
 import java.math.BigDecimal
 
-fun aBasket(): Matcher<Basket?> = BasketMatcher()
+fun isBasket(): Matcher<Basket?> = BasketMatcher()
 
 class BasketMatcher: TypeSafeMatcher<Basket>() {
     override fun matchesSafely(basket: Basket): Boolean {

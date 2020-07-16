@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import au.com.woolworths.village.app.databinding.PaymentConfirmBinding
 import au.com.woolworths.village.sdk.ApiResult
+import au.com.woolworths.village.sdk.Wallet
 import au.com.woolworths.village.sdk.auth.IdmTokenDetails
 import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
 import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
@@ -330,7 +331,7 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     fun retrievePaymentInstruments() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                var result = village.retrievePaymentInstruments()
+                var result = village.retrievePaymentInstruments(Wallet.MERCHANT)
 
                 when (result) {
                     is ApiResult.Success -> {

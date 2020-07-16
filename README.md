@@ -1,21 +1,34 @@
 # Woolworths Village Android SDK
 
-This project contains libraries for use in Android applications to
-access the Village API.
+This project contains a collection of libraries that form the SDK to
+facilitate Android applications accessing the Village API.
+
+The SDK is currently in development. Therefore parts may change.
 
 ## Usage
 
-The SDK module comprises:
- - An adaption layer between Android and the API
+The SDK is modelled after popular "API SDKs" like Stripe. It has the
+following core design philosophies.
+
+1. Technology agnostic. Different applications may different technology
+choices and an SDK shouldn't force an application to depend on a different
+technology stack as this bloats the build and increases complexity.
+
+2. Swappable. Don't like a particular implementation of the SDK, then
+swap it out for another object that implements the correct interface.
+
+The SDK comprises of:
+ - An adaption layer between the Application and the API
  - An API layer which knows how to communicate with the Village API
  - An authentication layer.
 
-Consumers have the flexibility to plug in different implementations of
+Applications have the flexibility to plug in different implementations of
 the interfaces to allow particular technology choices (eg: choice of
 HTTP client library). This makes it very easy to use the SDK in an
 existing project, without necessarily introducing extra dependencies.
 
-The entry point for consumers is the `Village` class.
+The entry point for applications is the `CustomerVillage` class or
+`MerchantVillage` class depending on the goals of the application.
 
 ### API layer
 
@@ -25,7 +38,7 @@ The API layer is decoupled from the rest of the SDK via the
 
 #### Open API implementation
 
-The SDK comes with an implementation of the `VillageApiRepository`
+The SDK can be used with an implementation of the `VillageApiRepository`
 that uses the [Open API generator](https://openapi-generator.tech/) to
 provide an API Client with DTOs representing the data structures of the
 API. The SDK can be configured to use different libraries that the Open

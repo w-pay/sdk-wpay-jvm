@@ -15,7 +15,8 @@ fun createCustomerVillage(): CustomerVillage<IdmTokenDetails> {
             RequestHeaderChain(
                 arrayOf(
                     apiKeyRequestHeader,
-                    bearerTokenRequestHeader
+                    bearerTokenRequestHeader,
+                    WalletIdRequestHeader()
                 )
             ),
             BuildConfig.API_CONTEXT_ROOT

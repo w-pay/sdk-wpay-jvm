@@ -30,6 +30,16 @@ existing project, without necessarily introducing extra dependencies.
 The entry point for applications is the `CustomerVillage` class or
 `MerchantVillage` class depending on the goals of the application.
 
+### Authentication layer
+
+In order to access protected APIs, the SDK will need to know how to
+authenticate with the API or a gateway that protects the API. The
+`ApiAuthenticator` interface abstracts how the SDK authenticates from
+the rest of the API interface. Applications that have a preexisting
+authentication objects can either update them to implement the
+`ApiAuthenticator` interface, or provide an [Adapter](https://en.wikipedia.org/wiki/Adapter_pattern#Java)
+to make the existing authentication data available to the application.
+
 ### API layer
 
 The API layer is decoupled from the rest of the SDK via the

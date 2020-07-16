@@ -44,4 +44,8 @@ interface VillageMerchantApiRepository: VillageAdministrationApiRepository {
     fun retrieveSchemaDetails(schemaId: String): ApiResult<MerchantSchema>
 
     fun createSchema(schema: MerchantSchema): ApiResult<MerchantSchemaSummary>
+
+    fun createPaymentSession(request: CreatePaymentSessionRequest): ApiResult<CreatePaymentSessionResult>
+
+    fun retrievePaymentSession(paymentSessionId: String): ApiResult<PaymentSession>
 }

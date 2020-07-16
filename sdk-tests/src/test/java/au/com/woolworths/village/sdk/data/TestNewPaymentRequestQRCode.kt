@@ -13,6 +13,6 @@ class TestNewPaymentRequestQRCode: NewPaymentRequestQRCode {
     }
 
     override fun referenceType(): QRCodePaymentReferenceType {
-        return QRCodePaymentReferenceType.PAYMENT_POINT
+        return QRCodePaymentReferenceType.PAYMENT_SESSION
     }
 }

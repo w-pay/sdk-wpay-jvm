@@ -26,6 +26,7 @@ class MerchantTransactionSummaryMatcher: TypeSafeMatcher<MerchantTransactionSumm
         assertThat(item.grossAmount, not(nullValue()))
         assertThat(item.executionTime, not(nullValue()))
         assertThat(item.status, not(nullValue()))
+        assertThat(item.statusDetail, not(nullValue()))
         assertThat(item.transactionId, not(blankOrNullString()))
 
         return true
@@ -49,6 +50,7 @@ class MerchantTransactionDetailMatcher: TypeSafeMatcher<MerchantTransactionDetai
         assertThat(item.grossAmount, not(nullValue()))
         assertThat(item.executionTime, not(nullValue()))
         assertThat(item.status, not(nullValue()))
+        assertThat(item.statusDetail, not(nullValue()))
         assertThat(item.transactionId, not(blankOrNullString()))
 
         return true

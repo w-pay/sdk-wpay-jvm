@@ -1,9 +1,6 @@
 package au.com.woolworths.village.sdk.matchers
 
-import au.com.woolworths.village.sdk.model.CreditCard
-import au.com.woolworths.village.sdk.model.GiftCard
-import au.com.woolworths.village.sdk.model.PaymentInstrumentAdditionResult
-import au.com.woolworths.village.sdk.model.PaymentInstruments
+import au.com.woolworths.village.sdk.model.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
@@ -11,7 +8,9 @@ import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.text.IsBlankString.blankOrNullString
 import org.junit.Assert.assertThat
 
-fun paymentInstruments(): Matcher<PaymentInstruments> = PaymentsInstrumentMatcher()
+fun allPaymentInstruments(): Matcher<AllPaymentInstruments> = AllPaymentInstrumentsMatcher()
+
+fun hasPaymentInstruments(): Matcher<PaymentInstruments> = PaymentInstrumentMatcher()
 
 fun <T : Any> hasCards(matcher: Matcher<T>): Matcher<List<T>> = CardsMatcher(matcher)
 
@@ -21,7 +20,22 @@ fun giftCard(): Matcher<GiftCard> = GiftCardMatcher()
 
 fun paymentInstrumentAdded(): Matcher<PaymentInstrumentAdditionResult> = PaymentInstrumentAdditionResultMatcher()
 
-class PaymentsInstrumentMatcher: TypeSafeMatcher<PaymentInstruments>() {
+class AllPaymentInstrumentsMatcher: TypeSafeMatcher<AllPaymentInstruments>() {
+    override fun matchesSafely(item: AllPaymentInstruments): Boolean {
+        assertThat(item.creditCards(), hasCards(creditCard()))
+        assertThat(item.giftCards(), hasCards(giftCard()))
+        assertThat(item.everydayPay()!!, hasPaymentInstruments())
+
+        return true
+    }
+
+    override fun describeTo(description: Description) {
+        description.appendText("A list of all payments instruments")
+    }
+
+}
+
+class PaymentInstrumentMatcher: TypeSafeMatcher<PaymentInstruments>() {
     override fun matchesSafely(item: PaymentInstruments): Boolean {
         assertThat(item.creditCards(), hasCards(creditCard()))
         assertThat(item.giftCards(), hasCards(giftCard()))
@@ -96,7 +110,6 @@ class GiftCardMatcher: TypeSafeMatcher<GiftCard>() {
         assertThat(stepUp, not(nullValue()))
         assertThat(stepUp?.mandatory(), not(nullValue()))
         assertThat(stepUp?.type(), not(blankOrNullString()))
-        assertThat(stepUp?.url(), not(nullValue()))
 
         return true
     }

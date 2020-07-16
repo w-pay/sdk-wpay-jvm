@@ -22,5 +22,10 @@ interface TransactionSummary: Payment {
 
     fun status(): PaymentStatus
 
+    /*
+     * The return type has yet to be defined in the spec.
+     */
+    fun statusDetail(): Any
+
     fun refundReason(): String?
 }

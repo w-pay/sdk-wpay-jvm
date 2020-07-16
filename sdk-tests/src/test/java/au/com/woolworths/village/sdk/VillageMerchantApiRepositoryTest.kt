@@ -1,9 +1,6 @@
 package au.com.woolworths.village.sdk
 
-import au.com.woolworths.village.sdk.data.aNewPaymentRequest
-import au.com.woolworths.village.sdk.data.aNewPaymentRequestQRCode
-import au.com.woolworths.village.sdk.data.aNewSchema
-import au.com.woolworths.village.sdk.data.aNewTransactionRefund
+import au.com.woolworths.village.sdk.data.*
 import au.com.woolworths.village.sdk.matchers.*
 import au.com.woolworths.village.sdk.openapi.OpenApiSdkFactory
 import org.hamcrest.Matchers
@@ -43,7 +40,7 @@ class VillageMerchantApiRepositoryTest {
     fun shouldCreatePaymentRequestQRCode() {
         val result = api.createPaymentRequestQRCode(aNewPaymentRequestQRCode())
 
-        assertThat(result, isSuccessfulWith(qrCode()))
+        assertThat(result, isSuccessfulWith(aQrCode()))
     }
 
     @Test
@@ -52,7 +49,7 @@ class VillageMerchantApiRepositoryTest {
 
         val result = api.retrievePaymentRequestQRCodeContent(qrCodeId)
 
-        assertThat(result, isSuccessfulWith(qrCode()))
+        assertThat(result, isSuccessfulWith(aQrCode()))
     }
 
     @Test
@@ -158,6 +155,22 @@ class VillageMerchantApiRepositoryTest {
         val result = api.createSchema(aNewSchema())
 
         assertThat(result, isSuccessfulWith(merchantSchemaSummary()))
+    }
+
+    @Test
+    fun shouldCreatePaymentSession() {
+        val result = api.createPaymentSession(TestCreatePaymentSessionRequest())
+
+        assertThat(result, isSuccessfulWith(paymentSessionCreated()))
+    }
+
+    @Test
+    fun shouldRetrievePaymentSession() {
+        val paymentSessionId = "a5bbfe1a-c1b9-11ea-924f-33c96a9759eb"
+
+        val result = api.retrievePaymentSession(paymentSessionId)
+
+        assertThat(result, isSuccessfulWith(paymentSession()))
     }
 
     @Test

@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk
 
+import au.com.woolworths.village.sdk.data.TestUpdatePaymentSessionRequest
 import au.com.woolworths.village.sdk.data.aNewCustomerPaymentRequest
 import au.com.woolworths.village.sdk.data.aNewPaymentInstrument
 import au.com.woolworths.village.sdk.data.aSelectedPaymentInstrument
@@ -66,16 +67,16 @@ class VillageCustomerApiRepositoryTest {
 
     @Test
     fun shouldRetrievePaymentInstruments() {
-        val result = api.retrievePaymentInstruments()
+        val result = api.retrievePaymentInstruments(Wallet.MERCHANT)
 
-        assertThat(result, isSuccessfulWith(paymentInstruments()))
+        assertThat(result, isSuccessfulWith(allPaymentInstruments()))
     }
 
     @Test
     fun shouldInitiatePaymentInstrumentAddition() {
         val instrument = aNewPaymentInstrument()
 
-        val result = api.initiatePaymentInstrumentAddition(instrument)
+        val result = api.initiatePaymentInstrumentAddition(instrument, Wallet.EVERYDAY_PAY)
 
         assertThat(result, isSuccessfulWith(paymentInstrumentAdded()))
     }
@@ -98,6 +99,36 @@ class VillageCustomerApiRepositoryTest {
                 "preference" to "value"
             )
         ))
+
+        assertThat(result, isSuccessful())
+    }
+
+    @Test
+    fun shouldRetrieveCustomerPaymentSession() {
+        val paymentSessionId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
+
+        val result = api.retrieveCustomerPaymentSession(paymentSessionId)
+
+        assertThat(result, isSuccessfulWith(paymentSession()))
+    }
+
+    @Test
+    fun shouldRetrieveCustomerPaymentSessionByQR() {
+        val qrCodeId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
+
+        val result = api.retrieveCustomerPaymentSessionByQR(qrCodeId)
+
+        assertThat(result, isSuccessfulWith(paymentSession()))
+    }
+
+    @Test
+    fun shouldUpdateCustomerPaymentSession() {
+        val paymentSessionId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
+
+        val result = api.updateCustomerPaymentSession(
+            paymentSessionId,
+            TestUpdatePaymentSessionRequest()
+        )
 
         assertThat(result, isSuccessful())
     }

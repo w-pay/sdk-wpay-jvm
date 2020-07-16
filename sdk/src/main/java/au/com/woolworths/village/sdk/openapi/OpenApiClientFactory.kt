@@ -6,6 +6,7 @@ import au.com.woolworths.village.sdk.openapi.api.AdministrationApi
 import au.com.woolworths.village.sdk.openapi.api.CustomerApi
 import au.com.woolworths.village.sdk.openapi.api.MerchantApi
 import au.com.woolworths.village.sdk.openapi.client.ApiClient
+import au.com.woolworths.village.sdk.openapi.dto.DynamicPayload
 
 open class OpenApiClientFactory(
     private val requestHeadersFactory: RequestHeadersFactory,
@@ -29,8 +30,21 @@ open class OpenApiClientFactory(
         return MerchantApi(createApiClient())
     }
 
+    protected fun getDefaultHeader(client: ApiClient, name: String): String? {
+        return (client as ExtendedApiClient).getDefaultHeader(name)
+    }
+
+    protected fun toDynamicPayload(payload: au.com.woolworths.village.sdk.model.DynamicPayload): DynamicPayload {
+        val dto = DynamicPayload()
+
+        dto.schemaId = payload.schemaId()
+        dto.payload = payload.payload()
+
+        return dto
+    }
+
     private fun createApiClient(): ApiClient {
-        val apiClient = ApiClient()
+        val apiClient = ExtendedApiClient()
         apiClient.basePath = "${host}${contextRoot}"
 
         requestHeadersFactory.createHeaders().forEach { (name, value) ->

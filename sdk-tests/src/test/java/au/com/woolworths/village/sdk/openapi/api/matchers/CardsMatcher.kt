@@ -78,7 +78,6 @@ class GiftCardsMatcher : TypeSafeMatcher<GetCustomerPaymentInstrumentsResultsDat
             assertThat(stepUp, not(nullValue()))
             assertThat(stepUp?.mandatory, not(nullValue()))
             assertThat(stepUp?.type, not(blankOrNullString()))
-            assertThat(stepUp?.url, not(blankOrNullString()))
         }
 
         return true

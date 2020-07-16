@@ -11,6 +11,8 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.threeten.bp.OffsetDateTime
 
+const val X_WALLET_ID = "some value"
+
 class CustomerApiTest {
     companion object {
         @BeforeClass
@@ -26,7 +28,11 @@ class CustomerApiTest {
     fun getCustomerPaymentDetailsByPaymentIdTest() {
         val paymentRequestId = "abc123def"
 
-        val result = api.getCustomerPaymentDetailsByPaymentId(paymentRequestId)
+        val result = api.getCustomerPaymentDetailsByPaymentId(
+            X_WALLET_ID,
+            paymentRequestId
+        )
+
         assertThat(result.data, hasCustomerPaymentDetails())
         assertThat(result.meta, not(nullValue()))
     }
@@ -35,14 +41,18 @@ class CustomerApiTest {
     fun getCustomerPaymentDetailsByQRCodeIdTest() {
         val qrId = "abc123def"
 
-        val result = api.getCustomerPaymentDetailsByQRCodeId(qrId)
+        val result = api.getCustomerPaymentDetailsByQRCodeId(
+            X_WALLET_ID,
+            qrId
+        )
+
         assertThat(result.data, hasCustomerPaymentDetails())
         assertThat(result.meta, not(nullValue()))
     }
 
     @Test
     fun getCustomerPaymentInstrumentsTest() {
-        val instruments = api.customerPaymentInstruments
+        val instruments = api.getCustomerPaymentInstruments(X_WALLET_ID, false)
 
         assertThat(instruments.data, hasCreditCards())
         assertThat(instruments.data, hasGiftCards())
@@ -51,7 +61,7 @@ class CustomerApiTest {
 
     @Test
     fun getCustomerPreferencesTest() {
-        val preferences = api.customerPreferences
+        val preferences = api.getCustomerPreferences(X_WALLET_ID)
 
         val preferenceGroup = preferences.data["preferenceGroup"]
         assertThat(preferenceGroup, not(nullValue()))
@@ -62,7 +72,11 @@ class CustomerApiTest {
     fun getCustomerTransactionDetailsTest() {
         val transactionId = "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
 
-        val result = api.getCustomerTransactionDetails(transactionId)
+        val result = api.getCustomerTransactionDetails(
+            X_WALLET_ID,
+            transactionId
+        )
+
         assertThat(result.data, hasCustomerTransactionDetails())
         assertThat(result.data.basket, hasBasketItems())
         assertThat(result.meta, not(nullValue()))
@@ -76,7 +90,15 @@ class CustomerApiTest {
         val pageSize = 20
         val page = 2
 
-        val results = api.getCustomerTransactions(paymentRequestId, startTime, endTime, pageSize, page)
+        val results = api.getCustomerTransactions(
+            X_WALLET_ID,
+            paymentRequestId,
+            startTime,
+            endTime,
+            pageSize,
+            page
+        )
+
         assertThat(results.data, hasCustomerTransactions())
         assertThat(results.meta, isPaginatedMeta())
     }
@@ -89,7 +111,12 @@ class CustomerApiTest {
         val instrumentAdditionDetails = InstrumentAdditionDetails()
         instrumentAdditionDetails.data = data
 
-        val result = api.initiatePaymentInstrumentAddition(instrumentAdditionDetails)
+        val result = api.initiatePaymentInstrumentAddition(
+            X_WALLET_ID,
+            instrumentAdditionDetails,
+            false
+        )
+
         assertThat(result.data.cardCaptureURL, not(nullValue()))
         assertThat(result.data.transactionRef, not(nullValue()))
     }
@@ -102,7 +129,13 @@ class CustomerApiTest {
         customerPaymentDetails.data.primaryInstrumentId = "124456"
         customerPaymentDetails.data.secondaryInstruments = ArrayList()
 
-        val result = api.makeCustomerPayment(paymentRequestId, customerPaymentDetails)
+        val result = api.makeCustomerPayment(
+            X_WALLET_ID,
+            paymentRequestId,
+            customerPaymentDetails,
+            false
+        )
+
         assertThat(result.data, hasCustomerTransactionSummary())
         assertThat(result.meta, not(nullValue()))
     }
@@ -116,6 +149,52 @@ class CustomerApiTest {
             )
         ) as Map<String, Map<String, String>>
 
-        api.setCustomerPreferences(customerPreferences)
+        api.setCustomerPreferences(
+            X_WALLET_ID,
+            customerPreferences
+        )
+    }
+
+    @Test
+    fun getCustomerPaymentSessionTest() {
+        val paymentSessionId = "abc123"
+
+        val result = api.getCustomerPaymentSession(
+            X_WALLET_ID,
+            paymentSessionId
+        )
+
+        assertThat(result.data, hasPaymentSession())
+        assertThat(result.meta, not(nullValue()))
+    }
+
+    @Test
+    fun getCustomerPaymentSessionByQrTest() {
+        val qrCodeId = "abc123"
+
+        val result = api.getCustomerPaymentSessionByQr(
+            X_WALLET_ID,
+            qrCodeId
+        )
+
+        assertThat(result.data, hasPaymentSession())
+        assertThat(result.meta, not(nullValue()))
+    }
+
+    @Test
+    fun updateCustomerPaymentSessionTest() {
+        val paymentSessionId = "abc123"
+
+        val updateSessionRequest = UpdatePaymentSessionRequest()
+        updateSessionRequest.data = CustomerPaymentSessionPaymentSessionIdData()
+        updateSessionRequest.data.additionalInfo = DynamicPayload()
+        updateSessionRequest.data.additionalInfo.schemaId = "def456"
+        updateSessionRequest.data.additionalInfo.payload = emptyMap()
+
+        api.updateCustomerPaymentSession(
+            X_WALLET_ID,
+            paymentSessionId,
+            updateSessionRequest
+        )
     }
 }

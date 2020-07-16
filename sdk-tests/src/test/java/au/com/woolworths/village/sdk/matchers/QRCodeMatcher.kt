@@ -9,9 +9,11 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.text.IsBlankString.blankOrNullString
 
-fun qrCode(): Matcher<QRCode> {
+fun aQrCode(): Matcher<QRCode> {
     return QRCodeMatcher()
 }
+
+fun isAQrCode(): Matcher<QRCode> = aQrCode()
 
 class QRCodeMatcher: TypeSafeMatcher<QRCode>() {
     override fun matchesSafely(item: QRCode): Boolean {

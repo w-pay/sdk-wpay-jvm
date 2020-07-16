@@ -4,7 +4,6 @@ import au.com.woolworths.village.sdk.openapi.api.data.basketWithItem
 import au.com.woolworths.village.sdk.openapi.api.matchers.*
 import au.com.woolworths.village.sdk.openapi.client.Configuration
 import au.com.woolworths.village.sdk.openapi.dto.*
-
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.hamcrest.text.IsBlankString.blankOrNullString
@@ -27,7 +26,11 @@ class MerchantApiTest {
     @Test
     fun cancelPaymentQRCodeTest() {
         val qrId = "dca8edc5-bbb7-44c0-8056-a5daf4327601"
-        api.cancelPaymentQRCode(qrId)
+
+        api.cancelPaymentQRCode(
+            X_WALLET_ID,
+            qrId
+        )
     }
 
     @Test
@@ -46,7 +49,11 @@ class MerchantApiTest {
             )
         ) as Map<String, Any>
 
-        val result = api.createMerchantSchema(schema)
+        val result = api.createMerchantSchema(
+            X_WALLET_ID,
+            schema
+        )
+
         assertThat(result.data.type, equalTo(schema.data.type))
         assertThat(result.data.description, equalTo(schema.data.description))
         assertThat(result.data.schemaId, not(blankOrNullString()))
@@ -58,10 +65,13 @@ class MerchantApiTest {
         val paymentQRCodeDetails = PaymentQRCodeDetails()
         paymentQRCodeDetails.data = MerchantQrData()
         paymentQRCodeDetails.data.referenceId = "1075839a-8923-11ea-bb06-6b3f2264ccd7"
-        paymentQRCodeDetails.data.referenceType = MerchantQrData.ReferenceTypeEnum.POINT
+        paymentQRCodeDetails.data.referenceType = MerchantQrData.ReferenceTypeEnum.SESSION
         paymentQRCodeDetails.data.timeToLive = 300
 
-        val result = api.createPaymentQRCode(paymentQRCodeDetails)
+        val result = api.createPaymentQRCode(
+            X_WALLET_ID,
+            paymentQRCodeDetails
+        )
 
         assertThat(result.data, isQrCode())
         assertThat(result.meta, not(nullValue()))
@@ -90,7 +100,10 @@ class MerchantApiTest {
             payload = HashMap()
         }
 
-        val result = api.createPaymentRequest(merchantPaymentRequest)
+        val result = api.createPaymentRequest(
+            X_WALLET_ID,
+            merchantPaymentRequest
+        )
 
         assertThat(result.data.paymentRequestId, not(blankOrNullString()))
         assertThat(result.data.qr, isQrCode())
@@ -100,13 +113,14 @@ class MerchantApiTest {
     @Test
     fun deleteMerchantPaymentTest() {
         val paymentRequestId = "2c6ffba4-8912-11ea-80d7-1766761cedbe"
-        api.deleteMerchantPayment(paymentRequestId)
+
+        api.deleteMerchantPayment(X_WALLET_ID, paymentRequestId)
     }
 
     @Test
     fun getMerchantPaymentDetailsTest() {
         val paymentRequestId = "2c6ffba4-8912-11ea-80d7-1766761cedbe"
-        val result = api.getMerchantPaymentDetails(paymentRequestId)
+        val result = api.getMerchantPaymentDetails(X_WALLET_ID, paymentRequestId)
 
         assertThat(result.data, hasMerchantPaymentDetails())
         assertThat(result.meta, not(nullValue()))
@@ -118,7 +132,12 @@ class MerchantApiTest {
         val pageSize = 50
         val page = 2
 
-        val result = api.getMerchantPayments(type, pageSize, page)
+        val result = api.getMerchantPayments(
+            X_WALLET_ID,
+            type,
+            pageSize,
+            page
+        )
 
         assertThat(result.data.payments.size, greaterThanOrEqualTo(1))
         assertThat(result.data.payments, hasItems(withMerchantPaymentSummary()))
@@ -127,7 +146,7 @@ class MerchantApiTest {
 
     @Test
     fun getMerchantPreferencesTest() {
-        val preferences = api.merchantPreferences
+        val preferences = api.getMerchantPreferences(X_WALLET_ID)
 
         val preferenceGroup = preferences.data["preferenceGroup"]
         assertThat(preferenceGroup, not(nullValue()))
@@ -136,7 +155,7 @@ class MerchantApiTest {
 
     @Test
     fun getMerchantSchemaTest() {
-        val schemas = api.merchantSchemas
+        val schemas = api.getMerchantSchemas(X_WALLET_ID)
 
         assertThat(schemas.data.schemas.size, greaterThanOrEqualTo(1))
         assertThat(schemas.data.schemas, hasItems(withSchemaSummary()))
@@ -146,7 +165,10 @@ class MerchantApiTest {
     @Test
     fun getMerchantSchemaDetailsTest() {
         val schemaId = "f13fc2fb-bfe1-4ec2-92e8-78f0f6dfced0"
-        val result = api.getMerchantSchemaDetails(schemaId)
+        val result = api.getMerchantSchemaDetails(
+            X_WALLET_ID,
+            schemaId
+        )
 
         assertThat(result.data.type, not(blankOrNullString()))
         assertThat(result.data.description, not(blankOrNullString()))
@@ -157,7 +179,10 @@ class MerchantApiTest {
     @Test
     fun getMerchantTransactionDetailsTest() {
         val transactionId = "0756eaaf-34cf-456f-a870-6da2bf4761a9"
-        val result = api.getMerchantTransactionDetails(transactionId)
+        val result = api.getMerchantTransactionDetails(
+            X_WALLET_ID,
+            transactionId
+        )
 
         assertThat(result.data, hasMerchantTransactionDetails())
         assertThat(result.meta, not(nullValue()))
@@ -170,7 +195,13 @@ class MerchantApiTest {
         val pageSize = 20
         val page = 2
 
-        val result = api.getMerchantTransactions(startTime, endTime, pageSize, page)
+        val result = api.getMerchantTransactions(
+            X_WALLET_ID,
+            startTime,
+            endTime,
+            pageSize,
+            page
+        )
 
         assertThat(result.data.transactions.size, greaterThanOrEqualTo(1))
         assertThat(result.data.transactions, hasItem(withMerchantTransactionSummary()))
@@ -180,7 +211,10 @@ class MerchantApiTest {
     @Test
     fun getPaymentQRCodeContentTest() {
         val qrId = "60006a56-892d-11ea-9d87-f3644d81edc2"
-        val results = api.getPaymentQRCodeContent(qrId)
+        val results = api.getPaymentQRCodeContent(
+            X_WALLET_ID,
+            qrId
+        )
 
         assertThat(results.data, isQrCode())
         assertThat(results.meta, not(nullValue()))
@@ -193,7 +227,11 @@ class MerchantApiTest {
         refundMerchantTransactionRequest.data = MerchantTransactionsTransactionIdRefundData()
         refundMerchantTransactionRequest.data.reason = "Customer returned item"
 
-        val result = api.refundMerchantTransaction(transactionId, refundMerchantTransactionRequest)
+        val result = api.refundMerchantTransaction(
+            X_WALLET_ID,
+            transactionId,
+            refundMerchantTransactionRequest
+        )
 
         assertThat(result.data, hasMerchantTransactionSummary())
         assertThat(result.meta, not(nullValue()))
@@ -208,6 +246,38 @@ class MerchantApiTest {
             )
         ) as Map<String, Map<String, String>>
 
-        api.setMerchantPreferences(merchantPreferences)
+        api.setMerchantPreferences(
+            X_WALLET_ID,
+            merchantPreferences
+        )
+    }
+
+    @Test
+    fun createPaymentSessionTest() {
+        val createRequest = CreatePaymentSessionRequest()
+        createRequest.data = MerchantPaymentSessionData()
+        createRequest.data.location = "somewhere"
+        createRequest.data.additionalInfo = DynamicPayload()
+
+        val result = api.createCustomerPaymentSession(
+            X_WALLET_ID,
+            createRequest
+        )
+
+        assertThat(result.data, hasPaymentSessionCreated())
+        assertThat(result.meta, not(nullValue()))
+    }
+
+    @Test
+    fun shouldRetrievePaymentSession() {
+        val paymentSessionId = "a5bbfe1a-c1b9-11ea-924f-33c96a9759eb"
+
+        val result = api.getMerchantPaymentSession(
+            X_WALLET_ID,
+            paymentSessionId
+        )
+
+        assertThat(result.data, hasPaymentSession())
+        assertThat(result.meta, not(nullValue()))
     }
 }

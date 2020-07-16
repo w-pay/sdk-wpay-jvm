@@ -1,8 +1,8 @@
 package au.com.woolworths.village.sdk.data
 
+import au.com.woolworths.village.sdk.Wallet
 import au.com.woolworths.village.sdk.model.PaymentInstrument
 import au.com.woolworths.village.sdk.model.PaymentInstrumentAddition
-import au.com.woolworths.village.sdk.model.PaymentInstrumentStepUp
 import org.threeten.bp.OffsetDateTime
 
 fun aSelectedPaymentInstrument(): PaymentInstrument = TestPaymentInstrument()
@@ -41,8 +41,8 @@ class TestPaymentInstrument: PaymentInstrument {
         return PaymentInstrument.InstrumentStatus.VERIFIED
     }
 
-    override fun stepUp(): PaymentInstrumentStepUp? {
-        return null
+    override fun wallet(): Wallet {
+        return Wallet.MERCHANT
     }
 }
 

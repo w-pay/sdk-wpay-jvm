@@ -1,8 +1,13 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.Wallet
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 import java.net.URL
+
+interface AllPaymentInstruments: PaymentInstruments {
+    fun everydayPay(): PaymentInstruments?
+}
 
 interface PaymentInstruments: Serializable {
     fun creditCards(): List<CreditCard>
@@ -18,12 +23,14 @@ interface PaymentInstrument: Serializable {
     fun allowed(): Boolean
     fun cardSuffix(): String
     fun lastUpdated(): OffsetDateTime
-    fun lastUsed(): OffsetDateTime
+    fun lastUsed(): OffsetDateTime?
     fun paymentInstrumentId(): String
     fun paymentToken(): String
     fun primary(): Boolean
     fun status(): InstrumentStatus
-    fun stepUp(): PaymentInstrumentStepUp?
+
+    /** what Wallet the instrument is from */
+    fun wallet(): Wallet
 }
 
 interface CreditCard: PaymentInstrument {
@@ -35,17 +42,21 @@ interface CreditCard: PaymentInstrument {
     fun requiresCVV(): Boolean
     fun scheme(): String
     fun updateURL(): URL
-
-    // setup is mandatory for credit cards
-    override fun stepUp(): PaymentInstrumentStepUp
+    fun stepUp(): CreditCardStepUp
 }
 
 interface GiftCard: PaymentInstrument {
     fun programName(): String
+    fun stepUp(): GiftCardStepUp?
 }
 
-interface PaymentInstrumentStepUp {
+interface CreditCardStepUp {
     fun type(): String
     fun mandatory(): Boolean
     fun url(): URL
+}
+
+interface GiftCardStepUp {
+    fun type(): String
+    fun mandatory(): Boolean
 }

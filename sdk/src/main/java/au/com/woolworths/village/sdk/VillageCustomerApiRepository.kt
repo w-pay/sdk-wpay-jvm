@@ -23,13 +23,31 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun retrievePaymentRequestDetailsByRequestId(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
 
-    fun makePayment(paymentRequest: CustomerPaymentRequest, instrument: PaymentInstrument): ApiResult<CustomerTransactionSummary>
+    fun makePayment(
+        paymentRequest: CustomerPaymentRequest,
+        instrument: PaymentInstrument
+    ): ApiResult<CustomerTransactionSummary>
 
-    fun retrievePaymentInstruments(): ApiResult<PaymentInstruments>
+    /**
+     * @param wallet When set to MERCHANT retrieves only from merchant wallet. EVERYDAY_PAY retrieves both merchant and everyday pay wallet instruments.
+     */
+    fun retrievePaymentInstruments(wallet: Wallet): ApiResult<AllPaymentInstruments>
 
-    fun initiatePaymentInstrumentAddition(instrument: PaymentInstrumentAddition): ApiResult<PaymentInstrumentAdditionResult>
+    fun initiatePaymentInstrumentAddition(
+        instrument: PaymentInstrumentAddition,
+        wallet: Wallet
+    ): ApiResult<PaymentInstrumentAdditionResult>
 
     fun retrievePreferences(): ApiResult<CustomerPreferences>
 
     fun setPreferences(preferences: CustomerPreferences): ApiResult<Unit>
+
+    fun retrieveCustomerPaymentSession(paymentSessionId: String): ApiResult<PaymentSession>
+
+    fun retrieveCustomerPaymentSessionByQR(qrCodeId: String): ApiResult<PaymentSession>
+
+    fun updateCustomerPaymentSession(
+        paymentSessionId: String,
+        session: UpdatePaymentSessionRequest
+    ): ApiResult<Unit>
 }

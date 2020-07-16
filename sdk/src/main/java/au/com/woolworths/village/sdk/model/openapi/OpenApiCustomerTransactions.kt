@@ -41,6 +41,10 @@ class OpenApiCustomerTransactionSummary(
         return TransactionSummary.PaymentStatus.valueOf(summary.status.value)
     }
 
+    override fun statusDetail(): Any {
+        return Any()
+    }
+
     override fun refundReason(): String? {
         return summary.refundReason
     }
@@ -87,6 +91,10 @@ class OpenApiCustomerTransactionDetails(
 
     override fun status(): TransactionSummary.PaymentStatus {
         return TransactionSummary.PaymentStatus.valueOf(details.status.value)
+    }
+
+    override fun statusDetail(): Any {
+        return Any()
     }
 
     override fun refundReason(): String? {

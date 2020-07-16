@@ -77,7 +77,7 @@ fun paymentRequestCreated(): Matcher<CreatePaymentRequestResult> {
 class CreatePaymentRequestResultMatcher: TypeSafeMatcher<CreatePaymentRequestResult>() {
     override fun matchesSafely(item: CreatePaymentRequestResult): Boolean {
         assertThat(item.paymentRequestId(), not(blankOrNullString()))
-        assertThat(item.qr()!!, qrCode())
+        assertThat(item.qr()!!, isAQrCode())
 
         return true
     }

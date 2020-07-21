@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def contextRoot = properties.getProperty('qr.context.root', "/wow/v1/dpwallet")
+def contextRoot = properties.getProperty('qr.context.root', "/wow/v1/pay/dev4/instore")
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion

@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.openapi
 
+import au.com.woolworths.village.sdk.ApiException
 import au.com.woolworths.village.sdk.Configurable
 import au.com.woolworths.village.sdk.RequestHeadersFactory
 import au.com.woolworths.village.sdk.openapi.api.AdministrationApi
@@ -41,6 +42,10 @@ open class OpenApiClientFactory(
         dto.payload = payload.payload()
 
         return dto
+    }
+
+    protected fun toApiException(e: au.com.woolworths.village.sdk.openapi.client.ApiException): ApiException {
+        return ApiException(e.code, e.responseHeaders, e.responseBody)
     }
 
     private fun createApiClient(): ApiClient {

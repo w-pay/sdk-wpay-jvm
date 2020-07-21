@@ -27,29 +27,24 @@ class CustomerLoginApiAuthenticator(
         ))
 
         val builder: OkHttpClient.Builder = OkHttpClient.Builder()
-        val client = builder.build();
+        val client = builder.build()
         val req: Request = Request.Builder()
             .url("${origin}${path}")
             .apply { requestHeaders.createHeaders().forEach { (name, value) -> addHeader(name, value) } }
             .post(credentials.toRequestBody("application/json; charset=utf-8".toMediaType()))
             .build()
 
-        try {
-            client.newCall(req).execute().use { response ->
-                val body = response.body?.string() ?: throw IllegalStateException("No response body")
-                Log.d("Authentication", "customerLogin: body = '${body}'")
+        client.newCall(req).execute().use { response ->
+            val body = response.body?.string() ?: throw IllegalStateException("No response body")
+            Log.d("Authentication", "customerLogin: body = '${body}'")
 
-                if (response.isSuccessful) {
-                    val result = gson.fromJson<IdmTokenDetails>(body, IdmTokenDetails::class.java)
+            if (response.isSuccessful) {
+                val result = gson.fromJson<IdmTokenDetails>(body, IdmTokenDetails::class.java)
 
-                    return ApiResult.Success(result)
-                }
-
-                return ApiResult.Error(ApiException(response.code, response.headers.toMultimap(), body))
+                return ApiResult.Success(result)
             }
-        }
-        catch (e: Exception) {
-            return ApiResult.Error(e)
+
+            return ApiResult.Error(ApiException(response.code, response.headers.toMultimap(), body))
         }
     }
 

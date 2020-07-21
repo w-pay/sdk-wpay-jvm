@@ -27,7 +27,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiHealthCheck(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -52,7 +52,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiCustomerTransactionSummaries(data.transactions))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -67,7 +67,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiCustomerTransactionDetails(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -82,7 +82,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiCustomerPaymentRequest(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -97,7 +97,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiCustomerPaymentRequest(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -117,7 +117,7 @@ class OpenApiVillageCustomerApiRepository(
             ))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -141,7 +141,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiPaymentInstrumentAdditionResult(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -155,7 +155,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(data)
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -174,7 +174,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(Unit)
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -190,7 +190,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiPaymentSession(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -206,7 +206,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiPaymentSession(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -230,7 +230,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(Unit)
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 
@@ -257,7 +257,7 @@ class OpenApiVillageCustomerApiRepository(
             ApiResult.Success(OpenApiCustomerTransactionSummary(data))
         }
         catch (e: ApiException) {
-            ApiResult.Error(e)
+            ApiResult.Error(toApiException(e))
         }
     }
 }

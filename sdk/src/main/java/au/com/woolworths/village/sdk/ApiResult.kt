@@ -5,5 +5,5 @@ package au.com.woolworths.village.sdk
  */
 sealed class ApiResult<out T: Any> {
     data class Success<out T: Any>(val value: T): ApiResult<T>()
-    data class Error(val e: Exception): ApiResult<Nothing>()
+    data class Error(val e: ApiException): ApiResult<Nothing>()
 }

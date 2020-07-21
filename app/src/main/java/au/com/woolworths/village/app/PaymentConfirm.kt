@@ -160,11 +160,16 @@ class PaymentConfirm : AppCompatActivity() {
     }
 
     private fun bindPaymentInstrument() {
-        // TODO: We pick a card be default.
         data.paymentInstruments.value?.let {
             when (it) {
                 is ApiResult.Success -> {
-                    bindings.slideToPay.unlock()
+                    if (it.value.creditCards().isEmpty()) {
+                        Log.e("PaymentConfirm", "No credit cards returned from API")
+                        showMissingDetailsError(R.string.payment_instruments_retrieve_error)
+                    }
+                    else {
+                        bindings.slideToPay.unlock()
+                    }
                 }
 
                 is ApiResult.Error -> {
@@ -331,14 +336,12 @@ class ViewModel : androidx.lifecycle.ViewModel() {
     fun retrievePaymentInstruments() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                var result = village.retrievePaymentInstruments(Wallet.MERCHANT)
+                val result = village.retrievePaymentInstruments(Wallet.MERCHANT)
 
                 when (result) {
                     is ApiResult.Success -> {
-                        if (result.value.creditCards().isEmpty()) {
-                            result = ApiResult.Error(Exception("No payment instruments"))
-                        }
-                        else {
+                        if (result.value.creditCards().isNotEmpty()) {
+                            // TODO: We pick a card by default.
                             selectedPaymentInstrument = result.value.creditCards()[0]
                         }
                     }

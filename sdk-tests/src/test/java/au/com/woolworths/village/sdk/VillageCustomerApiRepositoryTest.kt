@@ -76,7 +76,7 @@ class VillageCustomerApiRepositoryTest {
     fun shouldInitiatePaymentInstrumentAddition() {
         val instrument = aNewPaymentInstrument()
 
-        val result = api.initiatePaymentInstrumentAddition(instrument, Wallet.EVERYDAY_PAY)
+        val result = api.initiatePaymentInstrumentAddition(instrument)
 
         assertThat(result, isSuccessfulWith(paymentInstrumentAdded()))
     }

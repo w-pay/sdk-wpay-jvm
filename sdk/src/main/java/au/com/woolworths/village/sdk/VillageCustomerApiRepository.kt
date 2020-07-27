@@ -34,8 +34,7 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
     fun retrievePaymentInstruments(wallet: Wallet): ApiResult<AllPaymentInstruments>
 
     fun initiatePaymentInstrumentAddition(
-        instrument: PaymentInstrumentAddition,
-        wallet: Wallet
+        instrument: PaymentInstrumentAddition
     ): ApiResult<PaymentInstrumentAdditionResult>
 
     fun retrievePreferences(): ApiResult<CustomerPreferences>

@@ -122,8 +122,7 @@ class OpenApiVillageCustomerApiRepository(
     }
 
     override fun initiatePaymentInstrumentAddition(
-        instrument: PaymentInstrumentAddition,
-        wallet: Wallet
+        instrument: PaymentInstrumentAddition
     ): ApiResult<PaymentInstrumentAdditionResult> {
         val api = createCustomerApi()
         return try {
@@ -135,7 +134,7 @@ class OpenApiVillageCustomerApiRepository(
             val data = api.initiatePaymentInstrumentAddition(
                 getDefaultHeader(api.apiClient, X_WALLET_ID),
                 body,
-                wallet == Wallet.EVERYDAY_PAY
+                instrument.wallet() == Wallet.EVERYDAY_PAY
             ).data
 
             ApiResult.Success(OpenApiPaymentInstrumentAdditionResult(data))

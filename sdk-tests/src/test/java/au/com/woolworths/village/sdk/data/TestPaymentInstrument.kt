@@ -51,4 +51,7 @@ class TestPaymentInstrumentAddition: PaymentInstrumentAddition {
         return "abc123"
     }
 
+    override fun wallet(): Wallet {
+        return Wallet.EVERYDAY_PAY
+    }
 }

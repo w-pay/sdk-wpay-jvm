@@ -6,7 +6,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.text.IsBlankString
+import org.hamcrest.text.IsBlankString.blankOrNullString
 import java.math.BigDecimal
 
 fun isBasket(): Matcher<Basket?> = BasketMatcher()
@@ -29,11 +29,11 @@ class BasketMatcher: TypeSafeMatcher<Basket>() {
     class BasketItemMatcher: TypeSafeMatcher<Basket.Items>() {
         override fun matchesSafely(item: Basket.Items): Boolean {
             assertThat(item, not(nullValue()))
-            assertThat(item.label(), not(IsBlankString.blankOrNullString()))
-            assertThat(item.description(), not(IsBlankString.blankOrNullString()))
+            assertThat(item.label(), not(blankOrNullString()))
+            assertThat(item.description(), not(blankOrNullString()))
             assertThat(item.quantity(), greaterThan(BigDecimal.ZERO))
             assertThat(item.unitPrice(), greaterThan(BigDecimal.ZERO))
-            assertThat(item.unitMeasure(), not(IsBlankString.blankOrNullString()))
+            assertThat(item.unitMeasure(), not(blankOrNullString()))
             assertThat(item.totalPrice(), greaterThan(BigDecimal.ZERO))
             assertThat(item.tags(), not(nullValue()))
             assertThat(item.tags().size, greaterThan(0))

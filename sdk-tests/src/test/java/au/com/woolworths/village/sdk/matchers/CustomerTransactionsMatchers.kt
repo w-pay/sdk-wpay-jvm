@@ -27,7 +27,7 @@ class CustomerTransactionsSummariesMatcher: TypeSafeMatcher<CustomerTransactionS
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("A list of customer transactions")
+        description.appendText("A list of customer transaction summaries")
     }
 }
 

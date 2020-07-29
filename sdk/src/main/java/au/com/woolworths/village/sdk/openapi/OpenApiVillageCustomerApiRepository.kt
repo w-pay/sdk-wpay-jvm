@@ -19,7 +19,7 @@ class OpenApiVillageCustomerApiRepository(
 ) : OpenApiClientFactory(requestHeadersFactory, contextRoot),
     VillageCustomerApiRepository
 {
-    override fun checkHealth(): ApiResult<HeathCheck> {
+    override fun checkHealth(): ApiResult<HealthCheck> {
         val api = createAdministrationApi()
         return try {
             val data = api.checkHealth().data

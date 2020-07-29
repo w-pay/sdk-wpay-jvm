@@ -1,6 +1,6 @@
 package au.com.woolworths.village.sdk.model
 
-interface HeathCheck {
+interface HealthCheck {
     enum class Status {
         SUCCESS
     }

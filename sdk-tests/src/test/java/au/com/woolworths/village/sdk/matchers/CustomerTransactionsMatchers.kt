@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.matchers
 
+import au.com.woolworths.village.sdk.model.CustomerTransactionDetails
 import au.com.woolworths.village.sdk.model.CustomerTransactionSummaries
 import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
 import au.com.woolworths.village.sdk.model.CustomerTransactions
@@ -35,7 +36,7 @@ fun customerTransactionSummary(): Matcher<CustomerTransactionSummary> {
     return CustomerTransactionSummaryMatcher()
 }
 
-class CustomerTransactionSummaryMatcher: TypeSafeMatcher<CustomerTransactionSummary>() {
+open class CustomerTransactionSummaryMatcher: TypeSafeMatcher<CustomerTransactionSummary>() {
     override fun matchesSafely(item: CustomerTransactionSummary): Boolean {
         assertThat(item.merchantId(), not(blankOrNullString()))
         assertThat(item.merchantReferenceId(), not(blankOrNullString()))
@@ -53,6 +54,22 @@ class CustomerTransactionSummaryMatcher: TypeSafeMatcher<CustomerTransactionSumm
 
     override fun describeTo(description: Description) {
         description.appendText("A Customer Transaction Summary")
+    }
+}
+
+fun customerTransactionDetails(): Matcher<CustomerTransactionDetails> = CustomerTransactionDetailsMatcher()
+
+class CustomerTransactionDetailsMatcher: TypeSafeMatcher<CustomerTransactionDetails>() {
+    private val summaryMatcher: CustomerTransactionSummaryMatcher = CustomerTransactionSummaryMatcher()
+
+    override fun matchesSafely(item: CustomerTransactionDetails): Boolean {
+        assertThat(item.basket(), isBasket())
+
+        return summaryMatcher.matches(item)
+    }
+
+    override fun describeTo(description: Description) {
+        description.appendText("Details on a customer transaction")
     }
 }
 

@@ -37,7 +37,7 @@ class VillageCustomerApiRepositoryTest {
 
         val result = api.retrieveTransactionDetails(transactionId)
 
-        assertThat(result, isSuccessfulWith(customerTransactionSummary()))
+        assertThat(result, isSuccessfulWith(customerTransactionDetails()))
     }
 
     @Test

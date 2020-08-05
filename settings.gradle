@@ -1,4 +1,4 @@
 rootProject.name='VillageWalletClientSDK'
-include ':app'
+
 include ':sdk'
 include ':sdk-tests'

@@ -19,7 +19,6 @@ buildscript {
 
 plugins {
     id 'project-report'
-    id 'org.openapi.generator' version '4.3.1'
 }
 
 allprojects {
@@ -34,9 +33,6 @@ htmlDependencyReport {
 }
 
 ext {
-    packageName = "au.com.woolworths.village"
-    spec = "$projectDir/village.json".toString()
-
     minSdkVersion = 21
     targetSdkVersion = 28
     buildToolsVersion = "29.0.3"
@@ -44,10 +40,6 @@ ext {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-openApiValidate {
-    inputSpec = project.ext.spec
 }
 
 def pascalCase = {
@@ -63,14 +55,14 @@ def camelCase = { it ->
 }
 
 def apis = [
-    "okhttp-gson": [
-        language: "java",
-        library: "okhttp-gson"
-    ],
-    "objc": [
-        language: "objc",
-        library: null
-    ]
+        "okhttp-gson": [
+                language: "java",
+                library: "okhttp-gson"
+        ],
+        "objc": [
+                language: "objc",
+                library: null
+        ]
 ]
 def sdkTestsProject = null
 def evaluatedProjects = []
@@ -137,36 +129,5 @@ subprojects.each { sub ->
                 evaluatedProjects.add(prj)
             }
         }
-    }
-}
-
-apis.each { name, api ->
-    def outputLoc = "${projectDir}/${name}".toString()
-
-    task("generate${pascalCase(name)}SdkApi", type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-        group = "SDK API Generators"
-        description = "Generates a Village SDK API client using the ${name} framework"
-        generatorName = api.language
-        validateSpec = true
-        library = api.library
-
-        inputSpec = project.ext.spec
-        outputDir = outputLoc
-
-        groupId = project.ext.packageName
-        id = "sdk-api-${name}"
-        packageName = "${project.ext.packageName}.sdk.openapi"
-        apiPackage = "${packageName.get()}.api"
-        invokerPackage = "${packageName.get()}.client"
-        modelPackage = "${packageName.get()}.dto"
-
-        generateModelTests = false
-        generateModelDocumentation = false
-        generateApiTests = false
-
-        configOptions = [
-            hideGenerationTimestamp: "true",
-            "serializableModel": "true"
-        ]
     }
 }

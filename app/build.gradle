@@ -75,8 +75,9 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-crashes:${app_center_version}"
     implementation "com.microsoft.appcenter:appcenter-distribute:${app_center_version}"
 
-    // TODO: Update to use repository
+    // FIXME: Update to use repository
     implementation project(':sdk')
+    implementation project(':okhttp-gson')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

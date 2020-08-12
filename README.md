@@ -1,7 +1,7 @@
-# Woolworths Village Android SDK
+# Woolworths Village Wallet Android SDK
 
-This project contains a collection of libraries that form the SDK to
-facilitate Android applications accessing the Village API.
+This project contains an Android library that can facilitate
+applications accessing the Village API.
 
 The SDK is currently in development. Therefore parts may change.
 
@@ -14,8 +14,9 @@ following core design philosophies.
 choices and an SDK shouldn't force an application to depend on a different
 technology stack as this bloats the build and increases complexity.
 
-2. Swappable. Don't like a particular implementation of the SDK, then
-swap it out for another object that implements the correct interface.
+2. Swappable. Don't like a particular implementation of a part in the
+SDK, then swap it out for another object that implements the correct
+interface.
 
 The SDK comprises of:
  - An adaption layer between the Application and the API
@@ -50,9 +51,15 @@ technology choices of the application.
 
 #### Open API Implementation
 
-For convenience, the `Woolworths Village SDK Open API Repository`
+For convenience, the [Woolworths Village SDK Open API Repository](https://github.com/woolworthslimited/paysdk2-openapi)
 project provides an implementation of the API Repository interfaces
-that uses the Open API generator to provide API Clients.
+that wraps an API Client created with the Open API generator.
+
+#### Reference Application
+
+A [Reference Application](https://github.com/woolworthslimited/paysdk2-reference-android) is available
+to demonstrate the use of the SDK. The library can be imported directly into a project
+or Gradle Composite Builds can be used.
 
 - TODO: Publishing
 - TODO: Tagging

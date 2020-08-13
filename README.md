@@ -49,6 +49,8 @@ interfaces. Consumers need to configure their `Village` instance with
 an implementation of the correct repository that conforms to needs and
 technology choices of the application.
 
+The SDK currently supports version 0.0.5 of the API spec.
+
 #### Open API Implementation
 
 For convenience, the [Woolworths Village SDK Open API Repository](https://github.com/woolworthslimited/paysdk2-openapi)

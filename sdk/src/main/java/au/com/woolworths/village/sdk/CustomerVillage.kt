@@ -23,7 +23,7 @@ class CustomerVillage<A : Any>(
         return authenticator.authenticate()
     }
 
-    fun retrievePaymentDetails(qrCode: String): ApiResult<CustomerPaymentRequest> {
+    fun retrievePaymentRequestDetailsByQRCode(qrCode: String): ApiResult<CustomerPaymentRequest> {
         return api.retrievePaymentRequestDetailsByQRCode(qrCode)
     }
 

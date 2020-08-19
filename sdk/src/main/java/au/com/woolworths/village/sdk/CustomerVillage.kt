@@ -1,10 +1,7 @@
 package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
-import au.com.woolworths.village.sdk.model.AllPaymentInstruments
-import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
-import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
-import au.com.woolworths.village.sdk.model.PaymentInstrument
+import au.com.woolworths.village.sdk.model.*
 
 /**
  * Entry point into the SDK. It is responsible for managing the relationship between app
@@ -36,5 +33,13 @@ class CustomerVillage<A : Any>(
         instrument: PaymentInstrument
     ): ApiResult<CustomerTransactionSummary> {
         return api.makePayment(paymentRequest, instrument)
+    }
+
+    fun retrievePaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession> {
+        return api.retrieveCustomerPaymentSessionById(paymentSessionId)
+    }
+
+    fun retrievePaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession> {
+        return api.retrieveCustomerPaymentSessionByQRCode(qrCodeId)
     }
 }

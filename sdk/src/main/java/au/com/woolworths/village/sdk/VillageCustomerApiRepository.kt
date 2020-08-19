@@ -24,8 +24,8 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
     fun retrievePaymentRequestDetailsByRequestId(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
 
     fun makePayment(
-        paymentRequest: CustomerPaymentRequest,
-        instrument: PaymentInstrument
+        paymentRequestId: String,
+        instrument: PaymentInstrumentIdentifier
     ): ApiResult<CustomerTransactionSummary>
 
     /**

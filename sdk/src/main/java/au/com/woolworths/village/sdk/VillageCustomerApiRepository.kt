@@ -21,7 +21,7 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun retrievePaymentRequestDetailsByQRCode(qrCodeId: String): ApiResult<CustomerPaymentRequest>
 
-    fun retrievePaymentRequestDetailsByRequestId(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
+    fun retrievePaymentRequestDetailsById(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
 
     fun makePayment(
         paymentRequestId: String,
@@ -41,9 +41,9 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun setPreferences(preferences: CustomerPreferences): ApiResult<Unit>
 
-    fun retrieveCustomerPaymentSession(paymentSessionId: String): ApiResult<PaymentSession>
+    fun retrieveCustomerPaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession>
 
-    fun retrieveCustomerPaymentSessionByQR(qrCodeId: String): ApiResult<PaymentSession>
+    fun retrieveCustomerPaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession>
 
     fun updateCustomerPaymentSession(
         paymentSessionId: String,

@@ -14,7 +14,14 @@ interface PaymentInstruments: Serializable {
     fun giftCards(): List<GiftCard>
 }
 
-interface PaymentInstrument: Serializable {
+interface PaymentInstrumentIdentifier: Serializable {
+    fun paymentInstrumentId(): String
+
+    /** what Wallet the instrument is from */
+    fun wallet(): Wallet
+}
+
+interface PaymentInstrument: PaymentInstrumentIdentifier {
     enum class InstrumentStatus {
         UNVERIFIED_PERSISTENT,
         VERIFIED
@@ -24,13 +31,9 @@ interface PaymentInstrument: Serializable {
     fun cardSuffix(): String
     fun lastUpdated(): OffsetDateTime
     fun lastUsed(): OffsetDateTime?
-    fun paymentInstrumentId(): String
     fun paymentToken(): String
     fun primary(): Boolean
     fun status(): InstrumentStatus
-
-    /** what Wallet the instrument is from */
-    fun wallet(): Wallet
 }
 
 interface CreditCard: PaymentInstrument {

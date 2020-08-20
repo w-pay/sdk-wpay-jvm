@@ -52,8 +52,8 @@ uploadArchives {
         repository(url: "packagecloud+https://packagecloud.io/woolworths/paysdk2") {
             authentication(password: System.getenv('PACKAGECLOUD_TOKEN'))
         }
-        pom.groupId = group
-        pom.version = version
+        pom.groupId = project.group
+        pom.version = project.version
         pom.artifactId = project.getName()
     }
 }

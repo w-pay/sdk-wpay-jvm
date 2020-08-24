@@ -16,6 +16,8 @@ interface TransactionSummary: Payment {
 
     fun transactionId(): String
 
+    fun clientReference(): String?
+
     fun type(): PaymentType
 
     fun executionTime(): OffsetDateTime

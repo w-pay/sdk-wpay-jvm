@@ -30,16 +30,25 @@ class CustomerVillage<A : Any>(
 
     fun makePayment(
         paymentRequestId: String,
-        instrument: PaymentInstrumentIdentifier
+        instrument: PaymentInstrumentIdentifier,
+        secondaryInstruments: List<SecondaryPaymentInstrument>?,
+        clientReference: String?,
+        challengeResponses: List<ChallengeResponse>?
     ): ApiResult<CustomerTransactionSummary> {
-        return api.makePayment(paymentRequestId, instrument)
+        return api.makePayment(
+            paymentRequestId,
+            instrument,
+            secondaryInstruments,
+            clientReference,
+            challengeResponses
+        )
     }
 
     fun retrievePaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession> {
-        return api.retrieveCustomerPaymentSessionById(paymentSessionId)
+        return api.retrievePaymentSessionById(paymentSessionId)
     }
 
     fun retrievePaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession> {
-        return api.retrieveCustomerPaymentSessionByQRCode(qrCodeId)
+        return api.retrievePaymentSessionByQRCode(qrCodeId)
     }
 }

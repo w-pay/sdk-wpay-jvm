@@ -3,6 +3,7 @@ package au.com.woolworths.village.sdk.model
 import au.com.woolworths.village.sdk.Wallet
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
+import java.math.BigDecimal
 import java.net.URL
 
 interface AllPaymentInstruments: PaymentInstruments {
@@ -62,4 +63,10 @@ interface CreditCardStepUp {
 interface GiftCardStepUp {
     fun type(): String
     fun mandatory(): Boolean
+}
+
+interface SecondaryPaymentInstrument {
+    fun paymentInstrumentId(): String
+
+    fun amount(): BigDecimal
 }

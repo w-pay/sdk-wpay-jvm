@@ -20,8 +20,8 @@ class CustomerVillage<A : Any>(
         return authenticator.authenticate()
     }
 
-    fun retrievePaymentRequestDetailsByQRCode(qrCodeId: String): ApiResult<CustomerPaymentRequest> {
-        return api.retrievePaymentRequestDetailsByQRCode(qrCodeId)
+    fun retrievePaymentRequestDetailsByQRCodeId(qrCodeId: String): ApiResult<CustomerPaymentRequest> {
+        return api.retrievePaymentRequestDetailsByQRCodeId(qrCodeId)
     }
 
     fun retrievePaymentInstruments(wallet: Wallet): ApiResult<AllPaymentInstruments> {
@@ -48,7 +48,7 @@ class CustomerVillage<A : Any>(
         return api.retrievePaymentSessionById(paymentSessionId)
     }
 
-    fun retrievePaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession> {
-        return api.retrievePaymentSessionByQRCode(qrCodeId)
+    fun retrievePaymentSessionByQRCodeId(qrCodeId: String): ApiResult<PaymentSession> {
+        return api.retrievePaymentSessionByQRCodeId(qrCodeId)
     }
 }

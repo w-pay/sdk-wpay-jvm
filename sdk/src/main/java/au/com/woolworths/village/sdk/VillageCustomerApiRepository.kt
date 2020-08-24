@@ -19,7 +19,7 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun retrieveTransactionDetails(transactionId: String): ApiResult<CustomerTransactionDetails>
 
-    fun retrievePaymentRequestDetailsByQRCode(qrCodeId: String): ApiResult<CustomerPaymentRequest>
+    fun retrievePaymentRequestDetailsByQRCodeId(qrCodeId: String): ApiResult<CustomerPaymentRequest>
 
     fun retrievePaymentRequestDetailsById(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
 
@@ -48,7 +48,7 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun retrievePaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession>
 
-    fun retrievePaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession>
+    fun retrievePaymentSessionByQRCodeId(qrCodeId: String): ApiResult<PaymentSession>
 
     fun updatePaymentSession(
         paymentSessionId: String,

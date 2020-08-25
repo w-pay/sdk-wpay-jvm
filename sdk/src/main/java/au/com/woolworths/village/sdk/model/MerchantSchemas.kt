@@ -1,5 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
+import org.threeten.bp.OffsetDateTime
+
 interface MerchantSchemas {
 }
 
@@ -21,4 +23,6 @@ interface MerchantSchema {
     fun type(): String?
 
     fun description(): String?
+
+    fun created(): OffsetDateTime?
 }

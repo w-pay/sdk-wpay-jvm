@@ -3,7 +3,7 @@ package au.com.woolworths.village.sdk.model
 interface CreatePaymentSessionRequest {
     fun location(): String
 
-    fun additionalInfo(): DynamicPayload
+    fun merchantInfo(): DynamicPayload
 
     fun generateQR(): Boolean {
         return false

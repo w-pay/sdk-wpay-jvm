@@ -48,4 +48,8 @@ interface VillageMerchantApiRepository: VillageAdministrationApiRepository {
     fun createPaymentSession(request: CreatePaymentSessionRequest): ApiResult<CreatePaymentSessionResult>
 
     fun retrievePaymentSession(paymentSessionId: String): ApiResult<PaymentSession>
+
+    fun updatePaymentSession(paymentSessionId: String, session: MerchantUpdatePaymentSessionRequest): ApiResult<Unit>
+
+    fun deletePaymentSession(paymentSessionId: String): ApiResult<Unit>
 }

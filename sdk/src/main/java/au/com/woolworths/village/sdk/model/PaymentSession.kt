@@ -13,5 +13,7 @@ interface PaymentSession {
 
     fun location(): String
 
-    fun additionalInfo(): DynamicPayload
+    fun merchantInfo(): DynamicPayload
+
+    fun customerInfo(): DynamicPayload?
 }

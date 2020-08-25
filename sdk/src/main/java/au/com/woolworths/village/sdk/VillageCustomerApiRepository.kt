@@ -19,19 +19,24 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun retrieveTransactionDetails(transactionId: String): ApiResult<CustomerTransactionDetails>
 
-    fun retrievePaymentRequestDetailsByQRCode(qrCodeId: String): ApiResult<CustomerPaymentRequest>
+    fun retrievePaymentRequestDetailsByQRCodeId(qrCodeId: String): ApiResult<CustomerPaymentRequest>
 
     fun retrievePaymentRequestDetailsById(paymentRequestId: String): ApiResult<CustomerPaymentRequest>
 
     fun makePayment(
         paymentRequestId: String,
-        instrument: PaymentInstrumentIdentifier
+        instrument: PaymentInstrumentIdentifier,
+        secondaryInstruments: List<SecondaryPaymentInstrument>?,
+        clientReference: String?,
+        challengeResponses: List<ChallengeResponse>?
     ): ApiResult<CustomerTransactionSummary>
 
     /**
      * @param wallet When set to MERCHANT retrieves only from merchant wallet. EVERYDAY_PAY retrieves both merchant and everyday pay wallet instruments.
      */
     fun retrievePaymentInstruments(wallet: Wallet): ApiResult<AllPaymentInstruments>
+
+    fun deletePaymentInstrument(instrument: PaymentInstrumentIdentifier): ApiResult<Unit>
 
     fun initiatePaymentInstrumentAddition(
         instrument: PaymentInstrumentAddition
@@ -41,12 +46,12 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
 
     fun setPreferences(preferences: CustomerPreferences): ApiResult<Unit>
 
-    fun retrieveCustomerPaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession>
+    fun retrievePaymentSessionById(paymentSessionId: String): ApiResult<PaymentSession>
 
-    fun retrieveCustomerPaymentSessionByQRCode(qrCodeId: String): ApiResult<PaymentSession>
+    fun retrievePaymentSessionByQRCodeId(qrCodeId: String): ApiResult<PaymentSession>
 
-    fun updateCustomerPaymentSession(
+    fun updatePaymentSession(
         paymentSessionId: String,
-        session: UpdatePaymentSessionRequest
+        session: CustomerUpdatePaymentSessionRequest
     ): ApiResult<Unit>
 }

@@ -36,7 +36,7 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
      */
     fun retrievePaymentInstruments(wallet: Wallet): ApiResult<AllPaymentInstruments>
 
-    fun deletePaymentInstrument(instrumentId: String): ApiResult<Unit>
+    fun deletePaymentInstrument(instrument: PaymentInstrumentIdentifier): ApiResult<Unit>
 
     fun initiatePaymentInstrumentAddition(
         instrument: PaymentInstrumentAddition

@@ -6,11 +6,11 @@ interface ChallengeResponse {
         PASSCODE
     }
 
-    fun instrumentId(): String
+    val instrumentId: String
 
-    fun type(): Type
+    val type: Type
 
-    fun token(): String
+    val token: String
 
-    fun reference(): String?
+    val reference: String?
 }

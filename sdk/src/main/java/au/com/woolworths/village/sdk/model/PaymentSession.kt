@@ -3,17 +3,17 @@ package au.com.woolworths.village.sdk.model
 import org.threeten.bp.OffsetDateTime
 
 interface PaymentSession {
-    fun paymentSessionId(): String
+    val paymentSessionId: String
 
-    fun merchantId(): String
+    val merchantId: String
 
-    fun walletId(): String?
+    val walletId: String?
 
-    fun expiryTime(): OffsetDateTime
+    val expiryTime: OffsetDateTime
 
-    fun location(): String
+    val location: String
 
-    fun merchantInfo(): DynamicPayload
+    val merchantInfo: DynamicPayload
 
-    fun customerInfo(): DynamicPayload?
+    val customerInfo: DynamicPayload?
 }

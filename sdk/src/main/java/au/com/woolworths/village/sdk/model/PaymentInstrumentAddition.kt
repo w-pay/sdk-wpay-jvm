@@ -4,7 +4,7 @@ import au.com.woolworths.village.sdk.Wallet
 import java.io.Serializable
 
 interface PaymentInstrumentAddition: Serializable {
-    fun clientReference(): String
+    val clientReference: String
 
-    fun wallet(): Wallet
+    val wallet: Wallet
 }

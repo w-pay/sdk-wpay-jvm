@@ -4,9 +4,9 @@ import java.io.Serializable
 import java.math.BigDecimal
 
 interface Payment: Serializable {
-    fun paymentRequestId(): String
+    val paymentRequestId: String
 
-    fun merchantReferenceId(): String
+    val merchantReferenceId: String
 
-    fun grossAmount(): BigDecimal
+    val grossAmount: BigDecimal
 }

@@ -5,5 +5,5 @@ interface HealthCheck {
         SUCCESS
     }
 
-    fun result(): Status
+    val result: Status
 }

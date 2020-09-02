@@ -3,14 +3,14 @@ package au.com.woolworths.village.sdk.model
 import java.math.BigDecimal
 
 interface NewPaymentRequest {
-    fun merchantReferenceId(): String
-    fun grossAmount(): BigDecimal
-    fun generateQR(): Boolean
-    fun maxUses(): Int?
-    fun timeToLivePayment(): Int?
-    fun timeToLiveQR(): Int?
-    fun specificWalletId(): String?
-    fun basket(): Basket?
-    fun posPayload(): PosPayload?
-    fun merchantPayload(): MerchantPayload?
+    val merchantReferenceId: String
+    val grossAmount: BigDecimal
+    val generateQR: Boolean
+    val maxUses: Int?
+    val timeToLivePayment: Int?
+    val timeToLiveQR: Int?
+    val specificWalletId: String?
+    val basket: Basket?
+    val posPayload: PosPayload?
+    val merchantPayload: MerchantPayload?
 }

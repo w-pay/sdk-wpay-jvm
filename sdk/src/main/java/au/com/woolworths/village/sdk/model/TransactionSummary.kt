@@ -14,20 +14,20 @@ interface TransactionSummary: Payment {
         REJECTED,
     }
 
-    fun transactionId(): String
+    val transactionId: String
 
-    fun clientReference(): String?
+    val clientReference: String?
 
-    fun type(): PaymentType
+    val type: PaymentType
 
-    fun executionTime(): OffsetDateTime
+    val executionTime: OffsetDateTime
 
-    fun status(): PaymentStatus
+    val status: PaymentStatus
 
     /*
      * The return type has yet to be defined in the spec.
      */
-    fun statusDetail(): Any
+    val statusDetail: Any
 
-    fun refundReason(): String?
+    val revaldReason: String?
 }

@@ -3,7 +3,7 @@ package au.com.woolworths.village.sdk.model
 import java.io.Serializable
 
 interface PaymentInstrumentAdditionResult: Serializable {
-    fun cardCaptureURL(): String
+    val cardCaptureURL: String
 
-    fun transactionRef(): String?
+    val transactionRef: String?
 }

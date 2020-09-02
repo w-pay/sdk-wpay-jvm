@@ -7,15 +7,15 @@ interface MerchantTransactions: Serializable {
 }
 
 interface MerchantTransactionSummaries: MerchantTransactions {
-    fun transactions(): List<MerchantTransactionSummary>
+    val transactions: List<MerchantTransactionSummary>
 }
 
 interface MerchantTransactionSummary: TransactionSummary {
-    fun walletId(): String
+    val walletId: String
 }
 
 interface MerchantTransactionDetails: MerchantTransactionSummary {
-    fun basket(): Basket?
-    fun posPayload(): PosPayload?
-    fun merchantPayload(): MerchantPayload?
+    val basket: Basket?
+    val posPayload: PosPayload?
+    val merchantPayload: MerchantPayload?
 }

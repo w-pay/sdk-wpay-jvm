@@ -7,21 +7,21 @@ interface MerchantPayments: Serializable {
 }
 
 interface MerchantPaymentSummaries: MerchantPayments {
-    fun payments(): List<MerchantPaymentSummary>
+    val payments: List<MerchantPaymentSummary>
 }
 
 interface MerchantPaymentSummary: Payment {
-    fun usesRemaining(): Int?
+    val usesRemaining: Int?
 
-    fun expiryTime(): OffsetDateTime?
+    val expiryTime: OffsetDateTime?
 
-    fun specificWalletId(): String?
+    val specificWalletId: String?
 }
 
 interface MerchantPaymentDetails: MerchantPaymentSummary {
-    fun basket(): Basket?
+    val basket: Basket?
 
-    fun posPayload(): PosPayload?
+    val posPayload: PosPayload?
 
-    fun merchantPayload(): MerchantPayload?
+    val merchantPayload: MerchantPayload?
 }

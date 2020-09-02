@@ -6,23 +6,23 @@ interface MerchantSchemas {
 }
 
 interface MerchantSchemaSummaries: MerchantSchemas {
-    fun schemas(): List<MerchantSchemaSummary>
+    val schemas: List<MerchantSchemaSummary>
 }
 
 interface MerchantSchemaSummary {
-    fun schemaId(): String
+    val schemaId: String
 
-    fun type(): String
+    val type: String
 
-    fun description(): String?
+    val description: String?
 }
 
 interface MerchantSchema {
-    fun schema():  Map<String, Any>
+    val schema:  Map<String, Any>
 
-    fun type(): String?
+    val type: String?
 
-    fun description(): String?
+    val description: String?
 
-    fun created(): OffsetDateTime?
+    val created: OffsetDateTime?
 }

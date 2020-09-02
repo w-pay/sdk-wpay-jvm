@@ -1,7 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
 interface MerchantUpdatePaymentSessionRequest {
-    fun merchantInfo(): DynamicPayload
+    val merchantInfo: DynamicPayload
 
-    fun paymentRequestId(): String?
+    val paymentRequestId: String?
 }

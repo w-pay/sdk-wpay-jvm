@@ -3,15 +3,15 @@ package au.com.woolworths.village.sdk.model
 import org.threeten.bp.OffsetDateTime
 
 interface QRCode {
-    fun qrId(): String
+    val qrId: String
 
-    fun referenceId(): String
+    val referenceId: String
 
-    fun referenceType(): QRCodePaymentReferenceType
+    val referenceType: QRCodePaymentReferenceType
 
-    fun content(): String
+    val content: String
 
-    fun image(): String
+    val image: String
 
-    fun expiryTime(): OffsetDateTime?
+    val expiryTime: OffsetDateTime?
 }

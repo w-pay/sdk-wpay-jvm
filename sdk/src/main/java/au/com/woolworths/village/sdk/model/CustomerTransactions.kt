@@ -5,24 +5,24 @@ import java.math.BigDecimal
 
 interface CustomerTransactions: Serializable {
     interface UsedPaymentInstrument: Serializable {
-        fun paymentInstrumentId(): String
+        val paymentInstrumentId: String
 
-        fun amount(): BigDecimal
+        val amount: BigDecimal
 
-        fun paymentTransactionRef(): String?
+        val paymentTransactionRef: String?
     }
 }
 
 interface CustomerTransactionSummaries: CustomerTransactions {
-    fun transactions(): List<CustomerTransactionSummary>
+    val transactions: List<CustomerTransactionSummary>
 }
 
 interface CustomerTransactionSummary: TransactionSummary {
-    fun merchantId(): String
+    val merchantId: String
 
-    fun instruments(): List<CustomerTransactions.UsedPaymentInstrument>
+    val instruments: List<CustomerTransactions.UsedPaymentInstrument>
 }
 
 interface CustomerTransactionDetails: CustomerTransactionSummary {
-    fun basket(): Basket?
+    val basket: Basket?
 }

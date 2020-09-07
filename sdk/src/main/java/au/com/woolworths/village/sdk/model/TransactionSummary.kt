@@ -29,5 +29,5 @@ interface TransactionSummary: Payment {
      */
     val statusDetail: Any
 
-    val revaldReason: String?
+    val refundReason: String?
 }

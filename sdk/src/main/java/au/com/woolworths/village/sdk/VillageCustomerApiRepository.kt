@@ -54,4 +54,6 @@ interface VillageCustomerApiRepository: VillageAdministrationApiRepository {
         paymentSessionId: String,
         session: CustomerUpdatePaymentSessionRequest
     ): ApiResult<Unit>
+
+    fun deletePaymentSession(paymentSessionId: String): ApiResult<Unit>
 }

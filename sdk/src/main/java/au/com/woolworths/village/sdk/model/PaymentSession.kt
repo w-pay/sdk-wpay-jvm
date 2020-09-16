@@ -5,6 +5,8 @@ import org.threeten.bp.OffsetDateTime
 interface PaymentSession {
     val paymentSessionId: String
 
+    val paymentRequestId: String?
+
     val merchantId: String
 
     val walletId: String?

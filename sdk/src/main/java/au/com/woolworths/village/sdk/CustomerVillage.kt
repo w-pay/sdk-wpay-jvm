@@ -2,6 +2,7 @@ package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.model.*
+import org.threeten.bp.OffsetDateTime
 
 /**
  * Entry point into the SDK. It is responsible for managing the relationship between app
@@ -50,5 +51,35 @@ class CustomerVillage<A : Any>(
 
     fun retrievePaymentSessionByQRCodeId(qrCodeId: String): ApiResult<PaymentSession> {
         return api.retrievePaymentSessionByQRCodeId(qrCodeId)
+    }
+
+    fun deletePaymentSession(paymentSessionId: String): ApiResult<Unit> {
+        return api.deletePaymentSession(paymentSessionId)
+    }
+
+    fun preApprovePaymentSession(
+        paymentSessionId: String,
+        primaryInstrument: PaymentInstrumentIdentifier,
+        secondaryInstruments: List<SecondaryPaymentInstrument>?,
+        clientReference: String?,
+        challengeResponses: List<ChallengeResponse>?
+    ): ApiResult<Unit> {
+        return api.preApprovePaymentSession(
+            paymentSessionId,
+            primaryInstrument,
+            secondaryInstruments,
+            clientReference,
+            challengeResponses
+        )
+    }
+
+    fun retrieveTransactions(
+        paymentRequestId: String?,
+        page: Int?,
+        pageSize: Int?,
+        endTime: OffsetDateTime?,
+        startTime: OffsetDateTime?
+    ): ApiResult<CustomerTransactionSummaries> {
+        return api.retrieveTransactions(paymentRequestId, page, pageSize, endTime, startTime)
     }
 }

@@ -1,0 +1,7 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+au.com.woolworths.village.sdk
+au.com.woolworths.village.sdk.auth
+au.com.woolworths.village.sdk.model
+

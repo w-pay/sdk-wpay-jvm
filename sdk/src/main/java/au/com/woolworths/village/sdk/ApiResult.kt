@@ -1,14 +1,29 @@
 package au.com.woolworths.village.sdk
 
-/*
- * The beginning of a poor mans Monad.
+/**
+ * A result from an API operation
  */
+// The beginning of a poor mans Monad.
 sealed class ApiResult<out T: Any> {
+    /**
+     * A successful response from the API was received
+     *
+     * @param T The type of response data
+     * @property value The data parsed from the API response
+     * @constructor
+     */
     data class Success<out T: Any>(val value: T): ApiResult<T>()
+
+    /**
+     * An error that occurred while making an API call
+     *
+     * @property e The error that occurred.
+     * @constructor
+     */
     data class Error(val e: ApiException): ApiResult<Nothing>()
 }
 
-/*
+/**
  * Base exception type. Used when no other error type is appropriate.
  */
 open class ApiException(
@@ -18,6 +33,9 @@ open class ApiException(
     constructor(message: String): this(message, null)
 }
 
+/**
+ * Throw when there is an error parsing JSON data
+ */
 class JsonParsingException(
     override val message: String,
     override val cause: Throwable?,
@@ -28,6 +46,9 @@ class JsonParsingException(
     constructor(message: String): this(message, null, null)
 }
 
+/**
+ * Thrown when the server returns an HTTP error
+ */
 class HttpErrorException(
     val statusCode: Int,
     val responseHeaders: Map<String, List<String>>,

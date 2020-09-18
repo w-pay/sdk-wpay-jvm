@@ -2,9 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven' // Required for publishing to packagecloud
+apply plugin: "org.jetbrains.dokka"
 
 group "au.com.woolworths.village.sdk"
-version "3.3.0"
+version "3.3.1"
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -57,4 +58,11 @@ uploadArchives {
         pom.version = project.version
         pom.artifactId = project.getName()
     }
+}
+
+dokkaHtml {
+    outputDirectory.set(new File("${projectDir}/docs"))
+
+    // TODO When Dokka >= 1.4.10 is published
+    //moduleName.set("Woolworths Village Wallet Android SDK")
 }

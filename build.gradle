@@ -19,6 +19,7 @@ buildscript {
 
 plugins {
     id 'project-report'
+    id("org.jetbrains.dokka") version "1.4.0"
 }
 
 allprojects {

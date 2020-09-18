@@ -1,5 +1,11 @@
 package au.com.woolworths.village.sdk
 
+/**
+ * A [RequestHeadersFactory] that populates the HTTP request headers Map using a list of [RequestHeaderFactory]s
+ *
+ * @constructor
+ * @param factories The list of [RequestHeaderFactory]s to use.
+ */
 class RequestHeaderChain(
     private val factories: Array<RequestHeaderFactory>
 ) : RequestHeadersFactory {

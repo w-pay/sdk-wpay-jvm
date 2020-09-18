@@ -7,10 +7,9 @@ The SDK is currently in development. Therefore parts may change.
 
 ## Usage
 
-The SDK is modelled after popular "API SDKs" like Stripe. It has the
-following core design philosophies.
+The SDK is has the following core design philosophies.
 
-1. Technology agnostic. Different applications may different technology
+1. Technology agnostic. Different applications may have different technology
 choices and an SDK shouldn't force an application to depend on a different
 technology stack as this bloats the build and increases complexity.
 
@@ -39,7 +38,7 @@ authenticate with the API or a gateway that protects the API. The
 the rest of the API interface. Applications that have a preexisting
 authentication workflow can either update the relevant classes to implement the
 `ApiAuthenticator` interface, or provide an [Adapter](https://en.wikipedia.org/wiki/Adapter_pattern#Java)
-to make the existing authentication details available to the application.
+to make the existing authentication details available to the SDK.
 
 ### API layer
 
@@ -68,6 +67,60 @@ As such if the API specification changes in a way that introduces breaking
 changes (eg: path change or data changes) the major version of the SDK
 will be increased.
 
-The SDK currently supports version 0.0.5 of the API spec.
+The SDK currently supports version 0.0.7 of the API spec.
 
-- TODO: Publishing
+## Getting started
+
+Read the [📘 SDK reference docs](/sdk/docs/index.html) for more information on the different types
+in the SDK.
+
+### Example usage
+
+The examples use the Open API implementation, however any class conforming to the correct protocol
+can be used
+
+```kotlin
+fun createCustomerVillage(): CustomerVillage<IdmTokenDetails> {
+    val options = VillageOptions("<your key here>")
+    val apiKeyRequestHeader = ApiKeyRequestHeader(options)
+    val bearerTokenRequestHeader = BearerTokenRequestHeader<IdmTokenDetails>()
+    val api =
+        OpenApiVillageCustomerApiRepository(
+            RequestHeaderChain(
+                arrayOf(
+                    apiKeyRequestHeader,
+                    bearerTokenRequestHeader,
+                    WalletIdRequestHeader()
+                )
+            ),
+            BuildConfig.API_CONTEXT_ROOT
+        )
+
+    /*
+     * Currently the creation of the `ApiAuthenticator` has to be in the consuming
+     * application.
+     */
+    val authenticator = createAuthenticator()
+  
+    val authentication = StoringApiAuthenticator(
+        authenticator,
+        bearerTokenRequestHeader
+    )
+
+    return CustomerVillage(api, authentication)
+}
+```
+
+The different methods on the SDK can be now used.
+
+### Documentation
+
+The SDK reference docs are generated using [Dokka](https://github.com/Kotlin/dokka)
+
+```shell
+$ ./gradlew dokkaHtml
+```
+
+## Publishing
+
+Newer versions of the SDK are tagged in GitHub and are published to Package Cloud

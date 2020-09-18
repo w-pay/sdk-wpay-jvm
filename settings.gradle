@@ -1,3 +1,10 @@
-rootProject.name='VillageWalletSDK'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        jcenter()
+    }
+}
+
+rootProject.name = 'VillageWalletSDK'
 
 include ':sdk'

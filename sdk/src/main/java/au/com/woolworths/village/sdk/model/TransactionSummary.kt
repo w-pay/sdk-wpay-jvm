@@ -47,7 +47,7 @@ interface TransactionSummary: Payment {
     val status: PaymentStatus
 
     /** The error detail returned by downstream processes when the payment is REJECTED */
-    val statusDetail: Any
+    val statusDetail: Any?
 
     /** The reason provided for the refund. Only provided for REFUND transactions */
     val refundReason: String?

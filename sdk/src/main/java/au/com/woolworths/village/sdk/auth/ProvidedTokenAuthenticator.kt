@@ -9,8 +9,4 @@ class ProvidedTokenAuthenticator(val token: String) : ApiAuthenticator<HasAccess
                 get() = token
         })
     }
-
-    override fun setHost(host: String) {
-
-    }
 }

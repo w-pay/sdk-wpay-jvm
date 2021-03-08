@@ -1,7 +1,6 @@
 package au.com.woolworths.village.sdk.auth
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.Configurable
 
 /**
  * Abstracts how the SDK authenticates with the API.
@@ -11,7 +10,7 @@ import au.com.woolworths.village.sdk.Configurable
  *
  * @param T The type of authentication details
  */
-interface ApiAuthenticator<T : Any>: Configurable {
+interface ApiAuthenticator<T : Any> {
     /**
      * Called by the SDK to obtain authentication details eg: an access token
      *

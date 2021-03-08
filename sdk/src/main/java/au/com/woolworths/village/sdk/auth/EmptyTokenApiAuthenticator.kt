@@ -9,8 +9,4 @@ class EmptyTokenApiAuthenticator : ApiAuthenticator<HasAccessToken> {
                 get() = ""
         })
     }
-
-    override fun setHost(host: String) {
-
-    }
 }

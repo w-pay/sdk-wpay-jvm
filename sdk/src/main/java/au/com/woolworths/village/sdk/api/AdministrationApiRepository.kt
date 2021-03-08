@@ -1,13 +1,12 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.Configurable
 import au.com.woolworths.village.sdk.model.HealthCheck
 
 /**
  * Can be used to perform Administration functions on the API
  */
-interface AdministrationApiRepository : Configurable {
+interface AdministrationApiRepository {
     /**
      * Check the health/status of the API
      */

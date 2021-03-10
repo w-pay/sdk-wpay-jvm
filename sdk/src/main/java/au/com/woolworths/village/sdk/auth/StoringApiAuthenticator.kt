@@ -22,8 +22,4 @@ class StoringApiAuthenticator<T : Any>(
 
         return result
     }
-
-    override fun setHost(host: String) {
-        delegate.setHost(host)
-    }
 }

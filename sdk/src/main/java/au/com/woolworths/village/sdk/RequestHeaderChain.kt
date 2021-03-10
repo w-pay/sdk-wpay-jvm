@@ -7,7 +7,7 @@ package au.com.woolworths.village.sdk
  * @param factories The list of [RequestHeaderFactory]s to use.
  */
 class RequestHeaderChain(
-    private val factories: Array<RequestHeaderFactory>
+    private val factories: List<RequestHeaderFactory>
 ) : RequestHeadersFactory {
     override fun createHeaders(): Map<String, String> {
         val headers = HashMap<String, String>()

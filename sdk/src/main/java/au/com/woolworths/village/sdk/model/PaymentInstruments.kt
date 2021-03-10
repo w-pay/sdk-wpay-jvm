@@ -9,7 +9,7 @@ import java.net.URL
 /**
  * All the possible [PaymentInstrument]s that a customer might have in a wallet.
  */
-interface AllPaymentInstruments: PaymentInstruments {
+interface WalletContents: PaymentInstruments {
     /**
      * A list of payment instruments stored in the customers EverydayPay wallet
      *

@@ -1,27 +1,50 @@
 package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
+import au.com.woolworths.village.sdk.auth.HasAccessToken
 
 /**
- * Entry point into the SDK for merchants. It is responsible for managing the relationship between
- * the app concerns, and calling the API.
- *
- * @constructor
- * @param api The API repository to use
- * @param authenticator The [ApiAuthenticator] to use to obtain authorisation needed to access the API
+ * Options unique to using the Merchant API operations.
  */
-class MerchantVillage<A : Any>(
-    private val api: VillageMerchantApiRepository,
-    private val authenticator: ApiAuthenticator<A>
-): Configurable {
+class VillageMerchantOptions(
+    apiKey: String,
+    baseUrl: String,
+
     /**
-     * Allows the application to change the host the SDK sends API requests too.
+     * If given, the merchant ID will be added to the headers.
      *
-     * This allows the application to read data from an outside source (eg: a QR code) and have
-     * the SDK use the same host.
+     * Since the merchant ID identifies the merchant it can be overridden with another value by the
+     * API gateway which uses the authentication token to identify the merchant.
      */
-    override fun setHost(host: String) {
-        authenticator.setHost(host)
-        api.setHost(host)
-    }
+    val merchantId: String?
+) : VillageOptions(apiKey, baseUrl)
+
+/**
+ * Factory function type to give to SDK factory functions to instantiate a new API repository instance.
+ */
+fun interface MerchantApiRepositoryFactory {
+    fun create(
+        options: VillageMerchantOptions,
+        headers: RequestHeadersFactory,
+        authenticator: ApiAuthenticator<HasAccessToken>
+    ): VillageMerchantApiRepository
+}
+
+/**
+ * Entry point into the SDK for merchants.
+ *
+ * @param options
+ * @param token An access token or ApiAuthenticator instance for obtaining an access token, or nothing.
+ * @param repository A factory function to create a new API repository instance.
+ */
+fun createMerchantSDK(
+    options: VillageMerchantOptions,
+    token: ApiTokenType,
+    repository: MerchantApiRepositoryFactory
+): VillageMerchantApiRepository {
+    val (headers, authenticator) = createSDKComponents(options, token);
+
+    options.merchantId?.let { headers.add(WalletIdRequestHeader(it)) }
+
+    return repository.create(options, RequestHeaderChain(headers), authenticator)
 }

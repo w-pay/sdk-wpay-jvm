@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.math.BigDecimal
 
 
-interface GiftCard{
+interface AllowedPaymentMethodsGiftCard{
 	/** The gift card bin numbers that are allowed for the relevant merchant. This does not indicate sub-bins, ie. exact gift card programs. */
 	val allowedBins: List<String>
 
@@ -25,7 +25,7 @@ enum class TransactionTypeEnum{
 	PURCHASE
 }
 
-interface CreditCard{
+interface AllowedPaymentMethodsCreditCard{
 	/** The allowed networks (schemes) for credit card transactions. */
 	val allowedNetworks: List<String>
 
@@ -35,7 +35,7 @@ interface CreditCard{
 	val serviceStatus: ServiceStatus
 }
 
-interface Paypal{
+interface AllowedPaymentMethodsPaypal{
 	/** The paypal client token used for configuration and authorization of paypal transactions. */
 	val clientToken: String
 
@@ -43,7 +43,7 @@ interface Paypal{
 	val serviceStatus: ServiceStatus
 }
 
-interface GooglePay{
+interface AllowedPaymentMethodsGooglePay{
 	/* The public key required by the Google Pay wallet. */
 	val publicKey: String
 
@@ -59,25 +59,25 @@ interface GooglePay{
 	/* The merchant name required by the Google Pay wallet. */
 	val merchantName: String
 
-	val creditCard Card
+	val creditCard: Card
 
-	val debitCard Card
+	val debitCard: Card
 	/* This property indicates the status of the google pay service in the container. */
 	val serviceStatus: ServiceStatus
 }
 
-interface ApplePay{
-	val creditCard Card
-	val debitCard Card
+interface AllowedPaymentMethodsApplePay{
+	val creditCard: Card
+	val debitCard: Card
 	/* This property indicates the status of the apple pay service in the container. */
 	val serviceStatus: ServiceStatus
 }
 
 interface Card{
 	/* The allowed networks (schemes) for debit card transactions. */
-	allowedNetworks: List<String>
+	val allowedNetworks: List<String>
 	/* The allowed transaction types for debit card transactions. */
-	allowedTransactionTypes: List<TransactionTypeEnum>
+	val allowedTransactionTypes: List<TransactionTypeEnum>
 }
 
 /**
@@ -86,23 +86,21 @@ interface Card{
  * @category Model
  */
 interface MerchantProfileResponse {
-	val allowedPaymentMethods AllowedPaymentMethods
+	val allowedPaymentMethods: AllowedPaymentMethods
 }
 
 interface AllowedPaymentMethods{
-{
-		/** The presence of this object in the response indicates that a gift card is an allowed payment method and instrument in the container for the relevant merchant. */
-		val giftCard GiftCard
-		/** The presence of this object in the response indicates that a credit card is an allowed payment method and instrument in the container for the relevant merchant. */
-		val creditCard CreditCard
+	/** The presence of this object in the response indicates that a gift card is an allowed payment method and instrument in the container for the relevant merchant. */
+	val giftCard: AllowedPaymentMethodsGiftCard
+	/** The presence of this object in the response indicates that a credit card is an allowed payment method and instrument in the container for the relevant merchant. */
+	val creditCard: AllowedPaymentMethodsCreditCard
 
-		/** The presence of this object in the response indicates that paypal is an allowed payment method and instrument in the container for the relevant merchant. */
-		val paypal Paypal
+	/** The presence of this object in the response indicates that paypal is an allowed payment method and instrument in the container for the relevant merchant. */
+	val paypal: AllowedPaymentMethodsPaypal
 
-		/* The presence of this object in the response indicates that google pay is an allowed payment method and instrument in the container for the relevant merchant. */
-		val googlePay GooglePay
+	/* The presence of this object in the response indicates that google pay is an allowed payment method and instrument in the container for the relevant merchant. */
+	val googlePay: AllowedPaymentMethodsGooglePay
 
-		/* The presence of this object in the response indicates that apple pay is an allowed payment method and instrument in the container for the relevant merchant. */
-		val applePay ApplePay
-	}
+	/* The presence of this object in the response indicates that apple pay is an allowed payment method and instrument in the container for the relevant merchant. */
+	val applePay: AllowedPaymentMethodsApplePay
 }

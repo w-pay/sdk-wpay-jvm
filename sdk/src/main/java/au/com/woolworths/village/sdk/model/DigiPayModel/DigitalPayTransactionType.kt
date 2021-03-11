@@ -4,41 +4,41 @@ import java.io.Serializable
 
 interface DigitalPayTransactionType: Serializable {
 	/** The container transaction type to use for credit card instruments. */
-	val creditCard PreauthPurchase?
+	val creditCard: PreauthPurchase?
 
 	/** The container transaction type to use for gift card instruments. */
-	val giftCard Purchase?
+	val giftCard: Purchase?
 
 	/** The container transaction type to use for paypal instruments. */
-	val payPal Purchase?
+	val payPal: Purchase?
 
 	/** The container transaction type to use for google pay instruments. */
-	val googlePay GooglePayTransactionDetail? 
+	val googlePay: GooglePayTransactionDetail?
 
 	/** The container transaction type to use for apple pay instruments. */
-	val applePay ApplePayTransactionDetail? 
+	val applePay: ApplePayTransactionDetail?
 }
 
 interface GooglePayTransactionDetail{
 	/** The container transaction type to use for google pay credit card instruments. */
-	var creditCard PreauthPurchase
+	var creditCard: PreauthPurchase
 	/** The container transaction type to use for google pay debit card instruments. */
-	var debitCard Purchase
+	var debitCard: Purchase
 }
 
 interface ApplePayTransactionDetail{
 	/** The container transaction type to use for apple pay credit card instruments. */
-	var creditCard PreauthPurchase
+	var creditCard: PreauthPurchase
 	/** The container transaction type to use for apple pay debit card instruments. */
-	var debitCard Purchase
+	var debitCard: Purchase
 }
 
 
-enum PreauthPurchase{
+enum class PreauthPurchase{
 	PREAUTH,
 	PURCHASE
 }
 
-enum Purchase{
+enum class Purchase{
 	PURCHASE
 }

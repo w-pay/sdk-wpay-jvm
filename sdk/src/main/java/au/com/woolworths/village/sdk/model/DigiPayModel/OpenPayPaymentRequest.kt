@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.math.BigDecimal
 
 interface TransactionType{
-	openPay: OpenPay
+	val openPay: OpenPay
 }
 
 /**
@@ -21,54 +21,54 @@ interface OpenPayPaymentRequest: Serializable {
 	 *
 	 * This number should uniquely identify the transaction in the merchant’s system.
 	 */
-	val clientReference String
+	val clientReference: String
 
 	/**
 	 * A merchant application specific reference number.
 	 *
 	 * This number should uniquely identify the customer in the merchant’s system.
 	 */
-	val customerRef String?
+	val customerRef: String?
 
 	/** The merchant order number of the transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/** The channel from which this charge is originating, eg. Online, In-Store. */
-	val channel String
+	val channel: String
 
 	/** The unique identifier for the merchants trading account. */
-	val tradingAccountId String?
+	val tradingAccountId: String?
 
 	/** The merchants transaction date and time. The timestamp format is ISO8601. */
-	val merchantTransactedAt String?
+	val merchantTransactedAt: String?
 
 	/** List of payments */
-	val payments List<OpenPayPayments>
+	val payments: List<OpenPayPayments>
 
 	/** OpenPay store data */
-	val storeData OpenPayStoreData
+	val storeData: OpenPayStoreData
 }
 
-enum OpenPay{
+enum class OpenPay{
 	PREAUTH,
 	PURCHASE
 }
 
 interface OpenPayStoreData: Serializable {
 	/** The payment transaction store id. */
-	val storeId String
+	val storeId: String
 
 	/** A pin for the payment method id. */
-	val pin String
+	val pin: String
 }
 
 interface OpenPayPayments: Serializable {
 	/** The payment token. */
-	val paymentToken String
+	val paymentToken: String
 
 	/** The amount you want to pay with the payment instrument. */
-	val amount BigDecimal
+	val amount: BigDecimal
 
 	/** The GST amount of the full amount you want to pay with the payment instrument. */
-	val gstAmount BigDecimal?
+	val gstAmount: BigDecimal?
 }

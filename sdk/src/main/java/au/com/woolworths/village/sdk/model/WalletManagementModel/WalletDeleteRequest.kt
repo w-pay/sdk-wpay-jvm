@@ -9,8 +9,8 @@ import java.io.Serializable
  */
 interface WalletDeleteRequest {
 	/* The IDM (Gigya) UID or merchant shopper id of the user. Do NOT use an email address! */
-	val uid String
+	val uid: String
 
 	/* The merchant shopper id of the user. */
-	val shopperId String
+	val shopperId: String
 }

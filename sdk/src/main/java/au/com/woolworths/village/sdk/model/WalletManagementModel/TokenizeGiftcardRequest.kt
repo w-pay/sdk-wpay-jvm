@@ -9,14 +9,14 @@ import java.io.Serializable
  */
 interface TokenizeGiftcardRequest {
 	/* The gift card number. */
-	val cardNumber String
+	val cardNumber: String
 
 	/* The gift card pin code. */
-	val pinCode String
+	val pinCode: String
 
 	/* A flag to indicate if this payment instrument has to be set as the primary instrument. */
-	val primary Boolean?
+	val primary: Boolean?
 
 	/* A flag to indicate if this payment instrument has to be saved in the container or tokenized for one-off use. */
-	val save Boolean?
+	val save: Boolean?
 }

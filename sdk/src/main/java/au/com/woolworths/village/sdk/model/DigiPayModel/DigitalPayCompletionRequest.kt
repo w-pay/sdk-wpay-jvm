@@ -14,13 +14,13 @@ interface DigitalPayCompletionRequest: Serializable {
 	 *
 	 * This number should uniquely identify the transaction in the merchant’s system.
 	 */
-	val clientReference String
+	val clientReference: String
 
 	/** The merchant order number of the transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/** List of completions */
-	val completions List<DigitalPayCompletion>
+	val completions: List<DigitalPayCompletion>
 }
 
 interface DigitalPayCompletion: Serializable {
@@ -29,8 +29,8 @@ interface DigitalPayCompletion: Serializable {
 	 *
 	 * This number uniquely identifies the credit card transaction in the container.
 	 */
-	val paymentTransactionRef String
+	val paymentTransactionRef: String
 
 	/** The amount you want to process in the completion. */
-	val amount BigDecimal
+	val amount: BigDecimal
 }

@@ -1,4 +1,4 @@
-package au.com.woolworths.village.sdk.model
+package au.com.woolworths.village.sdk.model.walletManagement
 
 import java.io.Serializable
 import java.math.BigDecimal
@@ -10,16 +10,16 @@ import java.math.BigDecimal
  */
 interface ImportPaymentInstrumentsResponse: Serializable {
 	/* The IDM (Gigya) UID or merchant shopper id of the user. Do NOT use an email address! */
-	val uid String
+	val uid: String
 
 	/* The merchant shopper id of the user. */
-	val shopperId String
+	val shopperId: String
 
-	val creditCards List<CreditCardResult>?
-	val payPal Paypal?
+	val creditCards: List<CreditCardResult>?
+	val payPal: PayPal?
 }
 
-class PayPal{
+interface PayPal{
 	/* The PayPalApi customer id. */
 	val customerId: String
 
@@ -36,55 +36,48 @@ class PayPal{
 	val errorMessage: ErrorMessage?
 }
 
-enum class ResultEnum{
-	OK,
-	DUP,
-	EXP,
-	ERROR
-}
-
 interface ErrorMessage{
-	val description String
+	val description: String
 }
 
 interface CreditCardResult {
 	/* WebPay reference in the transaction logs. This number uniquely identifies the transaction in WebPay. */
-	val transactionRef String
+	val transactionRef: String
 
 	/* The WebPay transaction timestamp. The timestamp format is ISO8601. */
-	val transactionTimestamp String
+	val transactionTimestamp: String
 
 	/* The WebPay transaction type. */
-	val transactionType String
+	val transactionType: String
 
 	/* The WebPay transaction response code. */
-	val transactionResponseCode String
+	val transactionResponseCode: String
 
 	/* The WebPay transaction response text. */
-	val transactionResponseText String
+	val transactionResponseText: String
 
 	/* The merchant order number used in the WebPay transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/* The bin (first 6 digits) of the credit card number used in the WebPay transaction. */
-	val bin String
+	val bin: String
 
 	/* The suffix (last 4 digits) of the credit card number used in the WebPay transaction. */
-	val cardSuffix String
+	val cardSuffix: String
 
 	/* The month of the expiry date of the credit card. */
-	val expiryMonth String
+	val expiryMonth: String
 
 	/* The year of the expiry date of the credit card. */
-	val expiryYear String
+	val expiryYear: String
 
 	/* The amount of the WebPay transaction. */
-	val amount BigDecimal
+	val amount: BigDecimal
 
 	/* The import process result for the credit card instrument.*/
-	val result ResultEnum
+	val result: ResultEnum
 
-	val errorMessage ErrorMessage?
+	val errorMessage: ErrorMessage?
 }
 
 

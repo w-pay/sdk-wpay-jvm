@@ -9,22 +9,22 @@ import java.io.Serializable
  */
 interface DigitalPayFraudPayload: Serializable {
 	/* The fraud check provider. */
-	val provider String
+	val provider: String
 
 	/* The fraud check version. */
-	val version String
+	val version: String
 
 	/* The fraud check message format. */
-	val format MessageFormat
+	val format: DigitalPayFraudMessageFormat
 
 	/* The fraud check message format. */
-	val responseFormat MessageFormat
+	val responseFormat: DigitalPayFraudMessageFormat
 
 	/* The fraud check message. */
-	val message String
+	val message: String
 }
 
-enum class MessageFormat{
+enum class DigitalPayFraudMessageFormat{
 	ZIP_BASE_64_ENCODED,
 	XML
 }

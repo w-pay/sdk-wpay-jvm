@@ -9,5 +9,5 @@ import java.io.Serializable
  */
 interface InitiateCardCaptureRequest {
 	/* A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system. */
-	val clientReference String
+	val clientReference: String
 }

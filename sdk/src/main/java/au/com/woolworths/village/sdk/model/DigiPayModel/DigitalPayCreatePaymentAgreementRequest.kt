@@ -3,6 +3,7 @@ package au.com.woolworths.village.sdk.model
 import java.io.Serializable
 import java.math.BigDecimal
 
+
 /**
  * The JSON request structure of the Create Payment Agreement endpoint.
  *
@@ -14,62 +15,62 @@ interface DigitalPayCreatePaymentAgreementRequest: Serializable {
 	 *
 	 * This number should uniquely identify the transaction in the merchant’s system.
 	 */
-	val clientReference String
+	val clientReference: String
 
 	/**
 	 * A merchant application specific reference number.
 	 *
 	 * This number should uniquely identify the customer in the merchant’s system.
 	 */
-	val customerRef String?
+	val customerRef: String?
 
 	/**
 	 * The merchant order number of the transaction.
 	 *
 	 * This property is only required if the 'immediateCharge' property is true.
 	 */
-	val orderNumber String?
+	val orderNumber: String?
 
 	/** Customer billing address for this payment agreement */
-	val billingAddress DigitalPayAddress
+	val billingAddress: DigitalPayAddress
 
 	/** Detail of the payment agreement to be created */
-	val paymentAgreement DigitalPayRequestPaymentAgreement
+	val paymentAgreement: DigitalPayRequestPaymentAgreement
 
 	/** Digital pay fraud payload */
-	val fraudPayload? DigitalPayFraudPayload
+	val fraudPayload: DigitalPayFraudPayload?
 }
 
 interface DigitalPayRequestPaymentAgreement: Serializable {
 	/** The payment agreement type. */
-	val type PaymentAgreementType
+	val type: PaymentAgreementType
 
 	/** The payment agreement payment instrument id that will be used for the charges. */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 
 	/** The payment agreement charge frequency. */
-	val chargeFrequency PaymentAgreementChargeFrequency
+	val chargeFrequency: PaymentAgreementChargeFrequency
 
 	/** The amount that will be charged at the frequency specified in the payment agreement. */
-	val chargeAmount BigDecimal
+	val chargeAmount: BigDecimal
 
 	/** The payment agreement start date and time. The timestamp format is ISO8601. */
-	val startDate String?
+	val startDate: String?
 
 	/** The payment agreement end date and time. The timestamp format is ISO8601. */
-	val endDate String?
+	val endDate: String?
 
 	/**
 	 * A flag to indicate if a charge transaction must be performed at the time of payment agreement creation.
 	 *
 	 * This in convenient in the cases where a customer wants to process a first charge transaction immediately at payment agreement creation.
 	 */
-	val immediateCharge Boolean
+	val immediateCharge: Boolean
 
 	/**
 	 * The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument.
 	 *
 	 * It's only valid for a predefined time and if an expired step-up token is used during validation, the validation of that instrument will fail and the user will have to get a new step-up token before retrying the API call. A step-up token is returned in the response of a credit card iframe. This property is only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during the API call.
 	 */
-	val stepUpToken String
+	val stepUpToken: String
 }

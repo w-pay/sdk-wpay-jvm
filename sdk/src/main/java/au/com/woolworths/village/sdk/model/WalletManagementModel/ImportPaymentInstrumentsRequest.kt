@@ -10,13 +10,13 @@ import java.math.BigDecimal
  */
 interface ImportPaymentInstrumentsRequest: Serializable {
 	/* The IDM (Gigya) UID or merchant shopper id of the user. Do NOT use an email address! */
-	val uid String
+	val uid: String
 
 	/* The merchant shopper id of the user. */
-	val shopperId String
+	val shopperId: String
 
-	val creditCards List<CreditCard>?
-	val payPal PaypalDetail? 
+	val creditCards: List<PaymentInstrumentRequestCreditCard>?
+	val payPal: PayPalDetail?
 }
 
 interface PayPalDetail: Serializable{
@@ -30,22 +30,22 @@ interface PayPalDetail: Serializable{
 	val paymentMethodToken: String
 }
 
-interface CreditCard: Serializable {
+interface PaymentInstrumentRequestCreditCard: Serializable {
 	/* WebPay reference in the transaction logs. This number uniquely identifies the transaction in WebPay. */
-	val transactionRef String
+	val transactionRef: String
 
 	/* The WebPay transaction timestamp. The timestamp format is ISO8601. */
-	val transactionTimestamp String
+	val transactionTimestamp: String
 
 	/* The merchant order number used in the WebPay transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/* The bin (first 6 digits) of the credit card number used in the WebPay transaction. */
-	val bin String
+	val bin: String
 
 	/* The suffix (last 4 digits) of the credit card number used in the WebPay transaction. */
-	val cardSuffix String
+	val cardSuffix: String
 
 	/* The amount of the WebPay transaction. */
-	val amount BigDecimal
+	val amount: BigDecimal
 }

@@ -9,14 +9,13 @@ import java.io.Serializable
  */
 interface VerifyPaymentInstrumentsSuccessResponse {
 	/* Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container. */
-	val transactionReceipt String
+	val transactionReceipt: String
 
 	/* Not in use. A property that will be used in future for multi-instrument verification.*/
-	val partialSuccess Boolean?
-	val example false
+	val partialSuccess: Boolean?
 
-	val fraudResponse FraudResponse
-	val verifyResponses List<VerifyResponse>
+	val fraudResponse: FraudResponse
+	val verifyResponses: List<VerifyResponse>
 }
 
 interface FraudResponse{
@@ -32,14 +31,14 @@ interface FraudResponse{
 
 interface VerifyResponse {
 	/* The payment token. */
-	val paymentToken String
+	val paymentToken: String
 
 	/* Container reference in the transaction logs. This number uniquely identifies the transaction in the container. */
-	val verifyTransactionRef String
+	val verifyTransactionRef: String
 
 	/* The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration. */
-	val externalServiceCode String
+	val externalServiceCode: String
 
 	/* The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration. */
-	val externalServiceMessage String
+	val externalServiceMessage: String
 }

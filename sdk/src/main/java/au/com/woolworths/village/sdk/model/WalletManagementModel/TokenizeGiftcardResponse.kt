@@ -10,50 +10,50 @@ import java.math.BigDecimal
  */
 interface TokenizeGiftcardResponse {
 	/* The current available balance of the gift card. */
-	val giftCard 
+	val giftCard: TokenizedGiftCard
 
-	val balance BigDecimal
+	val balance: BigDecimal
 
 	/* The day of the expiry date of the gift card. */
-	val expiryDay String
+	val expiryDay: String
 
 	/* The month of the expiry date of the gift card. */
-	val expiryMonth String
+	val expiryMonth: String
 
 	/* The year of the expiry date of the gift card. */
-	val expiryYear String
+	val expiryYear: String
 
 	/* A flag to indicate if the gift card is expired. */
-	val expired Boolean?
+	val expired: Boolean?
 }
 
-interface GiftCard{
+interface TokenizedGiftCard{
 	/* The new payment instrument id to be used for payments. */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 
 	/* The status of the payment instrument in the container. */
-	val status Status
+	val status: Status
 
 	/* The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601. */
-	val lastUpdated String
+	val lastUpdated: String
 
 	/* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-	val lastUsed String
+	val lastUsed: String
 
 	/* A flag to indicate if this payment instrument is the primary instrument in the container. */
-	val primary Boolean?
+	val primary: Boolean?
 
 	/* A flag to indicate if the merchant profile in the container allows the use of this payment instrument. */
-	val allowed Boolean?
+	val allowed: Boolean?
 
 	/* The gift card program name. */
-	val programName String
+	val programName: String
 
 	/* The suffix (last 4 digits) of the gift card number. */
-	val cardSuffix String
+	val cardSuffix: String
 }
 
-enum Status{
+enum class Status{
 	UNVERIFIED_PERSISTENT,
 	VERIFIED
 }

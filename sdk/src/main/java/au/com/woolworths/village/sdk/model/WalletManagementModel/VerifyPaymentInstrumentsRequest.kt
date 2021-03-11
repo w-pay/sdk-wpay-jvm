@@ -9,13 +9,13 @@ import java.io.Serializable
  */
 interface VerifyPaymentInstrumentsRequest {
 	/* A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.*/
-	val clientReference String
+	val clientReference: String
 
 	/* The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument. It's only valid for a predefined time and if an expired step-up token is used during payment, the payment for that instrument will fail and the user will have to get a new step-up token before retrying the payment. A step-up token is returned in the response of a credit card iframe. This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment. */
-	val paymentInstruments List<PaymentInstrument>
+	val paymentInstruments: List<VerifyPaymentInstrumentsRequestInstrument>
 
 	/* Set to null to skip the fraud check. */
-	val fraudPayload FraudPayload?
+	val fraudPayload: FraudPayload?
 }
 
 interface FraudPayload{
@@ -35,9 +35,9 @@ interface FraudPayload{
 	val message: String
 }
 
-interface PaymentInstrument {
+interface VerifyPaymentInstrumentsRequestInstrument {
 	/* The payment token. */
-	val paymentToken String
+	val paymentToken: String
 
 	/**
 	 * The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument.
@@ -46,7 +46,7 @@ interface PaymentInstrument {
 	 * A step-up token is returned in the response of a credit card iframe.
 	 * This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment.
 	 */
-	val stepUpToken String
+	val stepUpToken: String
 }
 
 enum class MessageFormat{

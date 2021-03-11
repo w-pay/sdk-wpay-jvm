@@ -9,11 +9,11 @@ import java.io.Serializable
  */
 interface TokenizeGooglePayRequest {
 	/** The type/schema value from the Google Pay wallet. */
-	val instrumentType String
+	val instrumentType: String
 
 	/** The display text returned by the Google Pay wallet. */
-	val comment String
+	val comment: String
 
 	/** The "tokenData" payload from the Google Pay wallet. */
-	val tokenData String
+	val tokenData: String
 }

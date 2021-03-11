@@ -9,8 +9,8 @@ import java.io.Serializable
  */
 interface TokenizeApplePayResponse {
 	/** The new payment instrument id to be used for payments. */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 
 	/** The step-up token to be used for payments. */
-	val stepUpToken String
+	val stepUpToken: String
 }

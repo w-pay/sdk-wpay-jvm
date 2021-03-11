@@ -14,16 +14,16 @@ interface OpenPayCompletionRequest: Serializable {
 	 *
 	 * This number should uniquely identify the transaction in the merchant’s system.
 	 */
-	val clientReference String
+	val clientReference: String
 
 	/** The merchant order number of the transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/** The merchants transaction date and time. The timestamp format is ISO8601. */
-	val merchantTransactedAt String
+	val merchantTransactedAt: String
 
 	/** List of completions */
-	val completions List<OpenPayCompletion>
+	val completions: List<OpenPayCompletion>
 }
 
 interface OpenPayCompletion: Serializable {
@@ -32,11 +32,11 @@ interface OpenPayCompletion: Serializable {
 	 *
 	 * This number uniquely identifies the credit card transaction in the container.
 	 */
-	val paymentTransactionRef String
+	val paymentTransactionRef: String
 
 	/** The amount you want to process in the completion. */
-	val amount BigDecimal
+	val amount: BigDecimal
 
 	/** The GST amount of the amount you want to process in the completion. */
-	val gstAmount BigDecimal?
+	val gstAmount: BigDecimal?
 }

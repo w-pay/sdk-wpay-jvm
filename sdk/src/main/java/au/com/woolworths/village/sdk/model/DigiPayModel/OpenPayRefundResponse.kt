@@ -14,10 +14,10 @@ interface OpenPayRefundResponse: Serializable {
 	 *
 	 * This number uniquely identifies the whole/grouped transaction in the container.
 	 */
-	val transactionReceipt String
+	val transactionReceipt: String
 
 	/** List of refund response */
-	val refundResponses List<OpenPayRefundTransactionResponse>
+	val refundResponses: List<OpenPayRefundTransactionResponse>
 }
 
 interface OpenPayRefundTransactionResponse: Serializable {
@@ -26,28 +26,28 @@ interface OpenPayRefundTransactionResponse: Serializable {
 	 *
 	 * This number uniquely identifies the openpay transaction in the container.
 	 */
-	val paymentTransactionRef String
+	val paymentTransactionRef: String
 
 	/** Container reference in the transaction logs. This number uniquely identifies the refund transaction in the container. */
-	val refundTransactionRef String
+	val refundTransactionRef: String
 
 	/** The amount processed in the refund. */
-	val amount BigDecimal
+	val amount: BigDecimal
 
 	/** This array is only included in the response if it is enabled in the consumers API configuration. */
-	val extendedTransactionData OpenPayExtendedTransactionData?
+	val extendedTransactionData: OpenPayExtendedTransactionData?
 
 	/**
 	 * The external service code (from eg. Openpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceCode String?
+	val externalServiceCode: String?
 
 	/**
 	 * The external service message (from eg. Openpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceMessage String?
+	val externalServiceMessage: String?
 }

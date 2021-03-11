@@ -9,32 +9,32 @@ import java.io.Serializable
  */
 interface TokenizeApplePayRequest {
 	/* The "data" value from the Apple Pay wallet. */
-	val data String
+	val data: String
 
 	/* The "ephemeralPublicKey" value from the Apple Pay wallet. */
-	val ephemeralPublicKey String
+	val ephemeralPublicKey: String
 
 	/* The "publicKeyHash" value from the Apple Pay wallet. */
-	val publicKeyHash String
+	val publicKeyHash: String
 
 	/* The "transactionId" value from the Apple Pay wallet. */
-	val transactionId String
+	val transactionId: String
 
 	/* The "signature" value from the Apple Pay wallet. */
-	val signature String
+	val signature: String
 
 	/* The "version" value from the Apple Pay wallet. */
-	val version String
+	val version: String
 
 	/* The type/schema value from the Apple Pay wallet. */
-	val instrumentType String
+	val instrumentType: String
 
 	/* A flag to indicate if this payment instrument has to be set as the primary instrument. */
-	val primary Boolean?
+	val primary: Boolean?
 
 	/* The display text returned by the Apple Pay wallet. */
-	val comment String
+	val comment: String
 
 	/* The "applicationData" value from the Apple Pay wallet. */
-	val applicationData String
+	val applicationData: String
 }

@@ -9,20 +9,20 @@ import java.io.Serializable
  */
 interface GiftcardsBalanceRequest: Serializable {
 	/* Use this array if the endpoint is being called with "cardNumber" and "pinCode" request properties. */
-	val giftCards List<GiftCard>
+	val giftCards: List<GiftCardBalenceGiftCard>
 	/* Use this array if the endpoint is being called with "paymentInstrumentId" request properties. */
-	val giftCardInstruments List<GiftCardInstrument>
+	val giftCardInstruments: List<GiftCardInstrument>
 }
 
-interface GiftCard: Serializable {
+interface GiftCardBalenceGiftCard: Serializable {
 	/* The gift card number. */
-	val cardNumber String
+	val cardNumber: String
 
 	/* The gift card pin code. */
-	val pinCode String
+	val pinCode: String
 }
 
 interface GiftCardInstrument: Serializable {
 	/* The gift card payment instrument id. */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 }

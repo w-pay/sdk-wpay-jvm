@@ -14,28 +14,28 @@ interface DigitalPayPaymentRequest: Serializable {
 	 *
 	 * This object is only required if the payments request contains apple pay instruments.
 	 */
-	val transactionType DigitalPayTransactionType
+	val transactionType: DigitalPayTransactionType
 
 	/** A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system. */
-	val clientReference String
+	val clientReference: String
 
 	/** The merchant order number of the transaction. */
-	val orderNumber String
+	val orderNumber: String
 
 	/** This object is only required if the payments request contains paypal instruments. */
-	val shippingAddress DigitalPayAddress
+	val shippingAddress: DigitalPayAddress
 
 	/** List of payments */
-	val payments List<DigitalPayPayment>
+	val payments: List<DigitalPayPayment>
 
 	/** Extended merchant data */
-	val extendedMerchantData List<ExtendedMerchantData>?
+	val extendedMerchantData: List<ExtendedMerchantData>?
 
 	/** Set to null to skip the cybersource fraud check. */
-	val fraudPayload DigitalPayFraudPayload?
+	val fraudPayload: DigitalPayFraudPayload?
 
 	/** Store data */
-	val storeData DigitalPayStoreData?
+	val storeData: DigitalPayStoreData?
 }
 
 interface DigitalPayPayment: Serializable {
@@ -44,17 +44,17 @@ interface DigitalPayPayment: Serializable {
 	 *
 	 * This property can be omitted if the payment token property is present.
 	 */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 
 	/**
 	 * The payment token from the card capture iframe response or the list payment instruments response.
 	 *
 	 * This property can be omitted if the payment instrument id property is present.
 	 */
-	val paymentToken String
+	val paymentToken: String
 
 	/** The amount you want to pay with the payment instrument. */
-	val amount BigDecimal
+	val amount: BigDecimal
 
 	/**
 	 * The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument.
@@ -63,7 +63,7 @@ interface DigitalPayPayment: Serializable {
 	 *
 	 * This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment.
 	 */
-	val stepUpToken String?
+	val stepUpToken: String?
 
 	/**
 	 * The passcode is used to send additional information (eg. gift card PIN) for the payment instrument.
@@ -72,24 +72,25 @@ interface DigitalPayPayment: Serializable {
 	 *
 	 * This property should NOT be used with credit card instruments (see stepUpToken).
 	 */
-	val passcode String?
+	val passcode: String?
 }
 
 interface DigitalPayStoreData: Serializable {
 	/** The in-store payment transaction store id. */
-	val storeId String
+	val storeId: String
 
 	/** The in-store payment transaction store id. This is a 12 digit \"0\" [zero] padded numeric string. */
-	val rrn String
+	val rrn: String
 
 	/** The in-store payment transaction timestamp. The timestamp format is milliseconds since epoch. */
-	val transactionTimestamp BigDecimal
+	val transactionTimestamp: BigDecimal
 }
 
 interface ExtendedMerchantData: Serializable {
 	/** The name of the extended merchant data field. */
-	val field String get() = "correlationId"
+	val field: String
+		get() = "correlationId"
 
 	/** The value of the extended merchant data field. */
-	val value String
+	val value: String
 }

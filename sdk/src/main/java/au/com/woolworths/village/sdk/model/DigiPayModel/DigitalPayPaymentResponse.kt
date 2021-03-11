@@ -13,195 +13,195 @@ interface DigitalPayPaymentResponse: Serializable {
 	 *
 	 * This number uniquely identifies the whole/grouped transaction in the container.
 	 */
-	val transactionReceipt String
+	val transactionReceipt: String
 
 	/**
 	 * A flag to indicate if a split payment was only partially successful,
 	 *
 	 * ie. at least 1 of the payment instruments had a successful payment result.
 	 */
-	val partialSuccess Boolean?
+	val partialSuccess: Boolean?
 
 	/** DigitalPay fraud response */
-	val fraudResponse DigitalPayFraudResponse
+	val fraudResponse: DigitalPayFraudResponse
 
 	/** DigitalPay payment credit card payments */
-	val creditCards List<DigitalPayCreditCard>
+	val creditCards: List<DigitalPayCreditCard>
 
 	/** DigitalPay payment gift card payments */
-	val giftCards List<DigitalPayGiftCard>
+	val giftCards: List<DigitalPayGiftCard>
 
 	/** DigitalPay PayPal card payments */
-	val payPal List<DigitalPayPayPal>
+	val payPal: List<DigitalPayPayPal>
 
 	/**
 	 * Android Pay has been replaced by Google Pay.
 	 *
 	 * This property has been retained for backward compatibility and will always be an empty array.
 	 */
-	val androidPay List<Any>
+	val androidPay: List<Any>
 
 	/** DigitalPay payment Google Pay payments */
-	val googlePay List<DigitalPayGooglePay>
+	val googlePay: List<DigitalPayGooglePay>
 
 	/** DigitalPay payment Apple Pay payments */
-	val applePay List<DigitalPayApplePay>
+	val applePay: List<DigitalPayApplePay>
 
 	/** DigitalPay payment unknown payments */
-	val unknown List<DigitalPayPaymentInstrument>
+	val unknown: List<DigitalPayPaymentInstrument>
 }
 
 interface DigitalPayFraudResponse: Serializable {
 	/** The fraud check client id. Will be null if the fraud check was skipped. */
-	val clientId String
+	val clientId: String
 
 	/** The fraud check reason code. Will be null if the fraud check was skipped. */
-	val reasonCode String
+	val reasonCode: String
 
 	/** The fraud check decision. Will be null if the fraud check was skipped. */
-	val decision String
+	val decision: String
 }
 
 interface DigitalPayPaymentInstrument: Serializable {
 	/** The credit card payment instrument id. */
-	val paymentInstrumentId String
+	val paymentInstrumentId: String
 
 	/** The credit card payment token. The payment token is a unique identifier for the payment instrument. */
-	val paymentToken String
+	val paymentToken: String
 
 	/** Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container. */
-	val paymentTransactionRef String
+	val paymentTransactionRef: String
 
 	/** The error code. Only present if an error occurred during payment. */
-	val errorCode String?
+	val errorCode: String?
 
 	/** The error message. Only present if an error occurred during payment. */
-	val errorMessage String?
+	val errorMessage: String?
 
 	/** The error detail. Only present if an error occurred during payment. */
-	val errorDetail String?
+	val errorDetail: String?
 }
 
-interface DigitalPayCreditCard extends DigitalPayPaymentInstrument {
+interface DigitalPayCreditCard: DigitalPayPaymentInstrument {
 	/** Only present if an error occurred during payment. */
-	val stepUp CreditCardStepUp?
+	val stepUp: CreditCardStepUp?
 
 	/** This object is only included in the response if it is enabled in the consumers API configuration. */
-	val receiptData DigitalPayRecieptData?
+	val receiptData: DigitalPayRecieptData?
 
 	/** This array is only included in the response if it is enabled in the consumers API configuration. */
-	val extendedTransactionData List<DigitalPayExtendedTransactionData>?
+	val extendedTransactionData: List<DigitalPayExtendedTransactionData>?
 
 	/**
 	 * The external service code (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceCode String?
+	val externalServiceCode: String?
 
 	/**
 	 * The external service message (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceMessage String?
+	val externalServiceMessage: String?
 
 	/**
 	 * Special handling instructions that have to be executed after a payment.
 	 *
 	 * Only present if no error occurred during payment.
 	 */
-	val handlingInstructions DigitalPayHandlingInstructions?
+	val handlingInstructions: DigitalPayHandlingInstructions?
 }
 
 interface DigitalPayHandlingInstructions: Serializable {
 	/** The handling instruction code. */
-	val instructionCode DigitalPayInstructionCode
+	val instructionCode: DigitalPayInstructionCode
 
 	/** The handling instruction message. */
-	val instructionMessage String
+	val instructionMessage: String
 }
 
-interface DigitalPayGiftCard extends DigitalPayPaymentInstrument {
+interface DigitalPayGiftCard: DigitalPayPaymentInstrument {
 	/** Only present if an error occurred during payment. */
-	val stepUp CreditCardStepUp?
+	val stepUp: CreditCardStepUp?
 
 	/** This object is only included in the response if it is enabled in the consumers API configuration. */
-	val receiptData DigitalPayRecieptData?
+	val receiptData: DigitalPayRecieptData?
 
 	/**
 	 * The external service code (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceCode String?
+	val externalServiceCode: String?
 
 	/**
 	 * The external service message (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceMessage String?
+	val externalServiceMessage: String?
 }
 
-interface DigitalPayPayPal extends DigitalPayPaymentInstrument {
+interface DigitalPayPayPal: DigitalPayPaymentInstrument {
 	/** This object is only included in the response if it is enabled in the consumers API configuration. */
-	val receiptData DigitalPayRecieptData?
+	val receiptData: DigitalPayRecieptData?
 
 	/**
 	 * The external service code (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceCode String?
+	val externalServiceCode: String?
 
 	/**
 	 * The external service message (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceMessage String?
+	val externalServiceMessage: String?
 }
 
-interface DigitalPayGooglePay extends DigitalPayPaymentInstrument {
+interface DigitalPayGooglePay: DigitalPayPaymentInstrument {
 	/** Only present if an error occurred during payment. */
-	val stepUp CreditCardStepUp?
+	val stepUp: CreditCardStepUp?
 
 	/** This array is only included in the response if it is enabled in the consumers API configuration. */
-	val extendedTransactionData List<DigitalPayExtendedTransactionData>?
+	val extendedTransactionData: List<DigitalPayExtendedTransactionData>?
 
 	/**
 	 * The external service code (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceCode String?
+	val externalServiceCode: String?
 
 	/**
 	 * The external service message (from eg. Webpay).
 	 *
 	 * This property is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val externalServiceMessage String?
+	val externalServiceMessage: String?
 }
 
-interface DigitalPayApplePay extends DigitalPayPaymentInstrument {
+interface DigitalPayApplePay: DigitalPayPaymentInstrument {
 	/** Only present if an error occurred during payment. */
-	val stepUp CreditCardStepUp?
+	val stepUp: CreditCardStepUp?
 }
 
 interface DigitalPayRecieptData {
 	/** The suffix (last 4 digits) of the credit card number used in the WebPay transaction. */
-	val cardSuffix String
+	val cardSuffix: String
 
 	/** The credit card scheme. */
-	val scheme String
+	val scheme: String
 
 	/** The month of the expiry date of the credit card. */
-	val expiryMonth String
+	val expiryMonth: String
 
 	/** The year of the expiry date of the credit card. */
-	val expiryYear String
+	val expiryYear: String
 }
 
 interface DigitalPayExtendedTransactionData: Serializable {
@@ -210,23 +210,23 @@ interface DigitalPayExtendedTransactionData: Serializable {
 	 *
 	 * The 'token' field is only included in the response if it is enabled in the consumers API configuration.
 	 */
-	val field DigitalPayExtendedTransactionDataFieldName
+	val field: DigitalPayExtendedTransactionDataFieldName
 
 	/** The value of the extended transaction data field. */
-	val value String
+	val value: String
 }
 
 enum class DigitalPayExtendedTransactionDataFieldName {
-	BIN = "bin",
-	STAN = "stan",
-	RRN = "rrn",
-	TOKEN = "token",
-	MID = "mid",
-	TERMINA_ID = "terminalId"
+	BIN,
+	STAN,
+	RRN,
+	TOKEN,
+	MID,
+	TERMINA_ID
 }
 
 enum class DigitalPayInstructionCode {
-	INSTRUCTION_100 = "100",
-	INSTRUCTION_110 = "110",
-	INSTRUCTION_120 = "120"
+	INSTRUCTION_100,
+	INSTRUCTION_110,
+	INSTRUCTION_120
 }

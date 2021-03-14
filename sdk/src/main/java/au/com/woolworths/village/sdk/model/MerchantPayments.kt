@@ -3,14 +3,14 @@ package au.com.woolworths.village.sdk.model
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 
-interface MerchantPayments: Serializable {
+interface MerchantPayments : Serializable {
 }
 
 
 /**
  * List of payments made involving a merchant.
  */
-interface MerchantPaymentSummaries: MerchantPayments {
+interface MerchantPaymentSummaries : MerchantPayments {
     /** The resulting list of payments. */
     val payments: List<MerchantPaymentSummary>
 }
@@ -18,7 +18,7 @@ interface MerchantPaymentSummaries: MerchantPayments {
 /**
  * Summary information for a single Payment Request
  */
-interface MerchantPaymentSummary: Payment {
+interface MerchantPaymentSummary : Payment {
     /**
      * The number of times that the payment request can be used to create a payment.
      *
@@ -45,7 +45,7 @@ interface MerchantPaymentSummary: Payment {
 /**
  * Detailed information for a single Payment Request
  */
-interface MerchantPaymentDetails: MerchantPaymentSummary {
+interface MerchantPaymentDetails : MerchantPaymentSummary {
     /** The [Basket] associated to the transaction. */
     val basket: Basket?
 

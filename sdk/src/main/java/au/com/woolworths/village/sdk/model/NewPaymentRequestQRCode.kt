@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Request to create a new [QRCode] for a Payment Request
  */
-interface NewPaymentRequestQRCode: Serializable {
+interface NewPaymentRequestQRCode : Serializable {
     /** The ID of the payment request linked to this [QRCode] */
     val referenceId: String
 

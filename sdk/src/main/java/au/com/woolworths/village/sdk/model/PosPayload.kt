@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Payload describing the specific POS system.
  */
-interface PosPayload: Serializable {
+interface PosPayload : Serializable {
     /** The ID of the previously configured schema that will be used to validate the contents of the payload */
     val schemaId: String?
 

@@ -4,7 +4,9 @@ import au.com.woolworths.village.sdk.auth.*
 
 sealed class ApiTokenType {
     data class StringToken(val token: String) : ApiTokenType()
-    data class ApiAuthenticatorToken(val authenticator: ApiAuthenticator<HasAccessToken>) : ApiTokenType()
+    data class ApiAuthenticatorToken(val authenticator: ApiAuthenticator<HasAccessToken>) :
+        ApiTokenType()
+
     data class NoToken(val token: Unit = Unit) : ApiTokenType()
 }
 

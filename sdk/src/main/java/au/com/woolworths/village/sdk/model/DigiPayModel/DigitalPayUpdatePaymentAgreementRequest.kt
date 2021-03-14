@@ -7,34 +7,34 @@ import java.io.Serializable
  *
  * @category Model
  */
-interface DigitalPayUpdatePaymentAgreementRequest: Serializable {
-	/**
-	 * A merchant application specific reference number.
-	 *
-	 * This number should uniquely identify the transaction in the merchant’s system.
-	 */
-	val clientReference: String
+interface DigitalPayUpdatePaymentAgreementRequest : Serializable {
+    /**
+     * A merchant application specific reference number.
+     *
+     * This number should uniquely identify the transaction in the merchant’s system.
+     */
+    val clientReference: String
 
-	/**
-	 * A merchant application specific reference number.
-	 *
-	 * This number should uniquely identify the customer in the merchant’s system.
-	 */
-	val customerRef: String?
+    /**
+     * A merchant application specific reference number.
+     *
+     * This number should uniquely identify the customer in the merchant’s system.
+     */
+    val customerRef: String?
 
-	/**
-	 * The merchant order number of the transaction.
-	 *
-	 * This property is only required if the 'immediateCharge' property is true.
-	 */
-	val orderNumber: String?
+    /**
+     * The merchant order number of the transaction.
+     *
+     * This property is only required if the 'immediateCharge' property is true.
+     */
+    val orderNumber: String?
 
-	/** Customer billing address for this payment agreement */
-	val billingAddress: DigitalPayAddress?
+    /** Customer billing address for this payment agreement */
+    val billingAddress: DigitalPayAddress?
 
-	/** Detail of the payment agreement to be created */
-	val paymentAgreement: DigitalPayRequestPaymentAgreement?
+    /** Detail of the payment agreement to be created */
+    val paymentAgreement: DigitalPayRequestPaymentAgreement?
 
-	/** Digital pay fraud payload */
-	val fraudPayload: DigitalPayFraudResponse?
+    /** Digital pay fraud payload */
+    val fraudPayload: DigitalPayFraudResponse?
 }

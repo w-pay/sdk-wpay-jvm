@@ -6,14 +6,14 @@ import java.math.BigDecimal
 /**
  * Basket of items associated with a payment request.
  */
-interface Basket: Serializable {
+interface Basket : Serializable {
     /** Items in the basket */
     val items: List<Items>
 
     /**
      * An item in a [Basket]
      */
-    interface Items: Serializable {
+    interface Items : Serializable {
         /** Short label for the basket item. */
         val label: String
 

@@ -8,29 +8,29 @@ import java.math.BigDecimal
  *
  * @category Model
  */
-interface DigitalPayCompletionRequest: Serializable {
-	/**
-	 * A merchant application specific reference number.
-	 *
-	 * This number should uniquely identify the transaction in the merchant’s system.
-	 */
-	val clientReference: String
+interface DigitalPayCompletionRequest : Serializable {
+    /**
+     * A merchant application specific reference number.
+     *
+     * This number should uniquely identify the transaction in the merchant’s system.
+     */
+    val clientReference: String
 
-	/** The merchant order number of the transaction. */
-	val orderNumber: String
+    /** The merchant order number of the transaction. */
+    val orderNumber: String
 
-	/** List of completions */
-	val completions: List<DigitalPayCompletion>
+    /** List of completions */
+    val completions: List<DigitalPayCompletion>
 }
 
-interface DigitalPayCompletion: Serializable {
-	/**
-	 * Container reference in the transaction logs.
-	 *
-	 * This number uniquely identifies the credit card transaction in the container.
-	 */
-	val paymentTransactionRef: String
+interface DigitalPayCompletion : Serializable {
+    /**
+     * Container reference in the transaction logs.
+     *
+     * This number uniquely identifies the credit card transaction in the container.
+     */
+    val paymentTransactionRef: String
 
-	/** The amount you want to process in the completion. */
-	val amount: BigDecimal
+    /** The amount you want to process in the completion. */
+    val amount: BigDecimal
 }

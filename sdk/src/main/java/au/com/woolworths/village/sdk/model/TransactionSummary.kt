@@ -5,7 +5,7 @@ import org.threeten.bp.OffsetDateTime
 /**
  * Summary information of a transaction
  */
-interface TransactionSummary: Payment {
+interface TransactionSummary : Payment {
     /**
      * Allowed types of transactions
      */

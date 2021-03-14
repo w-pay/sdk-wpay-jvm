@@ -6,7 +6,7 @@ import java.math.BigDecimal
 /**
  * Properties common to all Payments and Payment Requests
  */
-interface Payment: Serializable {
+interface Payment : Serializable {
     /** The ID of this payment request */
     val paymentRequestId: String
 

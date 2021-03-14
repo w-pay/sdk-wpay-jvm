@@ -2,8 +2,6 @@ package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.auth.HasAccessToken
-import au.com.woolworths.village.sdk.model.*
-import org.threeten.bp.OffsetDateTime
 
 /**
  * Options unique to using the Customer API operations.

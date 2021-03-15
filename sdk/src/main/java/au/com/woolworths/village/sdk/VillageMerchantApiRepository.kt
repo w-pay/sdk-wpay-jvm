@@ -12,7 +12,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
  *
  * Implementations of the protocol may provide additional constraints on the user.
  */
-interface VillageMerchantApiRepository : ApiAuthenticator<HasAccessToken> {
+interface VillageMerchantApiRepository {
     val admin: AdministrationApiRepository
     val payments: MerchantPaymentsRepository
     val paymentSession: MerchantPaymentSessionsRepository

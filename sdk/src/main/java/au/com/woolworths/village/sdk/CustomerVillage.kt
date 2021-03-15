@@ -2,8 +2,6 @@ package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.auth.HasAccessToken
-import au.com.woolworths.village.sdk.model.*
-import org.threeten.bp.OffsetDateTime
 
 /**
  * Options unique to using the Customer API operations.
@@ -19,18 +17,18 @@ class VillageCustomerOptions(
      * API gateway which uses the authentication token to identify the customer.
      */
     val walletId: String?
-) : VillageOptions(apiKey, baseUrl)
+) : VillageOptions(apiKey, baseUrl) {
+    constructor(apiKey: String, baseUrl: String) : this(apiKey, baseUrl, null)
+}
 
 /**
  * Factory function type to give to SDK factory functions to instantiate a new API repository instance.
  */
-fun interface CustomerApiRepositoryFactory {
-    fun create(
-        options: VillageCustomerOptions,
-        headers: RequestHeadersFactory,
-        authenticator: ApiAuthenticator<HasAccessToken>
-    ): VillageCustomerApiRepository
-}
+typealias CustomerApiRepositoryFactory = (
+    options: VillageCustomerOptions,
+    headers: RequestHeadersFactory,
+    authenticator: ApiAuthenticator<HasAccessToken>
+) -> VillageCustomerApiRepository
 
 /**
  * Entry point into the SDK for customers.
@@ -48,5 +46,5 @@ fun createCustomerSDK(
 
     options.walletId?.let { headers.add(WalletIdRequestHeader(it)) }
 
-    return repository.create(options, RequestHeaderChain(headers), authenticator)
+    return repository(options, RequestHeaderChain(headers), authenticator)
 }

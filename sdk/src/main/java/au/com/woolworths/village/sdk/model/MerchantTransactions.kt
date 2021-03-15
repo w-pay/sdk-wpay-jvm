@@ -2,14 +2,14 @@ package au.com.woolworths.village.sdk.model
 
 import java.io.Serializable
 
-interface MerchantTransactions: Serializable {
+interface MerchantTransactions : Serializable {
 
 }
 
 /**
  * List of merchant transactions.
  */
-interface MerchantTransactionSummaries: MerchantTransactions {
+interface MerchantTransactionSummaries : MerchantTransactions {
     /** The resulting list of transactions. */
     val transactions: List<MerchantTransactionSummary>
 }
@@ -17,7 +17,7 @@ interface MerchantTransactionSummaries: MerchantTransactions {
 /**
  * Summary information of the resulting transaction
  */
-interface MerchantTransactionSummary: TransactionSummary {
+interface MerchantTransactionSummary : TransactionSummary {
     /** The ID of the wallet associated with this transaction */
     val walletId: String
 }
@@ -25,7 +25,7 @@ interface MerchantTransactionSummary: TransactionSummary {
 /**
  * Detailed information for a single transaction
  */
-interface MerchantTransactionDetails: MerchantTransactionSummary {
+interface MerchantTransactionDetails : MerchantTransactionSummary {
     /** The [Basket] associated to the transaction. */
     val basket: Basket?
 

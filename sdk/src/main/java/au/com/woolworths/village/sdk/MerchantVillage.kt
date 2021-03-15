@@ -22,13 +22,11 @@ class VillageMerchantOptions(
 /**
  * Factory function type to give to SDK factory functions to instantiate a new API repository instance.
  */
-fun interface MerchantApiRepositoryFactory {
-    fun create(
-        options: VillageMerchantOptions,
-        headers: RequestHeadersFactory,
-        authenticator: ApiAuthenticator<HasAccessToken>
-    ): VillageMerchantApiRepository
-}
+typealias MerchantApiRepositoryFactory = (
+    options: VillageMerchantOptions,
+    headers: RequestHeadersFactory,
+    authenticator: ApiAuthenticator<HasAccessToken>
+) -> VillageMerchantApiRepository
 
 /**
  * Entry point into the SDK for merchants.
@@ -46,5 +44,5 @@ fun createMerchantSDK(
 
     options.merchantId?.let { headers.add(WalletIdRequestHeader(it)) }
 
-    return repository.create(options, RequestHeaderChain(headers), authenticator)
+    return repository(options, RequestHeaderChain(headers), authenticator)
 }

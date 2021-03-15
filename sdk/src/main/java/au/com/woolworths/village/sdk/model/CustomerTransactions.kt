@@ -3,11 +3,11 @@ package au.com.woolworths.village.sdk.model
 import java.io.Serializable
 import java.math.BigDecimal
 
-interface CustomerTransactions: Serializable {
+interface CustomerTransactions : Serializable {
     /**
      * An instrument used for a transaction
      */
-    interface UsedPaymentInstrument: Serializable {
+    interface UsedPaymentInstrument : Serializable {
         /** The ID of the [PaymentInstrument] */
         val paymentInstrumentId: String
 
@@ -22,7 +22,7 @@ interface CustomerTransactions: Serializable {
 /**
  * List of customer transactions
  */
-interface CustomerTransactionSummaries: CustomerTransactions {
+interface CustomerTransactionSummaries : CustomerTransactions {
     /** The resulting list of transactions. */
     val transactions: List<CustomerTransactionSummary>
 }
@@ -30,7 +30,7 @@ interface CustomerTransactionSummaries: CustomerTransactions {
 /**
  * Summary information of a transaction performed by a customer
  */
-interface CustomerTransactionSummary: TransactionSummary {
+interface CustomerTransactionSummary : TransactionSummary {
     /** The ID of the merchant associated with this transaction */
     val merchantId: String
 
@@ -41,7 +41,7 @@ interface CustomerTransactionSummary: TransactionSummary {
 /**
  * Detailed information for a single transaction
  */
-interface CustomerTransactionDetails: CustomerTransactionSummary {
+interface CustomerTransactionDetails : CustomerTransactionSummary {
     /** The [Basket] associated to the the transaction */
     val basket: Basket?
 }

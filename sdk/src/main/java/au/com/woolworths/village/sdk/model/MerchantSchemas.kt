@@ -8,7 +8,7 @@ interface MerchantSchemas {
 /**
  * List of merchant schemas
  */
-interface MerchantSchemaSummaries: MerchantSchemas {
+interface MerchantSchemaSummaries : MerchantSchemas {
     /** A list of currently valid schemas for this merchant */
     val schemas: List<MerchantSchemaSummary>
 }
@@ -32,7 +32,7 @@ interface MerchantSchemaSummary {
  */
 interface MerchantSchema {
     /** The schema content formatted according to JSON Schema standards */
-    val schema:  Map<String, Any>
+    val schema: Map<String, Any>
 
     /** The type of the schema e.g. pos, merchant */
     val type: String?

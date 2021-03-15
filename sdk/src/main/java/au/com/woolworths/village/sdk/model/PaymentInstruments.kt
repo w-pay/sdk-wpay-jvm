@@ -9,7 +9,7 @@ import java.net.URL
 /**
  * All the possible [PaymentInstrument]s that a customer might have in a wallet.
  */
-interface WalletContents: PaymentInstruments {
+interface WalletContents : PaymentInstruments {
     /**
      * A list of payment instruments stored in the customers EverydayPay wallet
      *
@@ -21,7 +21,7 @@ interface WalletContents: PaymentInstruments {
 /**
  * List of grouped payment instruments.
  */
-interface PaymentInstruments: Serializable {
+interface PaymentInstruments : Serializable {
     /** List of added credit cards */
     val creditCards: List<CreditCard>
 
@@ -32,7 +32,7 @@ interface PaymentInstruments: Serializable {
 /**
  * Used to identify a [PaymentInstrument] to the API
  */
-interface PaymentInstrumentIdentifier: Serializable {
+interface PaymentInstrumentIdentifier : Serializable {
     /** The payment instrument id. */
     val paymentInstrumentId: String
 
@@ -43,7 +43,7 @@ interface PaymentInstrumentIdentifier: Serializable {
 /**
  * Common properties to all [PaymentInstruments]
  */
-interface PaymentInstrument: PaymentInstrumentIdentifier {
+interface PaymentInstrument : PaymentInstrumentIdentifier {
     /**
      * Verification state for a [PaymentInstrument]
      */
@@ -77,7 +77,7 @@ interface PaymentInstrument: PaymentInstrumentIdentifier {
 /**
  * An added credit card
  */
-interface CreditCard: PaymentInstrument {
+interface CreditCard : PaymentInstrument {
     /** The nickname of the credit card instrument in the container. */
     val cardName: String
 
@@ -109,7 +109,7 @@ interface CreditCard: PaymentInstrument {
 /**
  * An added gift card.
  */
-interface GiftCard: PaymentInstrument {
+interface GiftCard : PaymentInstrument {
     /** The gift card program name. */
     val programName: String
 

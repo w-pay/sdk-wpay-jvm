@@ -8,7 +8,7 @@ import java.io.Serializable
  *
  * This API returns a URL to be used to access the DigiPay IFrame based interface to request the customer to enter a payment instrument details.
  */
-interface PaymentInstrumentAddition: Serializable {
+interface PaymentInstrumentAddition : Serializable {
     /** The unique reference for this interaction as defined by the client application */
     val clientReference: String
 

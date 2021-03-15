@@ -3,7 +3,8 @@
 This project contains an Android library that can facilitate
 applications accessing the Village API.
 
-The SDK is currently in development. Therefore parts may change.
+| :memo: | The SDK is currently in development. Therefore parts may change. |
+|--------|:-----------------------------------------------------------------|
 
 ## Usage
 
@@ -27,8 +28,8 @@ the interfaces to allow particular technology choices (eg: choice of
 HTTP client library). This makes it very easy to use the SDK in an
 existing project, without necessarily introducing extra dependencies.
 
-The entry point for applications is the `CustomerVillage` class or
-`MerchantVillage` class depending on the goals of the application.
+The entry point for applications is the `createCustomerSDK` or
+`createCustomerSDK` functions depending on the goals of the application.
 
 ### Authentication layer
 
@@ -76,38 +77,23 @@ in the SDK.
 
 ### Example usage
 
-The examples use the Open API implementation, however any class conforming to the correct protocol
+The examples use the Open API implementation, however any class conforming to the correct interface
 can be used
 
 ```kotlin
-fun createCustomerVillage(): CustomerVillage<IdmTokenDetails> {
-    val options = VillageOptions("<your key here>")
-    val apiKeyRequestHeader = ApiKeyRequestHeader(options)
-    val bearerTokenRequestHeader = BearerTokenRequestHeader<IdmTokenDetails>()
-    val api =
-        OpenApiVillageCustomerApiRepository(
-            RequestHeaderChain(
-                arrayOf(
-                    apiKeyRequestHeader,
-                    bearerTokenRequestHeader,
-                    WalletIdRequestHeader()
-                )
-            ),
-            BuildConfig.API_CONTEXT_ROOT
-        )
-
-    /*
-     * Currently the creation of the `ApiAuthenticator` has to be in the consuming
-     * application.
-     */
-    val authenticator = createAuthenticator()
-  
-    val authentication = StoringApiAuthenticator(
-        authenticator,
-        bearerTokenRequestHeader
+fun createCustomerVillage(): VillageCustomerApiRepository {
+    val options = VillageCustomerOptions(
+        apiKey = "<your key here>",
+        baseUrl = "http://my.app.host.com/context/root"
     )
 
-    return CustomerVillage(api, authentication)
+    return createCustomerSDK(
+        options, 
+
+        // see the docs on how we can use different token types.
+        ApiTokenType.StringToken("abc123"),
+        OpenApiCustomerApiRepositoryFactory
+    )
 }
 ```
 

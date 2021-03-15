@@ -4,7 +4,7 @@ package au.com.woolworths.village.sdk
  * A result from an API operation
  */
 // The beginning of a poor mans Monad.
-sealed class ApiResult<out T: Any> {
+sealed class ApiResult<out T : Any> {
     /**
      * A successful response from the API was received
      *
@@ -12,7 +12,7 @@ sealed class ApiResult<out T: Any> {
      * @property value The data parsed from the API response
      * @constructor
      */
-    data class Success<out T: Any>(val value: T): ApiResult<T>()
+    data class Success<out T : Any>(val value: T) : ApiResult<T>()
 
     /**
      * An error that occurred while making an API call
@@ -20,7 +20,7 @@ sealed class ApiResult<out T: Any> {
      * @property e The error that occurred.
      * @constructor
      */
-    data class Error(val e: ApiException): ApiResult<Nothing>()
+    data class Error(val e: ApiException) : ApiResult<Nothing>()
 }
 
 /**
@@ -29,8 +29,8 @@ sealed class ApiResult<out T: Any> {
 open class ApiException(
     override val message: String,
     override val cause: Throwable?
-): Exception(message, cause) {
-    constructor(message: String): this(message, null)
+) : Exception(message, cause) {
+    constructor(message: String) : this(message, null)
 }
 
 /**
@@ -42,8 +42,8 @@ class JsonParsingException(
 
     /** Additional details about why the parsing failed. Is implementation specific. */
     val details: Map<String, Any>?
-): ApiException(message, cause) {
-    constructor(message: String): this(message, null, null)
+) : ApiException(message, cause) {
+    constructor(message: String) : this(message, null, null)
 }
 
 /**
@@ -53,7 +53,7 @@ class HttpErrorException(
     val statusCode: Int,
     val responseHeaders: Map<String, List<String>>,
     val responseBody: String
-): ApiException(
+) : ApiException(
     when (statusCode) {
         400 -> "Invalid Input"
         401 -> "Unauthorized"

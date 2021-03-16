@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.model.walletmanagement.PaymentInstrumentStatus
 import java.io.Serializable
 import java.math.BigDecimal
 import java.util.*

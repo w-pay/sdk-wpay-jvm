@@ -2,7 +2,7 @@ package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.model.ChargePaymentAgreementRequest
-import au.com.woolworths.village.sdk.model.DigitalPayPaymentAgreementResponse
+import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayPaymentAgreementResponse
 
 /**
  * @category API

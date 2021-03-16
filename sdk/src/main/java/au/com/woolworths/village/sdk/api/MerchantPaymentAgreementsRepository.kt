@@ -7,7 +7,7 @@ import au.com.woolworths.village.sdk.model.DigitalPayPaymentAgreementResponse
 /**
  * @category API
  */
-interface MerchantPaymentAgreementsApi {
+interface MerchantPaymentAgreementsRepository {
     /**
      * Charge a {@link PaymentAgreement}s
      *

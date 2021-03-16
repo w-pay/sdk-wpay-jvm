@@ -3,7 +3,7 @@ package au.com.woolworths.village.sdk.api
 import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.model.MerchantTransactionDetails
 import au.com.woolworths.village.sdk.model.MerchantTransactionSummaries
-import java.time.OffsetDateTime
+import org.threeten.bp.OffsetDateTime
 
 interface MerchantTransactionsRepository {
     /**

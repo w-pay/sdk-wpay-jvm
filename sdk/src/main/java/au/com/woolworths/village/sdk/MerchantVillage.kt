@@ -17,7 +17,9 @@ class VillageMerchantOptions(
      * API gateway which uses the authentication token to identify the merchant.
      */
     val merchantId: String?
-) : VillageOptions(apiKey, baseUrl)
+) : VillageOptions(apiKey, baseUrl){
+    constructor(apiKey: String, baseUrl: String) : this(apiKey, baseUrl, null)
+}
 
 /**
  * Factory function type to give to SDK factory functions to instantiate a new API repository instance.

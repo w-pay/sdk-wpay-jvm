@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
 import org.threeten.bp.OffsetDateTime
+import java.math.BigDecimal
 
 /**
  * Summary information of a transaction
@@ -31,6 +32,47 @@ interface TransactionSummary : Payment {
         REJECTED,
     }
 
+    enum class SummaryRollback {
+        REQUIRED,
+        NOT_REQUIRED,
+        FAILED,
+        SUCCESSFUL
+    }
+
+    /**
+     * An instrument used for a transaction
+     */
+    interface UsedPaymentInstrument {
+        /** The ID of the [PaymentInstrument] */
+        val paymentInstrumentId: String
+
+        /** The type of the payment instrument */
+        val instrumentType: String
+
+        /** The list of transactions associated with the instrument." */
+        val transactions: List<UsedPaymentInstrumentTransaction>
+    }
+
+    /**
+     * A subtransaction associated with a payment instrument
+     */
+    interface UsedPaymentInstrumentTransaction {
+        /** The type of transaction. */
+        val type: PaymentType?
+
+        /** Timestamp of when the transaction occurred */
+        val executionTime: OffsetDateTime?
+
+        /** The reference for the payment */
+        val paymentTransactionRef: String?
+
+        /** The current status of the transactions */
+        val status: PaymentStatus?
+
+        /** The amount charged against or refunded to this instrument */
+        val amount: BigDecimal?
+    }
+
     /** The ID of the transaction */
     val transactionId: String
 
@@ -46,9 +88,15 @@ interface TransactionSummary : Payment {
     /** The current status of the transactions */
     val status: PaymentStatus
 
-    /** The error detail returned by downstream processes when the payment is REJECTED */
-    val statusDetail: Any?
+    /** The rollback state of this transaction */
+    val rollback: SummaryRollback?
+
+    /** Array of transaction responses returned by downstream processes */
+    val subTransactions: List<Any>?
 
     /** The reason provided for the refund. Only provided for REFUND transactions */
     val refundReason: String?
+
+    /** The instruments used to make the payment. For refunds and cash back amounts will be negative */
+    val instruments: List<UsedPaymentInstrument>
 }

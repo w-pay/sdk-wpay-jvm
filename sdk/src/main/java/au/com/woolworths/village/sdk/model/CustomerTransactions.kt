@@ -3,21 +3,7 @@ package au.com.woolworths.village.sdk.model
 import java.io.Serializable
 import java.math.BigDecimal
 
-interface CustomerTransactions : Serializable {
-    /**
-     * An instrument used for a transaction
-     */
-    interface UsedPaymentInstrument : Serializable {
-        /** The ID of the [PaymentInstrument] */
-        val paymentInstrumentId: String
-
-        /** The amount charged against or refunded to this instrument */
-        val amount: BigDecimal
-
-        /** The reference for the payment */
-        val paymentTransactionRef: String?
-    }
-}
+interface CustomerTransactions : Serializable
 
 /**
  * List of customer transactions
@@ -33,9 +19,6 @@ interface CustomerTransactionSummaries : CustomerTransactions {
 interface CustomerTransactionSummary : TransactionSummary {
     /** The ID of the merchant associated with this transaction */
     val merchantId: String
-
-    /** The instruments used to make the payment. For refunds and cash back amounts will be negative */
-    val instruments: List<CustomerTransactions.UsedPaymentInstrument>
 }
 
 /**

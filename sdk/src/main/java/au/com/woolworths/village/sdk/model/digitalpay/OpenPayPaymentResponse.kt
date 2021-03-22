@@ -7,7 +7,7 @@ import java.io.Serializable
  *
  * @category Model
  */
-interface OpenPayPaymentPaymentResponse: Serializable {
+interface OpenPayPaymentResponse: Serializable {
 	/**
 	 * Container reference in the transaction logs.
 	 *

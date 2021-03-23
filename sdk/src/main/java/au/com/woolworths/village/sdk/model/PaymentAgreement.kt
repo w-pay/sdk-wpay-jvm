@@ -3,6 +3,7 @@ package au.com.woolworths.village.sdk.model
 import au.com.woolworths.village.sdk.model.walletmanagement.PaymentInstrumentStatus
 import java.io.Serializable
 import java.math.BigDecimal
+import java.time.OffsetDateTime
 import java.util.*
 
 /**
@@ -18,13 +19,13 @@ interface PaymentAgreement : Serializable {
     val status: PaymentInstrumentStatus
 
     /** The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601. */
-    val lastUpdated: Date?
+    val lastUpdated: OffsetDateTime?
 
     /** The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: Date?
+    val lastUsed: OffsetDateTime?
 
     /** The timestamp for when the payment instrument was added. The timestamp format is ISO8601. */
-    val createdOn: Date?
+    val createdOn: OffsetDateTime?
 
     /** A flag to indicate if this payment instrument is the primary instrument in the container. Not used for payment agreements. */
     val primary: Boolean?
@@ -51,10 +52,10 @@ interface PaymentAgreement : Serializable {
     val expiryYear: String?
 
     /** The payment agreement start date and time. The timestamp format is ISO8601. */
-    val startDate: Date?
+    val startDate: OffsetDateTime?
 
     /** The payment agreement end date and time. The timestamp format is ISO8601. */
-    val endDate: Date?
+    val endDate: OffsetDateTime?
 
     /** The payment agreement charge frequency. */
     val chargeFrequency: PaymentAgreementChargeFrequency

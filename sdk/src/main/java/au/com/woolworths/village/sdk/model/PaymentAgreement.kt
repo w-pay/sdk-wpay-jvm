@@ -1,10 +1,9 @@
 package au.com.woolworths.village.sdk.model
 
 import au.com.woolworths.village.sdk.model.walletmanagement.PaymentInstrumentStatus
+import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 import java.math.BigDecimal
-import java.time.OffsetDateTime
-import java.util.*
 
 /**
  * Properties of a Payment Agreement

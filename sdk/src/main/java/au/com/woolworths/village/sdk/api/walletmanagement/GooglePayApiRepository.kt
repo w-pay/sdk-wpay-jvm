@@ -35,5 +35,5 @@ interface GooglePayApiRepository {
     fun update(
         paymentToken: String,
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
-    ): ApiResult<TokenizeGooglePayRequest>
+    ): ApiResult<TokenizeGooglePayResponse>
 }

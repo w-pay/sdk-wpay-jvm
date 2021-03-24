@@ -20,5 +20,5 @@ interface CustomerTermsAndConditionsApiRepository {
      *
      * @param type The type of Ts and Cs that the shopper/customer has agreed to. Defaults to all if absent
      */
-    fun accept(acceptTermsAndConditionsRequest: AcceptTermsAndConditionsRequest): ApiResult<Void>
+    fun accept(acceptTermsAndConditionsRequest: AcceptTermsAndConditionsRequest): ApiResult<Unit>
 }

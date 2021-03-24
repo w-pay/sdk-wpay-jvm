@@ -56,5 +56,5 @@ interface PaymentAgreementApiRepository {
      *
      * @param paymentToken The payment agreement to delete
      */
-    fun delete(paymentToken: String): ApiResult<Void>
+    fun delete(paymentToken: String): ApiResult<Unit>
 }

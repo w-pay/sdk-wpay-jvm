@@ -24,5 +24,5 @@ interface MerchantPaymentAgreementsRepository {
      *
      * @param paymentToken The ID.
      */
-    fun delete(paymentToken: String): ApiResult<Void>
+    fun delete(paymentToken: String): ApiResult<Unit>
 }

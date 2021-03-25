@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.api.*
+import au.com.woolworths.village.sdk.api.digitalpay.DigitalPayRepository
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.auth.HasAccessToken
 
@@ -14,7 +15,9 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
  */
 interface VillageMerchantApiRepository {
     val admin: AdministrationApiRepository
+    val dp: DigitalPayRepository
     val payments: MerchantPaymentsRepository
+    val paymentAgreements: MerchantPaymentAgreementsRepository
     val paymentSession: MerchantPaymentSessionsRepository
     val preferences: MerchantPreferencesRepository
     val qr: QRCodeRepository

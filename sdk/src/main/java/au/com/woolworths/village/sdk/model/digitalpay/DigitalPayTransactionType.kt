@@ -1,4 +1,4 @@
-package au.com.woolworths.village.sdk.model
+package au.com.woolworths.village.sdk.model.digitalpay
 
 import java.io.Serializable
 

@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayTransactionType
 import java.math.BigDecimal
 
 /**

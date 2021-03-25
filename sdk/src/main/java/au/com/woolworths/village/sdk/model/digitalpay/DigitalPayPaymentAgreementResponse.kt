@@ -32,7 +32,7 @@ interface DigitalPayPaymentAgreementResponse : Serializable {
     val fraudResponse: DigitalPayFraudResponse?
 
     /** Extended transaction data object */
-    val extendedTransactionData: DigitalPayExtendedTransactionData?
+    val extendedTransactionData: List<DigitalPayExtendedTransactionData>?
 
     /**
      * The external service code (from eg. Webpay).

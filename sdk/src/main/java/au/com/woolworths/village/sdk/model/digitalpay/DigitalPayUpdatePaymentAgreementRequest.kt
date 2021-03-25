@@ -1,6 +1,7 @@
-package au.com.woolworths.village.sdk.model
+package au.com.woolworths.village.sdk.model.digitalpay
 
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayAddress
+import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayFraudPayload
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayFraudResponse
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayRequestPaymentAgreement
 import java.io.Serializable
@@ -39,5 +40,5 @@ interface DigitalPayUpdatePaymentAgreementRequest : Serializable {
     val paymentAgreement: DigitalPayRequestPaymentAgreement?
 
     /** Digital pay fraud payload */
-    val fraudPayload: DigitalPayFraudResponse?
+    val fraudPayload: DigitalPayFraudPayload?
 }

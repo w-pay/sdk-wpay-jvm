@@ -4,7 +4,7 @@ import au.com.woolworths.village.sdk.ApiResult
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayChargePaymentAgreementRequest
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayCreatePaymentAgreementRequest
 import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayPaymentAgreementResponse
-import au.com.woolworths.village.sdk.model.DigitalPayUpdatePaymentAgreementRequest
+import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayUpdatePaymentAgreementRequest
 
 /**
  * @category API

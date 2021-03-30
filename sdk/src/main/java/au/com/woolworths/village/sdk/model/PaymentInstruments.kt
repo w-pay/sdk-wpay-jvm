@@ -143,3 +143,21 @@ interface SecondaryPaymentInstrument {
     /** The amount of the payment to be paid using this instrument. */
     val amount: BigDecimal
 }
+
+interface IndividualPaymentInstrument : PaymentInstrument {
+    interface InstrumentDetail {
+        /** The gift card program name. */
+        val programName: String
+
+        /** What [ChallengeResponse] is required to make a payment with this instrument */
+        val stepUp: GiftCardStepUp
+    }
+    
+    /** The type of the payment instrument. */
+    val paymentInstrumentType: String
+
+    val paymentInstrumentDetail: InstrumentDetail
+
+    /** An encrypted JSON object containing sensitive data */
+    val cipherText: String?
+}

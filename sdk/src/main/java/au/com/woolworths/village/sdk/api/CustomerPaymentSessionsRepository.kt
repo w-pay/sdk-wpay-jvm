@@ -1,10 +1,7 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.model.ChallengeResponse
-import au.com.woolworths.village.sdk.model.CustomerUpdatePaymentSessionRequest
-import au.com.woolworths.village.sdk.model.PaymentSession
-import au.com.woolworths.village.sdk.model.SecondaryPaymentInstrument
+import au.com.woolworths.village.sdk.model.*
 
 interface CustomerPaymentSessionsRepository {
     /**
@@ -43,16 +40,18 @@ interface CustomerPaymentSessionsRepository {
      * Pre-approve payment for a [PaymentSession]
      *
      * @param paymentSessionId The [PaymentSession] to pre-approve payment for.
-     * @param primaryInstrument The primary (or only) instrument to use to make the payment.
+     * @param primaryInstrument The primary (or only) instrument to use to make the payment. If not present then the primary instrument from the customer preferences will be used.
      * @param secondaryInstruments Other payment instruments to use to split payment.
      * @param clientReference An optional client reference to be associated with the transaction.
+     * @param preferences Optional payment preferences.
      * @param challengeResponses Used when needing to complete challenge(s) to complete payment.
      */
     fun preApprove(
         paymentSessionId: String,
-        primaryInstrument: String,
+        primaryInstrument: String?,
         secondaryInstruments: List<SecondaryPaymentInstrument>?,
         clientReference: String?,
+        preferences: PaymentPreferences?,
         challengeResponses: List<ChallengeResponse>?
     ): ApiResult<Unit>
 }

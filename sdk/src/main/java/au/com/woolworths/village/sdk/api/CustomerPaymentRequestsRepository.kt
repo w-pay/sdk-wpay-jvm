@@ -1,7 +1,10 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.model.*
+import au.com.woolworths.village.sdk.model.ChallengeResponse
+import au.com.woolworths.village.sdk.model.CustomerPaymentRequest
+import au.com.woolworths.village.sdk.model.CustomerTransactionSummary
+import au.com.woolworths.village.sdk.model.SecondaryPaymentInstrument
 
 interface CustomerPaymentRequestsRepository {
     /**
@@ -29,7 +32,7 @@ interface CustomerPaymentRequestsRepository {
      */
     fun makePayment(
         paymentRequestId: String,
-        primaryInstrument: PaymentInstrumentIdentifier,
+        primaryInstrument: String,
         secondaryInstruments: List<SecondaryPaymentInstrument>?,
         clientReference: String?,
         challengeResponses: List<ChallengeResponse>?

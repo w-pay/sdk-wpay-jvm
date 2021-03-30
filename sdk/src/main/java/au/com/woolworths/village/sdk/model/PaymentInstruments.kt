@@ -1,6 +1,5 @@
 package au.com.woolworths.village.sdk.model
 
-import au.com.woolworths.village.sdk.Wallet
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 import java.math.BigDecimal
@@ -30,20 +29,12 @@ interface PaymentInstruments : Serializable {
 }
 
 /**
- * Used to identify a [PaymentInstrument] to the API
+ * Common properties to all [PaymentInstruments]
  */
-interface PaymentInstrumentIdentifier : Serializable {
+interface PaymentInstrument {
     /** The payment instrument id. */
     val paymentInstrumentId: String
 
-    /** Which Wallet the instrument is in */
-    val wallet: Wallet
-}
-
-/**
- * Common properties to all [PaymentInstruments]
- */
-interface PaymentInstrument : PaymentInstrumentIdentifier {
     /**
      * Verification state for a [PaymentInstrument]
      */

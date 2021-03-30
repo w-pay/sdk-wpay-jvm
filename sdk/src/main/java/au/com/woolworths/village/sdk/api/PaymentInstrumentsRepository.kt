@@ -1,26 +1,22 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.Wallet
 import au.com.woolworths.village.sdk.model.PaymentInstrumentAddition
 import au.com.woolworths.village.sdk.model.PaymentInstrumentAdditionResult
-import au.com.woolworths.village.sdk.model.PaymentInstrumentIdentifier
 import au.com.woolworths.village.sdk.model.WalletContents
 
 interface PaymentInstrumentsRepository {
     /**
-     * Retrieve the customer's registered [PaymentInstruments]
-     *
-     * @param wallet Whether to return only instruments registered by the customer for the merchant, or for the merchant and Everyday Pay
+     * Retrieve the customer's registered [PaymentInstrument]s
      */
-    fun list(wallet: Wallet): ApiResult<WalletContents>
+    fun list(): ApiResult<WalletContents>
 
     /**
      * Delete a [PaymentInstrument} from a {@link Wallet]
      *
      * @param instrument The payment instrument to delete.
      */
-    fun delete(instrument: PaymentInstrumentIdentifier): ApiResult<Unit>
+    fun delete(instrument: String): ApiResult<Unit>
 
     /**
      * Initiate the addition of a new [PaymentInstrument] for the customer.

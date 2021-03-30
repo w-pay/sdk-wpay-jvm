@@ -1,6 +1,5 @@
 package au.com.woolworths.village.sdk.model
 
-import au.com.woolworths.village.sdk.Wallet
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 import java.math.BigDecimal
@@ -30,20 +29,12 @@ interface PaymentInstruments : Serializable {
 }
 
 /**
- * Used to identify a [PaymentInstrument] to the API
+ * Common properties to all [PaymentInstruments]
  */
-interface PaymentInstrumentIdentifier : Serializable {
+interface PaymentInstrument {
     /** The payment instrument id. */
     val paymentInstrumentId: String
 
-    /** Which Wallet the instrument is in */
-    val wallet: Wallet
-}
-
-/**
- * Common properties to all [PaymentInstruments]
- */
-interface PaymentInstrument : PaymentInstrumentIdentifier {
     /**
      * Verification state for a [PaymentInstrument]
      */
@@ -151,4 +142,22 @@ interface SecondaryPaymentInstrument {
 
     /** The amount of the payment to be paid using this instrument. */
     val amount: BigDecimal
+}
+
+interface IndividualPaymentInstrument : PaymentInstrument {
+    interface InstrumentDetail {
+        /** The gift card program name. */
+        val programName: String
+
+        /** What [ChallengeResponse] is required to make a payment with this instrument */
+        val stepUp: GiftCardStepUp
+    }
+    
+    /** The type of the payment instrument. */
+    val paymentInstrumentType: String
+
+    val paymentInstrumentDetail: InstrumentDetail
+
+    /** An encrypted JSON object containing sensitive data */
+    val cipherText: String?
 }

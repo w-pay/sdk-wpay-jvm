@@ -63,8 +63,11 @@ interface TransactionSummary : Payment {
         /** Timestamp of when the transaction occurred */
         val executionTime: OffsetDateTime?
 
-        /** The reference for the payment */
+        /** The reference for the payment. If a refund this is the reference to the transaction being refunded. */
         val paymentTransactionRef: String?
+
+        /** The reference for the refund. */
+        val refundTransactionRef: String?
 
         /** The current status of the transactions */
         val status: PaymentStatus?

@@ -9,9 +9,7 @@ class EverydayPayWalletHeaderTest {
     fun itShouldSetEverydayPayWalletHeaderToTrueWhenEverydayPayWalletChosen() {
         val options = VillageOptions("", "", Wallet.EVERYDAY_PAY)
 
-        val factory = EverydayPayWalletHeader(options)
-        val headers: MutableMap<String, String> = mutableMapOf()
-        factory.addHeaders(headers)
+        val headers = createHeaders(options)
 
         assertThat(headers[X_EVERYDAY_PAY_WALLET], equalTo("true"))
     }
@@ -20,9 +18,7 @@ class EverydayPayWalletHeaderTest {
     fun itShouldSetEverydayPayWalletHeaderToFalseWhenEverydayPayWalletNotChosen() {
         val options = VillageOptions("", "", Wallet.MERCHANT)
 
-        val factory = EverydayPayWalletHeader(options)
-        val headers: MutableMap<String, String> = mutableMapOf()
-        factory.addHeaders(headers)
+        val headers = createHeaders(options)
 
         assertThat(headers[X_EVERYDAY_PAY_WALLET], equalTo("false"))
     }
@@ -31,10 +27,17 @@ class EverydayPayWalletHeaderTest {
     fun itShouldSetEverydayPayWalletHeaderToFalseWhenNoWalletChosen() {
         val options = VillageOptions("", "", null)
 
+        val headers = createHeaders(options)
+
+        assertThat(headers[X_EVERYDAY_PAY_WALLET], equalTo("false"))
+    }
+
+    private fun createHeaders(options: VillageOptions): MutableMap<String, String> {
         val factory = EverydayPayWalletHeader(options)
+
         val headers: MutableMap<String, String> = mutableMapOf()
         factory.addHeaders(headers)
 
-        assertThat(headers[X_EVERYDAY_PAY_WALLET], equalTo("false"))
+        return headers
     }
 }

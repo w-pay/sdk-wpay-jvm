@@ -20,7 +20,10 @@ fun createSDKComponents(
     options: VillageOptions,
     token: ApiTokenType
 ): Pair<MutableList<RequestHeaderFactory>, ApiAuthenticator<HasAccessToken>> {
-    val factories: MutableList<RequestHeaderFactory> = mutableListOf(ApiKeyRequestHeader(options))
+    val factories: MutableList<RequestHeaderFactory> = mutableListOf(
+        ApiKeyRequestHeader(options),
+        EverydayPayWalletHeader(options)
+    )
 
     val (authenticator, bearerTokenRequestHeader) = createAuthentication(token)
 

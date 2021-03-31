@@ -32,9 +32,6 @@ interface PaymentInstruments : Serializable {
  * Common properties to all [PaymentInstruments]
  */
 interface PaymentInstrument {
-    /** The payment instrument id. */
-    val paymentInstrumentId: String
-
     /**
      * Verification state for a [PaymentInstrument]
      */
@@ -43,11 +40,11 @@ interface PaymentInstrument {
         VERIFIED
     }
 
+    /** The payment instrument id. */
+    val paymentInstrumentId: String
+
     /** Indicates if the merchant profile in the container allows the use of this payment instrument. */
     val allowed: Boolean
-
-    /** The suffix (last 4 digits) of the card number. */
-    val cardSuffix: String
 
     /** The timestamp the payment instrument was last updated in the container. */
     val lastUpdated: OffsetDateTime
@@ -65,10 +62,15 @@ interface PaymentInstrument {
     val status: InstrumentStatus
 }
 
+interface CardPaymentInstrument : PaymentInstrument {
+    /** The suffix (last 4 digits) of the card number. */
+    val cardSuffix: String
+}
+
 /**
  * An added credit card
  */
-interface CreditCard : PaymentInstrument {
+interface CreditCard : CardPaymentInstrument {
     /** The nickname of the credit card instrument in the container. */
     val cardName: String
 
@@ -100,7 +102,7 @@ interface CreditCard : PaymentInstrument {
 /**
  * An added gift card.
  */
-interface GiftCard : PaymentInstrument {
+interface GiftCard : CardPaymentInstrument {
     /** The gift card program name. */
     val programName: String
 

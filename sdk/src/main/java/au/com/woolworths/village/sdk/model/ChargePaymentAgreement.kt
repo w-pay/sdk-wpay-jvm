@@ -4,7 +4,7 @@ import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayTransactionType
 import java.math.BigDecimal
 
 /**
- * Data required to charge against a {@link PaymentAgreement}
+ * Data required to charge against a [PaymentAgreement]
  *
  * @category Model
  */

@@ -1,7 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
 /**
- * Common properties of the {@link PaymentAgreement} request
+ * Common properties of the [PaymentAgreement] request
  *
  * @category Model
  */
@@ -20,7 +20,7 @@ interface CommonPaymentAgreementRequest {
 }
 
 /**
- * Request containing the details of the {@link PaymentAgreement} to create
+ * Request containing the details of the [PaymentAgreement] to create
  *
  * @category Model
  */
@@ -33,7 +33,7 @@ interface CreatePaymentAgreementRequest : CommonPaymentAgreementRequest {
 }
 
 /**
- * Request containing the details of the {@link PaymentAgreement} to update
+ * Request containing the details of the [PaymentAgreement] to update
  *
  * @category Model
  */

@@ -1,11 +1,7 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-
-/**
- * Map of customer preferences.
- */
-typealias CustomerPreferences = Map<String, Map<String, String>>
+import au.com.woolworths.village.sdk.model.CustomerPreferences
 
 interface CustomerPreferencesRepository {
     /**

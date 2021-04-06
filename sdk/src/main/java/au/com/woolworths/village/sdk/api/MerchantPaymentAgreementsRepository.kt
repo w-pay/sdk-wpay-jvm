@@ -9,7 +9,7 @@ import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayPaymentAgreement
  */
 interface MerchantPaymentAgreementsRepository {
     /**
-     * Charge a {@link PaymentAgreement}s
+     * Charge a [PaymentAgreement]s
      *
      * @param paymentToken The ID.
      * @param chargePaymentAgreementRequest details of charge to make against the payment agreement
@@ -20,7 +20,7 @@ interface MerchantPaymentAgreementsRepository {
     ): ApiResult<DigitalPayPaymentAgreementResponse>
 
     /**
-     * Delete a {@link PaymentAgreement} by its associated payment token
+     * Delete a [PaymentAgreement] by its associated payment token
      *
      * @param paymentToken The ID.
      */

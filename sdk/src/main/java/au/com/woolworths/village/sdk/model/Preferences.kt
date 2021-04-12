@@ -24,14 +24,14 @@ interface PaymentPreferences {
      *
      * The primary instrument will be used for the balance of the payment after any specified secondary instruments are used first.
      */
-    val primaryInstrumentId: String
+    val primaryInstrumentId: String?
 
     /**
      * Rules for the creation of a default set of secondary instruments to be used for a payment if a specific set is not specified.
      *
      *  Secondary instruments are used in order until the full amount of the payment has been paid.
      */
-    val secondaryInstruments: SecondaryInstrumentPreferences
+    val secondaryInstruments: SecondaryInstrumentPreferences?
 }
 
 interface SecondaryInstrumentPreferences {
@@ -40,7 +40,7 @@ interface SecondaryInstrumentPreferences {
      *
      * If not present defaults to enabled. Used to specifically disable secondary instruments without losing customer configure preferences.
      */
-    val enableSecondaryInstruments: Boolean
+    val enableSecondaryInstruments: Boolean?
 
     /** The order that the secondary instruments will be used for a specific payment. */
     val order: SecondaryInstrumentOrder?

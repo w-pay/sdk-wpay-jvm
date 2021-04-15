@@ -82,6 +82,7 @@ can be used
 
 ```kotlin
 fun createCustomerVillage(): VillageCustomerApiRepository {
+    // read the docs on all the options available
     val options = VillageCustomerOptions(
         apiKey = "<your key here>",
         baseUrl = "http://my.app.host.com/context/root"

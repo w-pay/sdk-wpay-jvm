@@ -9,7 +9,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 class VillageMerchantOptions(
     apiKey: String,
     baseUrl: String,
-    wallet: Wallet?,
+    wallet: Wallet? = null,
 
     /**
      * If given, the merchant ID will be added to the headers.
@@ -17,11 +17,8 @@ class VillageMerchantOptions(
      * Since the merchant ID identifies the merchant it can be overridden with another value by the
      * API gateway which uses the authentication token to identify the merchant.
      */
-    val merchantId: String?
-) : VillageOptions(apiKey, baseUrl, wallet){
-    constructor(apiKey: String, baseUrl: String) : this(apiKey, baseUrl, null, null)
-    constructor(apiKey: String, baseUrl: String, wallet: Wallet) : this(apiKey, baseUrl, wallet, null)
-}
+    val merchantId: String? = null
+) : VillageOptions(apiKey, baseUrl, wallet)
 
 /**
  * Factory function type to give to SDK factory functions to instantiate a new API repository instance.

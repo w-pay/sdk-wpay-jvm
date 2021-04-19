@@ -9,7 +9,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 class VillageCustomerOptions(
     apiKey: String,
     baseUrl: String,
-    wallet: Wallet?,
+    wallet: Wallet? = null,
 
     /**
      * If given, the wallet ID will be added to the headers.
@@ -17,11 +17,8 @@ class VillageCustomerOptions(
      * Since the wallet ID identifies the customer it can be overridden with another value by the
      * API gateway which uses the authentication token to identify the customer.
      */
-    val walletId: String?
-) : VillageOptions(apiKey, baseUrl, wallet) {
-    constructor(apiKey: String, baseUrl: String) : this(apiKey, baseUrl, null, null)
-    constructor(apiKey: String, baseUrl: String, wallet: Wallet) : this(apiKey, baseUrl, wallet, null)
-}
+    val walletId: String? = null
+) : VillageOptions(apiKey, baseUrl, wallet)
 
 /**
  * Factory function type to give to SDK factory functions to instantiate a new API repository instance.

@@ -19,5 +19,5 @@ open class VillageOptions(
      *
      * If not specified, will default to [Wallet.MERCHANT].
      */
-    val wallet: Wallet?
+    val wallet: Wallet? = null
 )

@@ -93,6 +93,7 @@ fun createCustomerVillage(): VillageCustomerApiRepository {
 
         // see the docs on how we can use different token types.
         ApiTokenType.StringToken("abc123"),
+
         OpenApiCustomerApiRepositoryFactory
     )
 }

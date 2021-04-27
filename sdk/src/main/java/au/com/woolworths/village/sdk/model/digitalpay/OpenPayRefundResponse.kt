@@ -35,7 +35,7 @@ interface OpenPayRefundTransactionResponse : Serializable {
     val amount: BigDecimal
 
     /** This array is only included in the response if it is enabled in the consumers API configuration. */
-    val extendedTransactionData: OpenPayExtendedTransactionData?
+    val extendedTransactionData: List<OpenPayExtendedTransactionData>?
 
     /**
      * The external service code (from eg. Openpay).

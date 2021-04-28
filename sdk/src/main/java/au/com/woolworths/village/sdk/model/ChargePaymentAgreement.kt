@@ -26,7 +26,7 @@ interface ChargePaymentAgreementRequest {
     val orderNumber: String
 
     /** Transaction type containers to use for all instruments. */
-    val transactionType: DigitalPayTransactionType
+    val transactionType: TransactionType
 
     /** A merchant application specific reference number for the customer. */
     val customerRef: String?

@@ -3,8 +3,8 @@ package au.com.woolworths.village.sdk.model.digitalpay
 import java.io.Serializable
 import java.math.BigDecimal
 
-interface TransactionType {
-    val openPay: OpenPay
+interface OpenPayPaymentRequestTransactionType {
+    val openPay: OpenPayTransactionType
 }
 
 /**
@@ -14,7 +14,7 @@ interface TransactionType {
  */
 interface OpenPayPaymentRequest : Serializable {
     /** The container transaction type to use for openpay instruments */
-    val transactionType: TransactionType
+    val transactionType: OpenPayPaymentRequestTransactionType
 
     /**
      * A merchant application specific reference number.
@@ -49,7 +49,7 @@ interface OpenPayPaymentRequest : Serializable {
     val storeData: OpenPayStoreData
 }
 
-enum class OpenPay {
+enum class OpenPayTransactionType {
     PREAUTH,
     PURCHASE
 }

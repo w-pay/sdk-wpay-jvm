@@ -20,7 +20,7 @@ interface DigitalPayRefundResponse : Serializable {
     val partialSuccess: Boolean?
 
     /** List of refund response */
-    val refundResponses: DigitalPayRefundTransactionResponse
+    val refundResponses: List<DigitalPayRefundTransactionResponse>
 }
 
 interface DigitalPayRefundTransactionResponse : Serializable {

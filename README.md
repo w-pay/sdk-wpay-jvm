@@ -72,7 +72,7 @@ The SDK currently supports version 1.0.3 of the API spec.
 
 ## Getting started
 
-Read the [📘 SDK reference docs](/sdk/docs/index.html) for more information on the different types
+Read the [📘 SDK reference docs](/sdk/docs/sdk/index.html) for more information on the different types
 in the SDK.
 
 ### Example usage

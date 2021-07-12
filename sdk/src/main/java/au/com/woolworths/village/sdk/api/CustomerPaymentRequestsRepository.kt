@@ -27,6 +27,7 @@ interface CustomerPaymentRequestsRepository {
      * @param clientReference An optional client reference to be associated with the transaction.
      * @param preferences Optional payment preferences.
      * @param challengeResponses Used when needing to complete challenge(s) to complete payment.
+     * @param fraudPayload Used to complete the fraud check.
      */
     fun makePayment(
         paymentRequestId: String,
@@ -34,6 +35,7 @@ interface CustomerPaymentRequestsRepository {
         secondaryInstruments: List<SecondaryPaymentInstrument>?,
         clientReference: String?,
         preferences: PaymentPreferences?,
-        challengeResponses: List<ChallengeResponse>?
+        challengeResponses: List<ChallengeResponse>?,
+        fraudPayload: FraudPayload?
     ): ApiResult<CustomerTransactionSummary>
 }

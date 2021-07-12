@@ -13,9 +13,9 @@ assignees: ''
 
 **Checklist**
 
-[] - Add/update models
-[] - Add/update API interface definitions
-[] - Add tests (if required) for new functionality
-[] - Regenerate SDK docs
-[] - Bump version of lib
-[] - Publish
+- [] Add/update models
+- [] Add/update API interface definitions
+- [] Add tests (if required) for new functionality
+- [] Regenerate SDK docs
+- [] Bump version of lib
+- [] Publish

@@ -5,7 +5,7 @@ apply plugin: 'maven' // Required for publishing to packagecloud
 apply plugin: "org.jetbrains.dokka"
 
 group "au.com.woolworths.village.sdk"
-version "4.0.0"
+version "4.0.1"
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion

@@ -93,17 +93,17 @@ interface MerchantProfileResponse {
 
 interface AllowedPaymentMethods {
     /** The presence of this object in the response indicates that a gift card is an allowed payment method and instrument in the container for the relevant merchant. */
-    val giftCard: AllowedPaymentMethodsGiftCard
+    val giftCard: AllowedPaymentMethodsGiftCard?
 
     /** The presence of this object in the response indicates that a credit card is an allowed payment method and instrument in the container for the relevant merchant. */
-    val creditCard: AllowedPaymentMethodsCreditCard
+    val creditCard: AllowedPaymentMethodsCreditCard?
 
     /** The presence of this object in the response indicates that paypal is an allowed payment method and instrument in the container for the relevant merchant. */
-    val paypal: AllowedPaymentMethodsPaypal
+    val paypal: AllowedPaymentMethodsPaypal?
 
     /* The presence of this object in the response indicates that google pay is an allowed payment method and instrument in the container for the relevant merchant. */
-    val googlePay: AllowedPaymentMethodsGooglePay
+    val googlePay: AllowedPaymentMethodsGooglePay?
 
     /* The presence of this object in the response indicates that apple pay is an allowed payment method and instrument in the container for the relevant merchant. */
-    val applePay: AllowedPaymentMethodsApplePay
+    val applePay: AllowedPaymentMethodsApplePay?
 }

@@ -1,11 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven' // Required for publishing to packagecloud
 apply plugin: "org.jetbrains.dokka"
 
-group "au.com.woolworths.village.sdk"
-version "4.0.1"
+// handle signing/publishing AARs for us
+// gradle's default maven-publish doesn't handle AARs very well
+apply plugin: "com.vanniktech.maven.publish"
+
+// for project coordinates (group, version, etc) see gradle.properties
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -27,10 +29,6 @@ android {
     }
 }
 
-configurations {
-    deployerJars
-}
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -44,20 +42,6 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:0.0.6"
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-        repository(url: "packagecloud+https://packagecloud.io/woolworths/paysdk2") {
-            authentication(password: System.getenv('PACKAGECLOUD_TOKEN'))
-        }
-        pom.groupId = project.group
-        pom.version = project.version
-        pom.artifactId = project.getName()
-    }
 }
 
 dokkaHtml {

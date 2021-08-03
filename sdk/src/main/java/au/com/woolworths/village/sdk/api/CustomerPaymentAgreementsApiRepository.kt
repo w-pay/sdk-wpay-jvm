@@ -1,10 +1,7 @@
 package au.com.woolworths.village.sdk.api
 
 import au.com.woolworths.village.sdk.ApiResult
-import au.com.woolworths.village.sdk.model.CreatePaymentAgreementRequest
-import au.com.woolworths.village.sdk.model.PaymentAgreement
-import au.com.woolworths.village.sdk.model.PaymentAgreements
-import au.com.woolworths.village.sdk.model.UpdatePaymentAgreementRequest
+import au.com.woolworths.village.sdk.model.*
 
 /**
  * @category API
@@ -26,17 +23,27 @@ interface CustomerPaymentAgreementsApiRepository {
      * Create a [PaymentAgreement]
      *
      * @param paymentAgreement The details for the new payment agreement
+     * @param challengeResponses Used when needing to complete challenge(s) to complete payment.
+     * @param fraudPayload Used to complete the fraud check
      */
-    fun create(paymentAgreement: CreatePaymentAgreementRequest): ApiResult<PaymentAgreement>
+    fun create(
+        paymentAgreement: CreatePaymentAgreementRequest,
+        challengeResponses: List<ChallengeResponse>?,
+        fraudPayload: FraudPayload?
+    ): ApiResult<PaymentAgreement>
 
     /**
      * Update a [PaymentAgreement]
      *
      * @param paymentToken The payment token to update
      * @param paymentAgreement The updates to apply to the payment agreement
+     * @param challengeResponses Used when needing to complete challenge(s) to complete payment.
+     * @param fraudPayload Used to complete the fraud check
      */
     fun update(
         paymentToken: String,
-        paymentAgreement: UpdatePaymentAgreementRequest
+        paymentAgreement: UpdatePaymentAgreementRequest,
+        challengeResponses: List<ChallengeResponse>?,
+        fraudPayload: FraudPayload?
     ): ApiResult<PaymentAgreement>
 }

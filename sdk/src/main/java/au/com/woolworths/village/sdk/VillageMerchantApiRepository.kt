@@ -28,4 +28,9 @@ interface VillageMerchantApiRepository {
      * Options that were given at SDK initialisation
      */
     val options: VillageMerchantOptions
+
+    /**
+     * An [ApiAuthenticator] that can be used to update the access token the SDK uses
+     */
+    var authenticator: ApiAuthenticator<HasAccessToken>
 }

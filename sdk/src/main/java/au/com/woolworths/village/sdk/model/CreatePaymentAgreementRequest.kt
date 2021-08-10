@@ -1,11 +1,11 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * Common properties of the [PaymentAgreement] request
- *
- * @category Model
  */
-interface CommonPaymentAgreementRequest {
+interface CommonPaymentAgreementRequest : Serializable {
     /** A merchant application specific reference number for the transaction. */
     val clientReference: String
 
@@ -21,8 +21,6 @@ interface CommonPaymentAgreementRequest {
 
 /**
  * Request containing the details of the [PaymentAgreement] to create
- *
- * @category Model
  */
 interface CreatePaymentAgreementRequest : CommonPaymentAgreementRequest {
     /** Billing address for the customer. */
@@ -34,8 +32,6 @@ interface CreatePaymentAgreementRequest : CommonPaymentAgreementRequest {
 
 /**
  * Request containing the details of the [PaymentAgreement] to update
- *
- * @category Model
  */
 interface UpdatePaymentAgreementRequest : CommonPaymentAgreementRequest {
     /** Billing address for the customer. */
@@ -47,10 +43,8 @@ interface UpdatePaymentAgreementRequest : CommonPaymentAgreementRequest {
 
 /**
  * The customer's billing address
- *
- * @category Model
  */
-interface PaymentAgreementBillingAddress {
+interface PaymentAgreementBillingAddress : Serializable {
     /** The customer's first name. */
     val firstName: String
 

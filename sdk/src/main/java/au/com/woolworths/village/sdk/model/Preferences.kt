@@ -1,11 +1,11 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * Available preference settings for a customer
- *
- * @category Model
  */
-interface CustomerPreferences {
+interface CustomerPreferences : Serializable {
     /** Payment preferences for a customer */
     val payments: PaymentPreferences?
 
@@ -15,10 +15,8 @@ interface CustomerPreferences {
 
 /**
  * Payment preferences for a customer
- *
- * @category Model
  */
-interface PaymentPreferences {
+interface PaymentPreferences : Serializable {
     /**
      * The primary instrument that will be used by default for a payment if a specific instrument is not specified.
      *
@@ -34,7 +32,7 @@ interface PaymentPreferences {
     val secondaryInstruments: SecondaryInstrumentPreferences?
 }
 
-interface SecondaryInstrumentPreferences {
+interface SecondaryInstrumentPreferences : Serializable {
     /**
      * Flag indicating whether secondary instruments are enabled or disabled.
      *
@@ -72,7 +70,5 @@ enum class SecondaryInstrumentOrder {
 
 /**
  * Map of general preferences.
- *
- * @category Model
  */
 typealias Preferences = Map<String, Map<String, String>>

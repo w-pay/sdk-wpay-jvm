@@ -19,7 +19,7 @@ interface DigitalPayTransactionType : Serializable {
     val applePay: ApplePayTransactionDetail?
 }
 
-interface GooglePayTransactionDetail {
+interface GooglePayTransactionDetail : Serializable {
     /** The container transaction type to use for google pay credit card instruments. */
     var creditCard: PreauthPurchase
 
@@ -27,7 +27,7 @@ interface GooglePayTransactionDetail {
     var debitCard: Purchase
 }
 
-interface ApplePayTransactionDetail {
+interface ApplePayTransactionDetail : Serializable {
     /** The container transaction type to use for apple pay credit card instruments. */
     var creditCard: PreauthPurchase
 

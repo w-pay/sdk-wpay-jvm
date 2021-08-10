@@ -1,11 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
  * The details of the payment to be created.
  */
-interface NewPaymentRequest {
+interface NewPaymentRequest : Serializable {
     /** The unique reference for the payment */
     val merchantReferenceId: String
 

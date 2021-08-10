@@ -1,13 +1,9 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
+import java.io.Serializable
 import java.math.BigDecimal
 
-/**
- * The JSON response structure of the Tokenize Giftcard endpoint.
- *
- * @category Model
- */
-interface TokenizeGiftcardResponse {
+interface TokenizeGiftcardResponse : Serializable {
     /* The current available balance of the gift card. */
     val giftCard: TokenizedGiftCard
 
@@ -26,7 +22,7 @@ interface TokenizeGiftcardResponse {
     val expired: Boolean?
 }
 
-interface TokenizedGiftCard {
+interface TokenizedGiftCard : Serializable {
     /* The new payment instrument id to be used for payments. */
     val paymentInstrumentId: String
 

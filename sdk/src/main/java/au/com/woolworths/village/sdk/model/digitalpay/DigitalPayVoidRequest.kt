@@ -18,7 +18,7 @@ interface DigitalPayVoidRequest : Serializable {
     val voids: List<DigitalPayVoid>
 }
 
-interface DigitalPayVoid {
+interface DigitalPayVoid : Serializable {
     /** Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container. */
     val paymentTransactionRef: String
 }

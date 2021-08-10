@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Tokenize Giftcard endpoint.
- *
- * @category Model
- */
-interface TokenizeGiftcardRequest {
+import java.io.Serializable
+
+interface TokenizeGiftcardRequest : Serializable {
     /* The gift card number. */
     val cardNumber: String
 

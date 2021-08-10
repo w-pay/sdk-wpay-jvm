@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
@@ -7,7 +8,7 @@ import java.math.BigDecimal
  *
  * @category Model
  */
-interface ListPaymentInstrumentsResponse {
+interface ListPaymentInstrumentsResponse : Serializable {
     val creditCards: List<CreditCardDetails>
     val giftCards: List<GiftCardDetails>
     val payPal: List<PayPalDetails>
@@ -20,7 +21,7 @@ interface ListPaymentInstrumentsResponse {
     val applePay: ApplePayDetails
 }
 
-interface CreditCardDetails {
+interface CreditCardDetails : Serializable {
     /* The credit card payment instrument id. */
     val paymentInstrumentId: String
 
@@ -72,7 +73,7 @@ interface CreditCardDetails {
     val stepUp: StepUp
 }
 
-interface GiftCardDetails {
+interface GiftCardDetails : Serializable {
     /* The gift card payment instrument id. */
     val paymentInstrumentId: String
 
@@ -101,7 +102,7 @@ interface GiftCardDetails {
     val cardSuffix: String
 }
 
-interface PayPalDetails {
+interface PayPalDetails : Serializable {
     /* The paypal payment instrument id. */
     val paymentInstrumentId: String
 
@@ -130,7 +131,7 @@ interface PayPalDetails {
     val customerId: String
 }
 
-interface PaymentAgreementDetails {
+interface PaymentAgreementDetails : Serializable {
     /* The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement. */
     val paymentToken: String
 
@@ -191,7 +192,7 @@ interface PaymentAgreementDetails {
     val stepUp: StepUp?
 }
 
-interface GooglePayDetails {
+interface GooglePayDetails : Serializable {
     /* The google pay payment instrument id. */
     val paymentInstrumentId: String
 
@@ -220,7 +221,7 @@ interface GooglePayDetails {
     val stepUp: StepUp?
 }
 
-interface ApplePayDetails {
+interface ApplePayDetails : Serializable {
     /* The apple pay payment instrument id. */
     val paymentInstrumentId: String
 
@@ -241,10 +242,11 @@ interface ApplePayDetails {
 
     /* A flag to indicate if the merchant profile in the container allows the use of this payment instrument. */
     val allowed: Boolean?
+
     val stepUp: StepUp
 }
 
-interface StepUp {
+interface StepUp : Serializable {
     /* The type of the step up action. For apple pay this will be REFRESH_TOKEN. */
     val type: StepUpTypeEnum
 

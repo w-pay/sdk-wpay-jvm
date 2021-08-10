@@ -1,9 +1,10 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 
-interface AllowedPaymentMethodsGiftCard {
+interface AllowedPaymentMethodsGiftCard : Serializable {
     /** The gift card bin numbers that are allowed for the relevant merchant. This does not indicate sub-bins, ie. exact gift card programs. */
     val allowedBins: List<String>
 
@@ -24,7 +25,7 @@ enum class TransactionTypeEnum {
     PURCHASE
 }
 
-interface AllowedPaymentMethodsCreditCard {
+interface AllowedPaymentMethodsCreditCard : Serializable {
     /** The allowed networks (schemes) for credit card transactions. */
     val allowedNetworks: List<String>
 
@@ -34,7 +35,7 @@ interface AllowedPaymentMethodsCreditCard {
     val serviceStatus: ServiceStatus
 }
 
-interface AllowedPaymentMethodsPaypal {
+interface AllowedPaymentMethodsPaypal : Serializable {
     /** The paypal client token used for configuration and authorization of paypal transactions. */
     val clientToken: String
 
@@ -42,7 +43,7 @@ interface AllowedPaymentMethodsPaypal {
     val serviceStatus: ServiceStatus
 }
 
-interface AllowedPaymentMethodsGooglePay {
+interface AllowedPaymentMethodsGooglePay : Serializable {
     /* The public key required by the Google Pay wallet. */
     val publicKey: String
 
@@ -66,7 +67,7 @@ interface AllowedPaymentMethodsGooglePay {
     val serviceStatus: ServiceStatus
 }
 
-interface AllowedPaymentMethodsApplePay {
+interface AllowedPaymentMethodsApplePay : Serializable {
     val creditCard: Card
     val debitCard: Card
 
@@ -74,7 +75,7 @@ interface AllowedPaymentMethodsApplePay {
     val serviceStatus: ServiceStatus
 }
 
-interface Card {
+interface Card : Serializable {
     /* The allowed networks (schemes) for debit card transactions. */
     val allowedNetworks: List<String>
 
@@ -82,16 +83,11 @@ interface Card {
     val allowedTransactionTypes: List<TransactionTypeEnum>
 }
 
-/**
- * The JSON response structure of the Merchant Profile endpoint.
- *
- * @category Model
- */
-interface MerchantProfileResponse {
+interface MerchantProfileResponse : Serializable {
     val allowedPaymentMethods: AllowedPaymentMethods
 }
 
-interface AllowedPaymentMethods {
+interface AllowedPaymentMethods : Serializable {
     /** The presence of this object in the response indicates that a gift card is an allowed payment method and instrument in the container for the relevant merchant. */
     val giftCard: AllowedPaymentMethodsGiftCard?
 

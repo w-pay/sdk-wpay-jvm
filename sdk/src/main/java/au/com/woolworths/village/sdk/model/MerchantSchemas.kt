@@ -1,8 +1,9 @@
 package au.com.woolworths.village.sdk.model
 
 import org.threeten.bp.OffsetDateTime
+import java.io.Serializable
 
-interface MerchantSchemas {
+interface MerchantSchemas : Serializable {
 }
 
 /**
@@ -16,7 +17,7 @@ interface MerchantSchemaSummaries : MerchantSchemas {
 /**
  * Summary information about a [MerchantSchema]
  */
-interface MerchantSchemaSummary {
+interface MerchantSchemaSummary : Serializable {
     /** The unique ID assigned to the schema */
     val schemaId: String
 
@@ -30,7 +31,7 @@ interface MerchantSchemaSummary {
 /**
  * Details about a particular schema
  */
-interface MerchantSchema {
+interface MerchantSchema : Serializable {
     /** The schema content formatted according to JSON Schema standards */
     val schema: Map<String, Any>
 

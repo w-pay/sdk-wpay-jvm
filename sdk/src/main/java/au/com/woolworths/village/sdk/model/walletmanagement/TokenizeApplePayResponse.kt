@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON response structure of the Tokenize Android Pay endpoint.
- *
- * @category Model
- */
-interface TokenizeApplePayResponse {
+import java.io.Serializable
+
+interface TokenizeApplePayResponse : Serializable {
     /** The new payment instrument id to be used for payments. */
     val paymentInstrumentId: String
 

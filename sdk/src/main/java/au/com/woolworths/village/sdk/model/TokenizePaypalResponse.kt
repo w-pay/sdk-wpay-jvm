@@ -1,15 +1,15 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * The JSON response structure of the Tokenize PayPalApi endpoint.
- *
- * @category Model
  */
-interface TokenizePaypalResponse {
+interface TokenizePaypalResponse : Serializable {
     val payPal: PaypalDetails
 }
 
-interface PaypalDetails {
+interface PaypalDetails : Serializable {
     /* The new payment instrument id to be used for payments.*/
     val paymentInstrumentId: String
 

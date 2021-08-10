@@ -1,9 +1,11 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * Request containing the details of the [PaymentSession]
  */
-interface CreatePaymentSessionRequest {
+interface CreatePaymentSessionRequest : Serializable {
     /** The location of the payment session (used to group payment sessions). */
     val location: String
 

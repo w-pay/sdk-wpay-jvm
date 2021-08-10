@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
 import org.threeten.bp.OffsetDateTime
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
@@ -42,8 +43,8 @@ interface TransactionSummary : Payment {
     /**
      * An instrument used for a transaction
      */
-    interface UsedPaymentInstrument {
-        /** The ID of the [PaymentInstrument] */
+    interface UsedPaymentInstrument : Serializable {
+    /** The ID of the [PaymentInstrument] */
         val paymentInstrumentId: String
 
         /** The type of the payment instrument */
@@ -56,7 +57,7 @@ interface TransactionSummary : Payment {
     /**
      * A subtransaction associated with a payment instrument
      */
-    interface UsedPaymentInstrumentTransaction {
+    interface UsedPaymentInstrumentTransaction : Serializable {
         /** The type of transaction. */
         val type: PaymentType?
 

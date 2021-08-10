@@ -1,13 +1,9 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
+import java.io.Serializable
 import java.math.BigDecimal
 
-/**
- * The JSON response structure of the Transaction History endpoint.
- *
- * @category Model
- */
-interface TransactionHistoryResponse {
+interface TransactionHistoryResponse : Serializable {
     /* The number of transactions returned in the results. */
     val returned: BigDecimal
 
@@ -17,7 +13,7 @@ interface TransactionHistoryResponse {
     val transactions: List<Transaction>
 }
 
-interface Transaction {
+interface Transaction : Serializable {
     /* The container transaction type. */
     val transactionType: ContainerTransactionType
 

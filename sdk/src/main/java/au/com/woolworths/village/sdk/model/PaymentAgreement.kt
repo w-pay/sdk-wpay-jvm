@@ -77,7 +77,7 @@ interface PaymentAgreement : Serializable {
     val description: String?
 }
 
-interface PaymentAgreementStepUp {
+interface PaymentAgreementStepUp : Serializable {
     /* The type of the step up action. For credit cards this will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment. */
     val type: String
 
@@ -90,18 +90,14 @@ interface PaymentAgreementStepUp {
 
 /**
  * List of payments agreements.
- *
- * @category Model
  */
-interface PaymentAgreements {
+interface PaymentAgreements : Serializable {
     /** The resulting list of payment agreements. */
     val paymentAgreements: List<PaymentAgreement>
 }
 
 /**
  * Frequency with which the payment agreement is charged
- *
- * @category Model
  */
 enum class PaymentAgreementChargeFrequency {
     WEEKLY,
@@ -111,8 +107,6 @@ enum class PaymentAgreementChargeFrequency {
 
 /**
  * Type of payment agreement
- *
- * @category Model
  */
 enum class PaymentAgreementType {
     RECURRING,

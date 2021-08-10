@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON success response structure of the Verify Payment InstrumentsApi endpoint.
- *
- * @category Model
- */
-interface VerifyPaymentInstrumentsSuccessResponse {
+import java.io.Serializable
+
+interface VerifyPaymentInstrumentsSuccessResponse : Serializable {
     /* Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container. */
     val transactionReceipt: String
 
@@ -16,7 +13,7 @@ interface VerifyPaymentInstrumentsSuccessResponse {
     val verifyResponses: List<VerifyResponse>
 }
 
-interface FraudResponse {
+interface FraudResponse : Serializable {
     /* The fraud check client id. Will be null if the fraud check was skipped. */
     val clientId: String
 
@@ -27,7 +24,7 @@ interface FraudResponse {
     val decision: String
 }
 
-interface VerifyResponse {
+interface VerifyResponse : Serializable {
     /* The payment token. */
     val paymentToken: String
 

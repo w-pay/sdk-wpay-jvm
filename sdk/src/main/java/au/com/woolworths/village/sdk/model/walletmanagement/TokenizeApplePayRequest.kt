@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Tokenize Apple Pay endpoint.
- *
- * @category Model
- */
-interface TokenizeApplePayRequest {
+import java.io.Serializable
+
+interface TokenizeApplePayRequest : Serializable {
     /* The "data" value from the Apple Pay wallet. */
     val data: String
 

@@ -1,14 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
-import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayTransactionType
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
  * Data required to charge against a [PaymentAgreement]
- *
- * @category Model
  */
-interface ChargePaymentAgreementRequest {
+interface ChargePaymentAgreementRequest : Serializable {
     /**
      * The payment token of the payment agreement.
      *

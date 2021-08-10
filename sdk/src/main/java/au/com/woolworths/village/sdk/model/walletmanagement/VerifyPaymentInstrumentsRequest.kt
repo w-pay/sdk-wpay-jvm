@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Verify Payment InstrumentsApi endpoint.
- *
- * @category Model
- */
-interface VerifyPaymentInstrumentsRequest {
+import java.io.Serializable
+
+interface VerifyPaymentInstrumentsRequest : Serializable {
     /* A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.*/
     val clientReference: String
 
@@ -16,7 +13,7 @@ interface VerifyPaymentInstrumentsRequest {
     val fraudPayload: FraudPayload?
 }
 
-interface FraudPayload {
+interface FraudPayload : Serializable {
     /* The fraud check provider. */
     val provider: String
 
@@ -33,7 +30,7 @@ interface FraudPayload {
     val message: String
 }
 
-interface VerifyPaymentInstrumentsRequestInstrument {
+interface VerifyPaymentInstrumentsRequestInstrument : Serializable {
     /* The payment token. */
     val paymentToken: String
 

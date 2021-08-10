@@ -1,23 +1,20 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 /**
  * List of terms and conditions acceptances
- *
- * @category Model
  */
-interface TermsAndConditionsAcceptances {
+interface TermsAndConditionsAcceptances : Serializable {
     /** An array of Ts and Cs the customer has accepted.. */
     val termsAndConditionsAcceptances: List<TermsAndConditionsAcceptance>
 }
 
 /**
  * The Terms and Condtions the customer has accepted.
- *
- * @category Model
  */
-interface TermsAndConditionsAcceptance {
+interface TermsAndConditionsAcceptance : Serializable {
     /** The type of the Ts and Cs. */
     val type: String
 
@@ -28,7 +25,7 @@ interface TermsAndConditionsAcceptance {
     val timestamp: BigDecimal
 }
 
-interface AcceptTermsAndConditionsRequest {
+interface AcceptTermsAndConditionsRequest : Serializable {
     /** The type of Ts and Cs that the shopper/customer has agreed to. */
     val type: String
 

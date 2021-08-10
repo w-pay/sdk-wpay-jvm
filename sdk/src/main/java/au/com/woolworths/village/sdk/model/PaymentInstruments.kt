@@ -31,7 +31,7 @@ interface PaymentInstruments : Serializable {
 /**
  * Common properties to all [PaymentInstruments]
  */
-interface PaymentInstrument {
+interface PaymentInstrument : Serializable {
     /**
      * Verification state for a [PaymentInstrument]
      */
@@ -113,7 +113,7 @@ interface GiftCard : CardPaymentInstrument {
 /**
  * Details of what step up is required to use a [CreditCard]
  */
-interface CreditCardStepUp {
+interface CreditCardStepUp : Serializable {
     /** This will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment. */
     val type: String
 
@@ -127,7 +127,7 @@ interface CreditCardStepUp {
 /**
  * Details of what step up is required to use a [GiftCard]
  */
-interface GiftCardStepUp {
+interface GiftCardStepUp : Serializable {
     /** This will be REQUIRE_PASSCODE which identifies that the consumer must capture the PIN prior to payment. */
     val type: String
 
@@ -138,7 +138,7 @@ interface GiftCardStepUp {
 /**
  * Used to identify other [PaymentInstrument]s to be used as part of a payment.
  */
-interface SecondaryPaymentInstrument {
+interface SecondaryPaymentInstrument : Serializable {
     /** The ID of the payment instrument */
     val paymentInstrumentId: String
 

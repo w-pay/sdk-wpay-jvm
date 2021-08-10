@@ -19,7 +19,7 @@ interface ImportPaymentInstrumentsResponse : Serializable {
     val payPal: PayPal?
 }
 
-interface PayPal {
+interface PayPal : Serializable {
     /* The PayPalApi customer id. */
     val customerId: String
 
@@ -36,11 +36,11 @@ interface PayPal {
     val errorMessage: ErrorMessage?
 }
 
-interface ErrorMessage {
+interface ErrorMessage : Serializable {
     val description: String
 }
 
-interface CreditCardResult {
+interface CreditCardResult : Serializable {
     /* WebPay reference in the transaction logs. This number uniquely identifies the transaction in WebPay. */
     val transactionRef: String
 
@@ -79,7 +79,6 @@ interface CreditCardResult {
 
     val errorMessage: ErrorMessage?
 }
-
 
 enum class ResultEnum {
     OK, DUP, EXP, ERROR

@@ -1,11 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
 import org.threeten.bp.OffsetDateTime
+import java.io.Serializable
 
 /**
  * A session between a customer and a merchant
  */
-interface PaymentSession {
+interface PaymentSession : Serializable {
     /** The ID of the [PaymentSession] */
     val paymentSessionId: String
 

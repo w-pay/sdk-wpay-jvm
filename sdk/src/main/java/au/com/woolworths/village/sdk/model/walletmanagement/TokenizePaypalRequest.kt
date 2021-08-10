@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Tokenize PayPalApi endpoint.
- *
- * @category Model
- */
-interface TokenizePaypalRequest {
+import java.io.Serializable
+
+interface TokenizePaypalRequest : Serializable {
     /* The PayPalApi nonce that will be used during a PayPalApi payment. */
     val nonce: String
 

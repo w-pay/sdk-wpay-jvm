@@ -1,9 +1,11 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * The response to a step up challenge
  */
-interface ChallengeResponse {
+interface ChallengeResponse : Serializable {
     /** Possible types of challenges */
     enum class Type {
         STEP_UP,

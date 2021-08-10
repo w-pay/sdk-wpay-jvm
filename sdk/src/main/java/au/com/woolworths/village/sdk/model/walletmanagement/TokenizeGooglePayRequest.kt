@@ -1,11 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Tokenize Google Pay endpoint.
- *
- * @category Model
- */
-interface TokenizeGooglePayRequest {
+import java.io.Serializable
+
+interface TokenizeGooglePayRequest : Serializable {
     /** The type/schema value from the Google Pay wallet. */
     val instrumentType: String
 

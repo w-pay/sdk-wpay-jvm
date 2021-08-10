@@ -1,11 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
 import org.threeten.bp.OffsetDateTime
+import java.io.Serializable
 
 /**
  * Detail of a QR code
  */
-interface QRCode {
+interface QRCode : Serializable {
     /** The ID of the QR code */
     val qrId: String
 

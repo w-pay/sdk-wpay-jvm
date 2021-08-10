@@ -1,12 +1,8 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
-/**
- * The JSON request structure of the Tokenize Android Pay endpoint.
- *
- * @category Model
- */
+import java.io.Serializable
 
-interface TokenizeAndroidPayRequest {
+interface TokenizeAndroidPayRequest : Serializable {
     /** The "encryptedMessage" value from the Android Pay wallet.*/
     val encryptedMessage: String
 

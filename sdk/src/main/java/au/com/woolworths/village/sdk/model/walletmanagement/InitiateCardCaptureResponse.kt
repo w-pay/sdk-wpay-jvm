@@ -1,11 +1,13 @@
 package au.com.woolworths.village.sdk.model.walletmanagement
 
+import java.io.Serializable
+
 /**
  * The JSON response structure of the Initiate Card Capture endpoint.
  *
  * @category Model
  */
-interface InitiateCardCaptureResponse {
+interface InitiateCardCaptureResponse : Serializable {
     /* The URL of an iframe. This iframe is used to capture a credit card number, expiry and CVV. */
     val cardCaptureURL: String
 

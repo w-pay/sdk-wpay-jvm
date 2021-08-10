@@ -1,9 +1,11 @@
 package au.com.woolworths.village.sdk.model
 
+import java.io.Serializable
+
 /**
  * Digital Pay Fraud Payload, set to null to skip the fraud check.
  */
-interface FraudPayload {
+interface FraudPayload : Serializable {
     /** The fraud check message */
     val message: String
 

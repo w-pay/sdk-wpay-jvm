@@ -1,6 +1,6 @@
 package au.com.woolworths.village.sdk.model.digitalpay
 
-import java.time.OffsetDateTime
+import org.threeten.bp.OffsetDateTime
 
 /**
  * Gift card product summary data

@@ -10,7 +10,7 @@ import java.math.BigDecimal
  */
 interface DigitalPayChargePaymentAgreementRequest : Serializable {
     /** Transaction type containers to use for all instruments. */
-    val transactionType: DigitalPayTransactionType
+    val transactionType: PaymentTransactionType
 
     /**
      * A merchant application specific reference number.

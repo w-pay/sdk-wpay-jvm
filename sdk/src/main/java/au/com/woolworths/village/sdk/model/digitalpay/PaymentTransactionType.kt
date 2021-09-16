@@ -2,7 +2,7 @@ package au.com.woolworths.village.sdk.model.digitalpay
 
 import java.io.Serializable
 
-interface DigitalPayTransactionType : Serializable {
+interface PaymentTransactionType : Serializable {
     /** The container transaction type to use for credit card instruments. */
     val creditCard: PreauthPurchase?
 

@@ -41,11 +41,33 @@ interface MerchantPaymentsRepository {
     /**
      * Refund a transaction to a customer
      *
-     * @param transactionId The transaction to refund.
+     * @param transactionId The transaction to be refunded.
      * @param refundDetails The details of the refund.
      */
     fun refundTransaction(
         transactionId: String,
         refundDetails: TransactionRefundDetails
+    ): ApiResult<MerchantTransactionSummary>
+
+    /**
+     * Complete a pre-authorised transaction
+     *
+     * @param transactionId The transaction to be completed.
+     * @param completionDetails The details of the completions.
+     */
+    fun completeTransaction(
+        transactionId: String,
+        completionDetails: TransactionCompletionDetails
+    ): ApiResult<MerchantTransactionSummary>
+
+    /**
+     * Void a pre-authorised transaction
+     *
+     * @param transactionId The transaction to be voided.
+     * @param voidDetails The details of the voids.
+     */
+    fun voidTransaction(
+        transactionId: String,
+        voidDetails: TransactionVoidDetails
     ): ApiResult<MerchantTransactionSummary>
 }

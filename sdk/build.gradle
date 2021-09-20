@@ -3,12 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jetbrains.dokka"
 
-// handle signing/publishing AARs for us
-// gradle's default maven-publish doesn't handle AARs very well
-apply plugin: "com.vanniktech.maven.publish"
-
-// for project coordinates (group, version, etc) see gradle.properties
-
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion

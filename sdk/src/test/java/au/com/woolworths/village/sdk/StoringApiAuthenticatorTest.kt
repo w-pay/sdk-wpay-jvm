@@ -3,17 +3,16 @@ package au.com.woolworths.village.sdk
 import au.com.woolworths.village.sdk.auth.ApiAuthenticator
 import au.com.woolworths.village.sdk.auth.CredentialsStore
 import au.com.woolworths.village.sdk.auth.StoringApiAuthenticator
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
+import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.junit.jupiter.MockitoExtension
 
-
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class StoringApiAuthenticatorTest {
     @Mock
     private val apiAuthenticator: ApiAuthenticator<String>? = null

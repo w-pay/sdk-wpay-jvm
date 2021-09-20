@@ -1,10 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.dokka"
+apply plugin: "de.mannodermaus.android-junit5"
 
 // handle signing/publishing AARs for us
-// gradle's default maven-publish doesn't handle AARs very well
+// gradle"s default maven-publish doesn"t handle AARs very well
 apply plugin: "com.vanniktech.maven.publish"
 
 // for project coordinates (group, version, etc) see gradle.properties
@@ -24,7 +25,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 }
@@ -32,16 +33,20 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.appcompat:appcompat:1.1.0"
 
-    implementation 'org.threeten:threetenbp:1.4.4'
+    implementation "org.threeten:threetenbp:1.4.4"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+    testImplementation "com.natpryce:hamkrest:1.8.0.1"
     testImplementation "org.mockito:mockito-core:2.+"
+    testImplementation "org.mockito:mockito-junit-jupiter:2.23.0"
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
 
 dokkaHtml {

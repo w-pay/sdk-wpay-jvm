@@ -1,8 +1,8 @@
 package au.com.woolworths.village.sdk
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert.*
-import org.junit.Test
+import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
+import org.junit.jupiter.api.Test
 
 class ApiResultTest {
     @Test

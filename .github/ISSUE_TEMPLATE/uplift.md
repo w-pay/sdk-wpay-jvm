@@ -17,6 +17,7 @@ assignees: ''
 - [ ] Add/update API interface definitions
 - [ ] Add tests (if required) for new functionality
 - [ ] Regenerate SDK docs
+- [ ] Update README with version targeted  
 - [ ] Bump version of lib
 - [ ] Publish
 - [ ] Tag repo

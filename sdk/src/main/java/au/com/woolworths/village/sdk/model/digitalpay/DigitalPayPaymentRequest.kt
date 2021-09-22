@@ -105,9 +105,12 @@ interface DigitalPayStoreData : Serializable {
 }
 
 interface ExtendedMerchantData : Serializable {
+    enum class Field(val fieldName: String) {
+        CORRELATION_ID("correlationId")
+    }
+
     /** The name of the extended merchant data field. */
-    val field: String
-        get() = "correlationId"
+    val field: Field
 
     /** The value of the extended merchant data field. */
     val value: String

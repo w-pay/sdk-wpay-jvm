@@ -88,7 +88,7 @@ interface DigitalPayCreditCard : DigitalPayPaymentInstrument {
     val stepUp: CreditCardStepUp?
 
     /** This object is only included in the response if it is enabled in the consumers API configuration. */
-    val receiptData: DigitalPayRecieptData?
+    val receiptData: DigitalPayCreditCardReceiptData?
 
     /** This array is only included in the response if it is enabled in the consumers API configuration. */
     val extendedTransactionData: List<DigitalPayExtendedTransactionData>?
@@ -131,7 +131,7 @@ interface DigitalPayGiftCard : DigitalPayPaymentInstrument {
     val stepUp: CreditCardStepUp?
 
     /** This object is only included in the response if it is enabled in the consumers API configuration. */
-    val receiptData: DigitalPayRecieptData?
+    val receiptData: DigitalPayGiftCardReceiptData?
 
     /**
      * The external service code (from eg. Webpay).
@@ -150,7 +150,7 @@ interface DigitalPayGiftCard : DigitalPayPaymentInstrument {
 
 interface DigitalPayPayPal : DigitalPayPaymentInstrument {
     /** This object is only included in the response if it is enabled in the consumers API configuration. */
-    val receiptData: DigitalPayRecieptData?
+    val receiptData: DigitalPayPayPalReceiptData?
 
     /**
      * The external service code (from eg. Webpay).
@@ -194,7 +194,7 @@ interface DigitalPayApplePay : DigitalPayPaymentInstrument {
     val stepUp: CreditCardStepUp?
 }
 
-interface DigitalPayRecieptData {
+interface DigitalPayCreditCardReceiptData {
     /** The suffix (last 4 digits) of the credit card number used in the WebPay transaction. */
     val cardSuffix: String
 
@@ -206,6 +206,19 @@ interface DigitalPayRecieptData {
 
     /** The year of the expiry date of the credit card. */
     val expiryYear: String
+}
+
+interface DigitalPayGiftCardReceiptData {
+    /** The suffix (last 4 digits) of the gift card number used in the WEX transaction. */
+    val cardSuffix: String
+}
+
+interface DigitalPayPayPalReceiptData {
+    /** The Paypal email id. */
+    val payPalId: String
+
+    /** The Paypal customer id. */
+    val customerId: String
 }
 
 interface DigitalPayExtendedTransactionData : Serializable {

@@ -38,9 +38,9 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'au.com.wpay.village.sdk'
+                groupId = group
                 artifactId = 'api-sdk'
-                version = '4.4.3'
+                version = version
             }
         }
     }

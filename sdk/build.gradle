@@ -6,7 +6,7 @@ apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'maven-publish'
 
 group = 'au.com.wpay.village.sdk'
-version = '4.4.3'
+version = '4.4.4'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion

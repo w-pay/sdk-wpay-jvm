@@ -16,8 +16,10 @@ assignees: ''
 - [ ] Add/update models
 - [ ] Add/update API interface definitions
 - [ ] Add tests (if required) for new functionality
-- [ ] Regenerate SDK docs
 - [ ] Update README with version targeted  
 - [ ] Bump version of lib
-- [ ] Publish
-- [ ] Tag repo
+
+Submit the PR.
+
+Note: The CI pipeline will take care of regenerating docs, and tagging. Publishing happens via
+JitPack.

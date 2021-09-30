@@ -111,4 +111,4 @@ $ ./gradlew dokkaHtml
 
 ## Publishing
 
-Newer versions of the SDK are tagged in GitHub and are published to Package Cloud
+Newer versions of the SDK are tagged in GitHub and are published via JitPack

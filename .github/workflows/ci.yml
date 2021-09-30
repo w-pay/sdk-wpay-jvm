@@ -47,7 +47,7 @@ jobs:
         run: ./scripts/tag.sh
 
       - name: Push changes
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           git push
           git push --tags

@@ -7,9 +7,11 @@ import java.io.Serializable
  */
 interface ChallengeResponse : Serializable {
     /** Possible types of challenges */
-    enum class Type {
-        STEP_UP,
-        PASSCODE
+    enum class Type(val value: String) {
+        STEP_UP("STEP_UP"),
+        PASSCODE("PASSCODE"),
+        THREEDS("3DS"),
+        THREEDS_FRICTIONLESS("3DS-frictionless")
     }
 
     /** The [PaymentInstrument] id related to the step up challenge. */

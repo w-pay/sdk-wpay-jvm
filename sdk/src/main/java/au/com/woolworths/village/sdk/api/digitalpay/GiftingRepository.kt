@@ -1,6 +1,8 @@
 package au.com.woolworths.village.sdk.api.digitalpay
 
 import au.com.woolworths.village.sdk.ApiResult
+import au.com.woolworths.village.sdk.model.ChallengeResponse
+import au.com.woolworths.village.sdk.model.FraudPayload
 import au.com.woolworths.village.sdk.model.digitalpay.*
 import org.threeten.bp.OffsetDateTime
 
@@ -38,6 +40,12 @@ interface GiftingRepository {
      * Order a gift card product.
      *
      * @param orderRequest detail of gift card order being made
+     * @param challengeResponses Used when needing to complete challenge(s) to complete payment.
+     * @param fraudPayload Used to complete the fraud check.
      */
-    fun order(orderRequest: DigitalPayGiftingOrderRequest): ApiResult<DigitalPayGiftingOrderResponse>
+    fun order(
+        orderRequest: DigitalPayGiftingOrderRequest,
+        challengeResponses: List<ChallengeResponse>?,
+        fraudPayload: FraudPayload?
+    ): ApiResult<DigitalPayGiftingOrderResponse>
 }

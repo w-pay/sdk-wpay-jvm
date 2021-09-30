@@ -35,15 +35,13 @@ jobs:
           arguments: clean assembleRelease
 
       - name: Update docs
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           ./gradlew dokkaHtml
           git add sdk/docs/
           git commit -m 'Updated docs' || echo "No changes to docs"
           git push
 
-      - name: Publish
-        if: ${{ github.ref == 'refs/heads/main' }}
-
-        # TODO: Currently a noop
-        run: ./gradlew tasks
+      - name: Tag
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: ./scripts/tag.sh

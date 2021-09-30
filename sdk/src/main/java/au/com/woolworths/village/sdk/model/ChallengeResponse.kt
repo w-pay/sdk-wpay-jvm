@@ -10,8 +10,8 @@ interface ChallengeResponse : Serializable {
     enum class Type(val value: String) {
         STEP_UP("STEP_UP"),
         PASSCODE("PASSCODE"),
-        THREEDS("3ds"),
-        THREEDS_FRICTIONLESS("3ds-frictionless")
+        THREEDS("3DS"),
+        THREEDS_FRICTIONLESS("3DS-frictionless")
     }
 
     /** The [PaymentInstrument] id related to the step up challenge. */

@@ -35,7 +35,7 @@ interface CreditCardDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?
@@ -87,7 +87,7 @@ interface GiftCardDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?
@@ -116,7 +116,7 @@ interface PayPalDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?
@@ -142,7 +142,7 @@ interface PaymentAgreementDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. Not used for payment agreements. */
     val primary: Boolean?
@@ -206,7 +206,7 @@ interface GooglePayDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?
@@ -235,7 +235,7 @@ interface ApplePayDetails : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?

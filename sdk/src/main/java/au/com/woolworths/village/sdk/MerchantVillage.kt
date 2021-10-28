@@ -6,7 +6,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 /**
  * Options unique to using the Merchant API operations.
  */
-class VillageMerchantOptions(
+open class VillageMerchantOptions(
     apiKey: String,
     baseUrl: String,
     wallet: Wallet? = null,

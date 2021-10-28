@@ -6,7 +6,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 /**
  * Options unique to using the Customer API operations.
  */
-class VillageCustomerOptions(
+open class VillageCustomerOptions(
     apiKey: String,
     baseUrl: String,
     wallet: Wallet? = null,

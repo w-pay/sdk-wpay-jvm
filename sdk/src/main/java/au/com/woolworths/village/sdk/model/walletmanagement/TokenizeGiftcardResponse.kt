@@ -33,7 +33,7 @@ interface TokenizedGiftCard : Serializable {
     val lastUpdated: String
 
     /* The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: String
+    val lastUsed: String?
 
     /* A flag to indicate if this payment instrument is the primary instrument in the container. */
     val primary: Boolean?

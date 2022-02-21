@@ -37,12 +37,12 @@ class StoringApiAuthenticatorTest {
 
     @Test
     fun shouldNotStoreCredentialsWhenError() {
-        val error = ApiException("Something went wrong")
+        val error = ApiError("Something went wrong")
         `when`(apiAuthenticator?.authenticate()).thenReturn(ApiResult.Error(error))
 
         val result: ApiResult.Error = storingApiAuthenticator.authenticate() as ApiResult.Error
 
-        assertThat(result.e, equalTo(error))
+        assertThat(result.error, equalTo(error))
         verify(credentialsStore, never())?.storeCredentials(anyString())
     }
 }

@@ -1,9 +1,15 @@
 package au.com.woolworths.village.sdk
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
+
 /**
  * A result from an API operation
+ *
+ * An ApiResult can be examined using an Imperative style (Kotlin's when), or can be converted
+ * to an Arrow Either so that Functional programming (map) can be used.
  */
-// The beginning of a poor mans Monad.
 sealed class ApiResult<out T : Any> {
     /**
      * A successful response from the API was received
@@ -17,43 +23,49 @@ sealed class ApiResult<out T : Any> {
     /**
      * An error that occurred while making an API call
      *
-     * @property e The error that occurred.
+     * @property error The error that occurred.
      * @constructor
      */
-    data class Error(val e: ApiException) : ApiResult<Nothing>()
+    data class Error(val error: ApiError) : ApiResult<Nothing>()
+
+    fun toEither(): Either<ApiError, T> =
+        when(this) {
+            is Success -> this.value.right()
+            is Error -> this.error.left()
+        }
 }
 
 /**
- * Base exception type. Used when no other error type is appropriate.
+ * Base error type. Used when no other error type is appropriate.
  */
-open class ApiException(
-    override val message: String,
-    override val cause: Throwable?
-) : Exception(message, cause) {
+open class ApiError(
+    val message: String,
+    val cause: Any?
+) {
     constructor(message: String) : this(message, null)
 }
 
 /**
- * Throw when there is an error parsing JSON data
+ * Returned when there is an error parsing JSON data
  */
-class JsonParsingException(
-    override val message: String,
-    override val cause: Throwable?,
+class JsonParsingError(
+    message: String,
+    cause: Any?,
 
     /** Additional details about why the parsing failed. Is implementation specific. */
     val details: Map<String, Any>?
-) : ApiException(message, cause) {
+) : ApiError(message, cause) {
     constructor(message: String) : this(message, null, null)
 }
 
 /**
- * Thrown when the server returns an HTTP error
+ * Returned when the server returns an HTTP failure
  */
-class HttpErrorException(
+class HttpFailureError(
     val statusCode: Int,
     val responseHeaders: Map<String, List<String>>,
     val responseBody: String
-) : ApiException(
+) : ApiError(
     when (statusCode) {
         400 -> "Invalid Input"
         401 -> "Unauthorized"

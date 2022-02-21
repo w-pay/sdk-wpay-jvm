@@ -1,61 +1,59 @@
 package au.com.woolworths.village.sdk
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import org.junit.jupiter.api.Test
+import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 
-class ApiResultTest {
-    @Test
-    fun shouldDistinguishErrorType() {
-        var distinguishedError = false
+class ApiResultTest : DescribeSpec({
+    describe("ApiResult") {
+        it("should distinguish error type") {
+            var distinguishedError = false
 
-        when(val result = causeAnError()) {
-            is ApiResult.Error -> {
-                when(result.e) {
-                    is JsonParsingException -> distinguishedError = true
+            when(val result = causeAnError()) {
+                is ApiResult.Error -> {
+                    when(result.error) {
+                        is JsonParsingError -> distinguishedError = true
+                    }
                 }
+                else -> {}
             }
+
+            distinguishedError.shouldBe(true)
         }
 
-        assertThat(distinguishedError, equalTo(true))
+        describe("HttpFailureError") {
+            it("should match invalid input status code") {
+                val error = HttpFailureError(400, emptyMap(), "")
+
+                error.message.shouldBe("Invalid Input")
+            }
+
+            it("should match unauthorized status code") {
+                val error = HttpFailureError(401, emptyMap(), "")
+
+                error.message.shouldBe("Unauthorized")
+            }
+
+            it("should match processing error status code") {
+                val error = HttpFailureError(422, emptyMap(), "")
+
+                error.message.shouldBe("Processing Error")
+            }
+
+            it("should match server error status code") {
+                val error = HttpFailureError(500, emptyMap(), "")
+
+                error.message.shouldBe("Server Error")
+            }
+
+            it("should default to server error when status code unrecognised") {
+                val error = HttpFailureError(503, emptyMap(), "")
+
+                error.message.shouldBe("Server Error")
+            }
+        }
     }
-
-    @Test
-    fun shouldMatchInvalidInputStatusCode() {
-        val error = HttpErrorException(400, emptyMap(), "")
-
-        assertThat(error.message, equalTo("Invalid Input"))
-    }
-
-    @Test
-    fun shouldMatchUnauthorizedStatusCode() {
-        val error = HttpErrorException(401, emptyMap(), "")
-
-        assertThat(error.message, equalTo("Unauthorized"))
-    }
-
-    @Test
-    fun shouldMatchProcessingErrorStatusCode() {
-        val error = HttpErrorException(422, emptyMap(), "")
-
-        assertThat(error.message, equalTo("Processing Error"))
-    }
-
-    @Test
-    fun shouldMatchServerErrorStatusCode() {
-        val error = HttpErrorException(500, emptyMap(), "")
-
-        assertThat(error.message, equalTo("Server Error"))
-    }
-
-    @Test
-    fun shouldDefaultToServerErrorWhenStatusCodeUnrecognised() {
-        val error = HttpErrorException(503, emptyMap(), "")
-
-        assertThat(error.message, equalTo("Server Error"))
-    }
-}
+})
 
 fun causeAnError(): ApiResult<Any> {
-    return ApiResult.Error(JsonParsingException("Something went wrong"))
+    return ApiResult.Error(JsonParsingError("Something went wrong"))
 }

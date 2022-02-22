@@ -14,7 +14,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
  * Implementations of the protocol may provide additional constraints on the user.
  */
 interface VillageCustomerApiRepository {
-    val admin: AdministrationApiRepository
+    val admin: AdministrationApi
     val dp: DigitalPayRepository
     val instruments: PaymentInstrumentsRepository
     val paymentAgreements: CustomerPaymentAgreementsApiRepository

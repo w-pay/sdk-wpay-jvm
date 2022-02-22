@@ -63,8 +63,8 @@ class JsonParsingError(
  */
 class HttpFailureError(
     val statusCode: Int,
-    val responseHeaders: Map<String, List<String>>,
-    val responseBody: String
+    val responseHeaders: Map<String, String>,
+    val responseBody: String?
 ) : ApiError(
     when (statusCode) {
         400 -> "Invalid Input"

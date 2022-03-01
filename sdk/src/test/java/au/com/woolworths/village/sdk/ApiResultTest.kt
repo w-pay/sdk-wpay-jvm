@@ -11,7 +11,7 @@ class ApiResultTest : DescribeSpec({
             when(val result = causeAnError()) {
                 is ApiResult.Error -> {
                     when(result.error) {
-                        is JsonParsingError -> distinguishedError = true
+                        is JsonUnmarshallingError -> distinguishedError = true
                     }
                 }
                 else -> {}
@@ -54,6 +54,5 @@ class ApiResultTest : DescribeSpec({
     }
 })
 
-fun causeAnError(): ApiResult<Any> {
-    return ApiResult.Error(JsonParsingError("Something went wrong"))
-}
+fun causeAnError(): ApiResult<Any> =
+    ApiResult.Error(JsonUnmarshallingError("Something went wrong"))

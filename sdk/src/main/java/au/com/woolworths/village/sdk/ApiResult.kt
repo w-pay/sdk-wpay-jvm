@@ -46,16 +46,33 @@ open class ApiError(
 }
 
 /**
- * Returned when there is an error parsing JSON data
+ * Returned when there is an error converting an object to a JSON string.
  */
-class JsonParsingError(
+class JsonMarshallingError(
     message: String,
     cause: Any?,
-
-    /** Additional details about why the parsing failed. Is implementation specific. */
-    val details: Map<String, Any>?
 ) : ApiError(message, cause) {
-    constructor(message: String) : this(message, null, null)
+    constructor(message: String) : this(message, null)
+}
+
+/**
+ * Returned when there is an error converting a string of JSON to an object.
+ */
+class JsonUnmarshallingError(
+    message: String,
+    cause: Any?,
+) : ApiError(message, cause) {
+    constructor(message: String) : this(message, null)
+}
+
+/**
+ * Returned if there is an error calling the API server.
+ */
+class HttpClientError(
+    message: String,
+    cause: Any?
+) : ApiError(message, cause) {
+    constructor(message: String) : this(message, null)
 }
 
 /**

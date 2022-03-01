@@ -1,5 +1,7 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.CurrencySerializer
+import au.com.woolworths.village.sdk.ISODateSerializer
 import au.com.woolworths.village.sdk.model.walletmanagement.PaymentInstrumentStatus
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
@@ -10,91 +12,132 @@ import java.math.BigDecimal
  *
  * @category Model
  */
-interface PaymentAgreement : Serializable {
+@kotlinx.serialization.Serializable
+data class PaymentAgreement(
     /** The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement. */
-    val paymentToken: String
+    val paymentToken: String,
 
     /** The status of the payment agreement in the container. */
-    val status: PaymentInstrumentStatus
+    val status: PaymentInstrumentStatus,
 
     /** The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601. */
-    val lastUpdated: OffsetDateTime?
+    @kotlinx.serialization.Serializable(with = ISODateSerializer::class)
+    val lastUpdated: OffsetDateTime?,
 
     /** The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used. */
-    val lastUsed: OffsetDateTime?
+    @kotlinx.serialization.Serializable(with = ISODateSerializer::class)
+    val lastUsed: OffsetDateTime?,
 
     /** The timestamp for when the payment instrument was added. The timestamp format is ISO8601. */
-    val createdOn: OffsetDateTime?
+    @kotlinx.serialization.Serializable(with = ISODateSerializer::class)
+    val createdOn: OffsetDateTime?,
 
     /** A flag to indicate if this payment instrument is the primary instrument in the container. Not used for payment agreements. */
-    val primary: Boolean?
+    val primary: Boolean?,
 
     /** A flag to indicate if the merchant profile in the container allows the use of this payment agreement. */
-    val allowed: Boolean?
+    val allowed: Boolean?,
 
     /** The payment agreement type. */
-    val type: PaymentAgreementType
+    val type: PaymentAgreementType,
 
     /** The payment agreement payment instrument id that will be used for the charges. */
-    val paymentInstrumentId: String
+    val paymentInstrumentId: String,
 
     /** The credit card scheme. */
-    val scheme: String?
+    val scheme: String?,
 
     /** The suffix (last 4 digits) of the credit card number. */
-    val cardSuffix: String?
+    val cardSuffix: String?,
 
     /** The month of the expiry date of the credit card. */
-    val expiryMonth: String?
+    val expiryMonth: String?,
 
     /** The year of the expiry date of the credit card. */
-    val expiryYear: String?
+    val expiryYear: String?,
 
     /** The payment agreement start date and time. The timestamp format is ISO8601. */
-    val startDate: OffsetDateTime?
+    @kotlinx.serialization.Serializable(with = ISODateSerializer::class)
+    val startDate: OffsetDateTime?,
 
     /** The payment agreement end date and time. The timestamp format is ISO8601. */
-    val endDate: OffsetDateTime?
+    @kotlinx.serialization.Serializable(with = ISODateSerializer::class)
+    val endDate: OffsetDateTime?,
 
     /** The payment agreement charge frequency. */
-    val chargeFrequency: PaymentAgreementChargeFrequency
+    val chargeFrequency: PaymentAgreementChargeFrequency,
 
     /** The amount that will be charged at the frequency specified in the payment agreement. */
-    val chargeAmount: BigDecimal
+    @kotlinx.serialization.Serializable(with = CurrencySerializer::class)
+    val chargeAmount: BigDecimal,
 
     /** The current charge cycle number. */
-    val chargeCycle: BigDecimal
+    val chargeCycle: Int,
 
     /** A flag to indicate if the payment agreement is expired. */
-    val expired: Boolean?
+    val expired: Boolean?,
 
     /** The URL of the endpoint to use to update the payment agreement. */
-    val updateURL: String
+    val updateURL: String,
 
-    val stepUp: PaymentAgreementStepUp?
+    val stepUp: PaymentAgreementStepUp?,
 
     /** A description of the payment agreement */
     val description: String?
+) : Serializable {
+    constructor(
+        paymentToken: String,
+        status: PaymentInstrumentStatus,
+        type: PaymentAgreementType,
+        paymentInstrumentId: String,
+        chargeFrequency: PaymentAgreementChargeFrequency,
+        chargeAmount: BigDecimal,
+    ) : this(
+        paymentToken = paymentToken,
+        status = status,
+        lastUpdated = null,
+        lastUsed = null,
+        createdOn = null,
+        primary = null,
+        allowed = null,
+        type = type,
+        paymentInstrumentId = paymentInstrumentId,
+        scheme = null,
+        cardSuffix = null,
+        expiryMonth = null,
+        expiryYear = null,
+        startDate = null,
+        endDate = null,
+        chargeFrequency = chargeFrequency,
+        chargeAmount = chargeAmount,
+        chargeCycle = 0,
+        expired = null,
+        updateURL = "",
+        stepUp = null,
+        description = null
+    )
 }
 
-interface PaymentAgreementStepUp : Serializable {
+@kotlinx.serialization.Serializable
+data class PaymentAgreementStepUp(
     /* The type of the step up action. For credit cards this will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment. */
-    val type: String
+    val type: String,
 
     /* A flag to indicate if this step up (action) is mandatory. */
-    val mandatory: Boolean?
+    val mandatory: Boolean?,
 
     /* The URL of an iframe. This iframe is used to capture a credit card expiry and CVV or CVV only. The URL will automatically switch between expiry and CVV or CVV only endpoints based on the container requirement. */
-    val url: String
-}
+    val url: String,
+) : Serializable
 
 /**
  * List of payments agreements.
  */
-interface PaymentAgreements : Serializable {
+@kotlinx.serialization.Serializable
+data class PaymentAgreements(
     /** The resulting list of payment agreements. */
     val paymentAgreements: List<PaymentAgreement>
-}
+) : Serializable
 
 /**
  * Frequency with which the payment agreement is charged

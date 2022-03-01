@@ -28,6 +28,9 @@ fun dataFrom(json: String): UnstructuredData =
 
 fun identifyTransform(json: JsonObject): Either<SdkError, JsonObject> = json.right()
 
+@Suppress("EXPERIMENTAL_API_USAGE")
+private val JSON = Json { explicitNulls = false }
+
 class KotlinxSerializationAdapterTest: DescribeSpec({
     describe("kotlinx-serialization adapter") {
         val unmashallerFactory = kotlinxSerialisationUnmarshaller()
@@ -73,13 +76,13 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
             val now = OffsetDateTime.of(2022, 3, 1, 15, 14, 34, 333, ZoneOffset.UTC)
 
             it("should serialise date to ISO string") {
-                val result = Json.encodeToJsonElement(ISODateSerializerStub(now)).jsonObject
+                val result = JSON.encodeToJsonElement(ISODateSerializerStub(now)).jsonObject
 
                 result["date"]?.content().shouldBe("2022-03-01T15:14:34Z")
             }
 
             it("should deserialise ISO date string") {
-                val result = Json.decodeFromJsonElement<ISODateSerializerStub>(JsonObject(mapOf(
+                val result = JSON.decodeFromJsonElement<ISODateSerializerStub>(JsonObject(mapOf(
                     "date" to JsonPrimitive("2022-03-01T15:14:34Z")
                 )))
 
@@ -97,24 +100,46 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
             val amount = BigDecimal("12.232")
 
             it("should serialise decimal to currency string") {
-                val result = Json.encodeToJsonElement(CurrencySerializerStub(amount)).jsonObject
+                val result = JSON.encodeToJsonElement(CurrencySerializerStub(amount)).jsonObject
 
                 result["amount"]?.content().shouldBe("12.23")
             }
 
             it("should round correctly") {
-                val result = Json.encodeToJsonElement(CurrencySerializerStub(BigDecimal("12.235"))).jsonObject
+                val result = JSON.encodeToJsonElement(CurrencySerializerStub(BigDecimal("12.235"))).jsonObject
 
                 result["amount"]?.content().shouldBe("12.24")
             }
 
             it("should deserialise currency string") {
-                val result = Json.decodeFromJsonElement<CurrencySerializerStub>(JsonObject(mapOf(
+                val result = JSON.decodeFromJsonElement<CurrencySerializerStub>(JsonObject(mapOf(
                     "amount" to JsonPrimitive("12.232")
                 )))
 
                 result.amount.shouldBe(amount)
             }
+        }
+    }
+
+    describe("api message structure") {
+        @Serializable
+        data class Person(val name: String, val address: String)
+
+        val name = "Bruce Wayne"
+        val address = "Wayne Manor"
+
+        it("should serialise to message structure") {
+            val person = Person(name, address)
+
+            val result = JSON.encodeToJsonElement(ApiRequestBody(person, Meta())).jsonObject
+
+            result["data"]?.jsonObject.shouldBe(
+                JsonObject(mapOf(
+                "name" to JsonPrimitive(name),
+                "address" to JsonPrimitive(address)
+            )))
+
+            result["meta"]?.toString().shouldBe("{}")
         }
     }
 

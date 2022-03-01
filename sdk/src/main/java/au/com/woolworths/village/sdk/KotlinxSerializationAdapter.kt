@@ -8,7 +8,10 @@ import au.com.redcrew.apisdkcreator.httpclient.GenericClassUnmarshaller
 import au.com.redcrew.apisdkcreator.httpclient.SdkError
 import au.com.redcrew.apisdkcreator.httpclient.UNMARSHALLING_ERROR_TYPE
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredDataToGenericClassUnmarshaller
+import au.com.woolworths.village.sdk.model.ChallengeResponse
+import au.com.woolworths.village.sdk.model.FraudPayload
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -70,6 +73,11 @@ import kotlin.reflect.full.createType
  * transformation via annotations without having to replicate the same process for every type in
  * the SDK. This is unwieldy given the amount of types in the SDK.
  *
+ * We also can't use a wrapper class as (to use the second example above) we can't construct a
+ * valid Person object without both the name and address. Therefore we would have to create a
+ * "partial Person" type or weaken constraints in the Person type (eg: make address nullable).
+ * Weakening constraints leads to anemic model and is not a good long term approach.
+ *
  * Therefore we have a transformer type that can, at runtime process the JSON data and give the data
  * to kotlinx-serialisation when ready.
  *
@@ -113,6 +121,27 @@ fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
             }
     }
 
+/*
+ * Only for use with HttpRequest's.
+ */
+@Serializable
+internal data class Meta(
+    val fraud: FraudPayload?,
+    val challengeResponses: List<ChallengeResponse> = emptyList(),
+) {
+    constructor(): this(null)
+}
+
+/*
+ * Only for use with HttpRequest's to give the HTTP request body to kotlinx-serialization in the
+ * message structure the API server is expecting.
+ */
+@Serializable
+internal data class ApiRequestBody<D, M>(
+    val data: D,
+    val meta: M
+)
+
 object ISODateSerializer : KSerializer<OffsetDateTime> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ISODate", PrimitiveKind.STRING)
 
@@ -140,7 +169,6 @@ object CurrencySerializer : KSerializer<BigDecimal> {
     override fun deserialize(decoder: Decoder): BigDecimal =
         decoder.decodeDouble().toBigDecimal()
 }
-
 
 fun jsonPassthrough(json: JsonObject): Either<SdkError, JsonObject> =
     json.right()

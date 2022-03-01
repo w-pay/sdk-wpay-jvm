@@ -5,22 +5,23 @@ import java.io.Serializable
 /**
  * Digital Pay Fraud Payload, set to null to skip the fraud check.
  */
-interface FraudPayload : Serializable {
+@kotlinx.serialization.Serializable
+class FraudPayload(
     /** The fraud check message */
-    val message: String
+    val message: String,
 
     /** The fraud check provider. */
-    val provider: String
+    val provider: String,
 
     /** The fraud check message format */
-    val format: FraudPayloadFormat
+    val format: FraudPayloadFormat,
 
     /** The fraud check response message format */
-    val responseFormat: FraudPayloadFormat
+    val responseFormat: FraudPayloadFormat,
 
     /** The fraud check version */
     val version: String
-}
+) : Serializable
 
 /**
  * Possible fraud payload formats

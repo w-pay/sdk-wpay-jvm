@@ -3,9 +3,14 @@ package au.com.woolworths.village.sdk.api
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.woolworths.village.sdk.ApiResult
+import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.woolworths.village.sdk.StubApiClient
-import au.com.woolworths.village.sdk.model.HealthCheck
+import au.com.woolworths.village.sdk.data.aJsonResponse
+import au.com.woolworths.village.sdk.data.healthCheckDTO
+import au.com.woolworths.village.sdk.kotlinxSerialisationUnmarshaller
+import au.com.woolworths.village.sdk.matchers.healthCheckFrom
+import au.com.woolworths.village.sdk.model.apiResponse
+import au.com.woolworths.village.sdk.model.stringData
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -18,12 +23,14 @@ class AdministrationApiTest : DescribeSpec({
         beforeEach {
             apiClient = StubApiClient()
 
-            api = AdministrationApi(apiClient.client())
+            apiClient.response = aJsonResponse<UnstructuredData>()
+                .withBody(stringData(apiResponse(healthCheckDTO())))
+                .build()
+
+            api = AdministrationApi(apiClient.client(), kotlinxSerialisationUnmarshaller())
         }
 
         it("should set request params") {
-            apiClient.result = ApiResult.Success(HealthCheck(HealthCheck.Status.SUCCESS))
-
             api.checkHealth()
 
             apiClient.request.shouldBe(HttpRequest<Unit>(
@@ -33,10 +40,7 @@ class AdministrationApiTest : DescribeSpec({
         }
 
         it("should return HealthCheck") {
-            val result = HealthCheck(HealthCheck.Status.SUCCESS)
-            apiClient.result = ApiResult.Success(result)
-
-            api.checkHealth().toEither().shouldBeRight(result)
+            api.checkHealth().toEither().shouldBeRight(healthCheckFrom(healthCheckDTO()))
         }
     }
 })

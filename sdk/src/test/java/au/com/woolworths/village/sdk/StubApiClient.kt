@@ -1,21 +1,25 @@
 package au.com.woolworths.village.sdk
 
-import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
-import au.com.woolworths.village.sdk.SdkApiClient
+import arrow.core.Either
+import arrow.core.right
+import au.com.redcrew.apisdkcreator.httpclient.*
 import kotlin.reflect.KClass
 
 class StubApiClient {
     lateinit var request: HttpRequest<*>
-    lateinit var result: ApiResult<*>
+    lateinit var response: HttpResponse<UnstructuredData>
 
     fun client(): SdkApiClient =
         object: SdkApiClient {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : Any> invoke(p1: KClass<T>): suspend (HttpRequest<*>) -> ApiResult<T> =
-                { req ->
-                    this@StubApiClient.request = req
+            override suspend fun invoke(
+                request: HttpRequest<*>
+            ): Either<SdkError, HttpResult<*, UnstructuredData>> {
+                this@StubApiClient.request = request
 
-                    this@StubApiClient.result as ApiResult<T>
-                }
+                return HttpResult(
+                    request = request,
+                    response = response
+                ).right()
+            }
         }
 }

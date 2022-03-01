@@ -4,12 +4,24 @@ import arrow.core.Either
 import arrow.core.identity
 import arrow.core.left
 import arrow.core.right
-import au.com.redcrew.apisdkcreator.httpclient.*
+import au.com.redcrew.apisdkcreator.httpclient.GenericClassUnmarshaller
+import au.com.redcrew.apisdkcreator.httpclient.SdkError
+import au.com.redcrew.apisdkcreator.httpclient.UNMARSHALLING_ERROR_TYPE
+import au.com.redcrew.apisdkcreator.httpclient.UnstructuredDataToGenericClassUnmarshaller
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.serializer
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.format.DateTimeFormatter
+import java.math.BigDecimal
+import java.math.RoundingMode
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createType
 
@@ -100,6 +112,34 @@ fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
                 }
             }
     }
+
+object ISODateSerializer : KSerializer<OffsetDateTime> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ISODate", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: OffsetDateTime) {
+        val isoDate = value
+            .withNano(0)
+            .format(DateTimeFormatter.ISO_DATE_TIME)
+
+        encoder.encodeString(isoDate)
+    }
+
+    override fun deserialize(decoder: Decoder): OffsetDateTime =
+        OffsetDateTime.parse(decoder.decodeString())
+}
+
+object CurrencySerializer : KSerializer<BigDecimal> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigDecimal", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: BigDecimal) {
+        val amount = value.setScale(2, RoundingMode.HALF_EVEN)
+
+        encoder.encodeString(amount.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): BigDecimal =
+        decoder.decodeDouble().toBigDecimal()
+}
 
 
 fun jsonPassthrough(json: JsonObject): Either<SdkError, JsonObject> =

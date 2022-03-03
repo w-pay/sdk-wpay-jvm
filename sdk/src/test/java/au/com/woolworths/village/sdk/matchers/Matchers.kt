@@ -4,10 +4,13 @@ import arrow.core.*
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
 
+private fun emptyResult(): Either<MatcherResult, MatcherResult> =
+    MatcherResult(true, { "" }, { "" }).right()
+
 private fun firstFailedResult(results: List<MatcherResult>): Option<MatcherResult> =
     results
         .map { Either.conditionally(it.passed(), { it }, { it }) }
-        .reduce { acc, it -> acc.flatMap(constant(it)) }
+        .fold(emptyResult()) { acc, it -> acc.flatMap(constant(it)) }
         .fold(::Some, constant(None))
 
 fun <T> equal(expected: T?, actual: T?): Boolean =

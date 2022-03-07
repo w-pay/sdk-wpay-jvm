@@ -1,6 +1,10 @@
 package au.com.woolworths.village.sdk.matchers
 
+import io.kotest.matchers.Matcher
+import io.kotest.matchers.MatcherResult
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.threeten.bp.OffsetDateTime
 import java.math.BigDecimal
@@ -25,3 +29,12 @@ fun JsonElement?.toInt(): Int =
 
 fun JsonElement?.toUpperCase(): String =
     this!!.jsonPrimitive.content.uppercase()
+
+fun jsonObjectFrom(dto: JsonElement): Matcher<JsonObject> =
+    jsonObjectFrom(dto.jsonObject)
+
+fun jsonObjectFrom(dto: JsonObject): Matcher<JsonObject> =
+    object : Matcher<JsonObject> {
+        override fun test(value: JsonObject): MatcherResult =
+            MatcherResult.test(::equal, dto, value)
+    }

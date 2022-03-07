@@ -1,24 +1,23 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.CurrencySerializer
+import au.com.woolworths.village.sdk.ISODateSerializer
+import kotlinx.serialization.Serializable
 import org.threeten.bp.OffsetDateTime
-import java.io.Serializable
+import java.math.BigDecimal
 
-interface MerchantPayments : Serializable {
-}
-
+interface MerchantPayments : ModelType
 
 /**
  * List of payments made involving a merchant.
  */
-interface MerchantPaymentSummaries : MerchantPayments {
+@Serializable
+data class MerchantPaymentSummaries(
     /** The resulting list of payments. */
     val payments: List<MerchantPaymentSummary>
-}
+) : MerchantPayments
 
-/**
- * Summary information for a single Payment Request
- */
-interface MerchantPaymentSummary : Payment {
+interface MerchantPaymentSummaryType : PaymentType {
     /**
      * The number of times that the payment request can be used to create a payment.
      *
@@ -43,15 +42,43 @@ interface MerchantPaymentSummary : Payment {
 }
 
 /**
+ * Summary information for a single Payment Request
+ */
+@Serializable
+data class MerchantPaymentSummary(
+    override val paymentRequestId: String,
+    override val merchantReferenceId: String,
+
+    @Serializable(with = CurrencySerializer::class)
+    override val grossAmount: BigDecimal,
+    override val usesRemaining: Int? = null,
+
+    @Serializable(with = ISODateSerializer::class)
+    override val expiryTime: OffsetDateTime? = null,
+    override val specificWalletId: String? = null
+) : MerchantPaymentSummaryType
+
+/**
  * Detailed information for a single Payment Request
  */
-interface MerchantPaymentDetails : MerchantPaymentSummary {
+@Serializable
+data class MerchantPaymentDetails(
+    override val paymentRequestId: String,
+    override val merchantReferenceId: String,
+
+    @Serializable(with = CurrencySerializer::class)
+    override val grossAmount: BigDecimal,
+    override val usesRemaining: Int? = null,
+    @Serializable(with = ISODateSerializer::class)
+    override val expiryTime: OffsetDateTime? = null,
+    override val specificWalletId: String? = null,
+
     /** The [Basket] associated to the transaction. */
-    val basket: Basket?
+    val basket: Basket? = null,
 
     /** Optional extra details from the POS. */
-    val posPayload: PosPayload?
+    val posPayload: PosPayload? = null,
 
     /** Optional extra details from the merchant. */
-    val merchantPayload: MerchantPayload?
-}
+    val merchantPayload: MerchantPayload? = null
+) : MerchantPaymentSummaryType

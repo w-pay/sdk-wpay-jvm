@@ -1,5 +1,6 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.CurrencySerializer
 import org.threeten.bp.OffsetDateTime
 import java.io.Serializable
 import java.math.BigDecimal
@@ -138,13 +139,15 @@ interface GiftCardStepUp : Serializable {
 /**
  * Used to identify other [PaymentInstrument]s to be used as part of a payment.
  */
-interface SecondaryPaymentInstrument : Serializable {
+@kotlinx.serialization.Serializable
+data class SecondaryPaymentInstrument(
     /** The ID of the payment instrument */
-    val paymentInstrumentId: String
+    val paymentInstrumentId: String,
 
     /** The amount of the payment to be paid using this instrument. */
+    @kotlinx.serialization.Serializable(with = CurrencySerializer::class)
     val amount: BigDecimal
-}
+) : ModelType
 
 interface IndividualPaymentInstrument : PaymentInstrument {
     interface InstrumentDetail {

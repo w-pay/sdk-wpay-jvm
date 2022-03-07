@@ -157,17 +157,19 @@ object ISODateSerializer : KSerializer<OffsetDateTime> {
         OffsetDateTime.parse(decoder.decodeString())
 }
 
-object CurrencySerializer : KSerializer<BigDecimal> {
+open class DecimalSerializer : KSerializer<BigDecimal> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigDecimal", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: BigDecimal) {
-        val amount = value.setScale(2, RoundingMode.HALF_EVEN)
-
-        encoder.encodeString(amount.toString())
-    }
+    override fun serialize(encoder: Encoder, value: BigDecimal) =
+        encoder.encodeString(value.toString())
 
     override fun deserialize(decoder: Decoder): BigDecimal =
         decoder.decodeDouble().toBigDecimal()
+}
+
+object CurrencySerializer : DecimalSerializer() {
+   override fun serialize(encoder: Encoder, value: BigDecimal) =
+       super.serialize(encoder, value.setScale(2, RoundingMode.HALF_EVEN))
 }
 
 fun jsonPassthrough(json: JsonObject): Either<SdkError, JsonObject> =

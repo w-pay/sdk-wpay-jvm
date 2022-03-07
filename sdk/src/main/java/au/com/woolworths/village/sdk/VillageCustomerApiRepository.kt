@@ -18,7 +18,7 @@ interface VillageCustomerApiRepository {
     val dp: DigitalPayRepository
     val instruments: PaymentInstrumentsRepository
     val paymentAgreements: CustomerPaymentAgreementsApi
-    val paymentRequests: CustomerPaymentRequestsRepository
+    val paymentRequests: CustomerPaymentRequestsApi
     val paymentSessions: CustomerPaymentSessionsRepository
     val preferences: CustomerPreferencesRepository
     val termsAndConditions: CustomerTermsAndConditionsApiRepository

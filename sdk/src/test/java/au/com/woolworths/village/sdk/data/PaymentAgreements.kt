@@ -32,6 +32,8 @@ fun createPaymentAgreementRequest(): CreatePaymentAgreementRequest =
             paymentInstrumentId = "90731",
             chargeFrequency = PaymentAgreementChargeFrequency.WEEKLY,
             chargeAmount = BigDecimal("25.99"),
+            chargeCycle = 0,
+            updateURL = "http://foobar.com"
         )
     )
 
@@ -97,5 +99,7 @@ fun updatePaymentAgreementRequest(): UpdatePaymentAgreementRequest =
             paymentInstrumentId = "90731",
             chargeFrequency = PaymentAgreementChargeFrequency.WEEKLY,
             chargeAmount = BigDecimal("25.99"),
+            chargeCycle = 0,
+            updateURL = "http://foobar.com"
         )
     )

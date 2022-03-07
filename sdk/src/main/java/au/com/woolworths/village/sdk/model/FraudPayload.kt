@@ -1,12 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * Digital Pay Fraud Payload, set to null to skip the fraud check.
  */
-@kotlinx.serialization.Serializable
-class FraudPayload(
+@Serializable
+data class FraudPayload(
     /** The fraud check message */
     val message: String,
 
@@ -21,7 +21,7 @@ class FraudPayload(
 
     /** The fraud check version */
     val version: String
-) : Serializable
+) : ModelType
 
 /**
  * Possible fraud payload formats

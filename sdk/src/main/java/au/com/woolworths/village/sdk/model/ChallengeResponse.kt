@@ -1,12 +1,12 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * The response to a step up challenge
  */
-@kotlinx.serialization.Serializable
-class ChallengeResponse(
+@Serializable
+data class ChallengeResponse(
     /** The [PaymentInstrument] id related to the step up challenge. */
     val instrumentId: String,
 
@@ -17,8 +17,8 @@ class ChallengeResponse(
     val token: String,
 
     /** An optional reference that could be used for audit tracing */
-    val reference: String?
-) : Serializable {
+    val reference: String? = null
+) : ModelType {
     /** Possible types of challenges */
     enum class Type(val value: String) {
         STEP_UP("STEP_UP"),

@@ -1,14 +1,15 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * Request to update a [PaymentSession] for a merchant.
  */
-interface MerchantUpdatePaymentSessionRequest : Serializable {
+@Serializable
+data class MerchantUpdatePaymentSessionRequest(
     /** Payload used to pass merchant information to the customer */
-    val merchantInfo: DynamicPayload
+    val merchantInfo: DynamicPayload,
 
     /** The ID of the associated Payment Request */
-    val paymentRequestId: String?
-}
+    val paymentRequestId: String? = null
+) : ModelType

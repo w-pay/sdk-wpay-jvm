@@ -1,14 +1,15 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * The result of creating a [PaymentSession]
  */
-interface CreatePaymentSessionResult : Serializable {
+@Serializable
+data class CreatePaymentSessionResult(
     /** The ID of the new [PaymentSession] */
-    val paymentSessionId: String
+    val paymentSessionId: String,
 
     /** A [QRCode] that is associated to the [PaymentSession] */
-    val qr: QRCode?
-}
+    val qr: QRCode? = null
+) : ModelType

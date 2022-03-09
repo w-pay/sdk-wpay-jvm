@@ -22,7 +22,7 @@ interface VillageCustomerApiRepository {
     val paymentSessions: CustomerPaymentSessionsApi
     val preferences: CustomerPreferencesApi
     val termsAndConditions: CustomerTermsAndConditionsApi
-    val transactions: CustomerTransactionsRepository
+    val transactions: CustomerTransactionsApi
 
     /**
      * Options that were given at SDK initialisation

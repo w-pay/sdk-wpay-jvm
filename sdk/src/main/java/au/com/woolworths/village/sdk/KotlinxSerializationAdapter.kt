@@ -142,16 +142,14 @@ internal data class ApiRequestBody<D, M>(
     val meta: M
 )
 
+fun OffsetDateTime.toIsoDateTime(): String =
+    this.withNano(0).format(DateTimeFormatter.ISO_DATE_TIME)
+
 object ISODateSerializer : KSerializer<OffsetDateTime> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ISODate", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: OffsetDateTime) {
-        val isoDate = value
-            .withNano(0)
-            .format(DateTimeFormatter.ISO_DATE_TIME)
-
-        encoder.encodeString(isoDate)
-    }
+    override fun serialize(encoder: Encoder, value: OffsetDateTime) =
+        encoder.encodeString(value.toIsoDateTime())
 
     override fun deserialize(decoder: Decoder): OffsetDateTime =
         OffsetDateTime.parse(decoder.decodeString())

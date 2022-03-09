@@ -1,34 +1,36 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
-import java.math.BigDecimal
+import kotlinx.serialization.Serializable
 
 /**
  * List of terms and conditions acceptances
  */
-interface TermsAndConditionsAcceptances : Serializable {
+@Serializable
+data class TermsAndConditionsAcceptances(
     /** An array of Ts and Cs the customer has accepted.. */
     val termsAndConditionsAcceptances: List<TermsAndConditionsAcceptance>
-}
+) : ModelType
 
 /**
  * The Terms and Condtions the customer has accepted.
  */
-interface TermsAndConditionsAcceptance : Serializable {
+@Serializable
+data class TermsAndConditionsAcceptance(
     /** The type of the Ts and Cs. */
-    val type: String
+    val type: String,
 
     /** The version of the Ts and Cs. */
-    val version: String
+    val version: String,
 
     /** The timestamp when the shopper/customer agreed to the Everyday Pay Ts and Cs.  The timestamp format is milliseconds since epoch. */
-    val timestamp: BigDecimal
-}
+    val timestamp: Long
+) : ModelType
 
-interface AcceptTermsAndConditionsRequest : Serializable {
+@Serializable
+data class AcceptTermsAndConditionsRequest(
     /** The type of Ts and Cs that the shopper/customer has agreed to. */
-    val type: String
+    val type: String,
 
     /** The current version of the Ts and Cs that the shopper/customer has agreed to. */
     val version: String
-}
+) : ModelType

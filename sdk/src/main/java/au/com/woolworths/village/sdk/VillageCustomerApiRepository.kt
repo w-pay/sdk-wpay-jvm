@@ -21,7 +21,7 @@ interface VillageCustomerApiRepository {
     val paymentRequests: CustomerPaymentRequestsApi
     val paymentSessions: CustomerPaymentSessionsApi
     val preferences: CustomerPreferencesApi
-    val termsAndConditions: CustomerTermsAndConditionsApiRepository
+    val termsAndConditions: CustomerTermsAndConditionsApi
     val transactions: CustomerTransactionsRepository
 
     /**

@@ -27,6 +27,9 @@ fun JsonElement?.toDate(): OffsetDateTime =
 fun JsonElement?.toInt(): Int =
     this!!.jsonPrimitive.content.toInt()
 
+fun JsonElement?.toLong(): Long =
+    this!!.jsonPrimitive.content.toLong()
+
 fun JsonElement?.toUpperCase(): String =
     this!!.jsonPrimitive.content.uppercase()
 

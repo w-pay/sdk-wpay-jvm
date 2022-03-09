@@ -43,6 +43,10 @@ open class ApiError(
     val cause: Any?
 ) {
     constructor(message: String) : this(message, null)
+
+    override fun toString(): String {
+        return "${this.javaClass.name}(message='$message', cause=$cause)"
+    }
 }
 
 /**

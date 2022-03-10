@@ -1,6 +1,5 @@
 package au.com.woolworths.village.sdk.api
 
-import arrow.core.computations.either
 import au.com.redcrew.apisdkcreator.httpclient.*
 import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
 import au.com.woolworths.village.sdk.*
@@ -20,8 +19,8 @@ private data class MerchantPreferencesResponse(
 )
 
 class MerchantPreferencesApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a merchant's preferences.

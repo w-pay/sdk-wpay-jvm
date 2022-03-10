@@ -3,6 +3,7 @@ package au.com.woolworths.village.sdk.matchers
 import au.com.woolworths.village.sdk.model.PaymentAgreement
 import au.com.woolworths.village.sdk.model.PaymentAgreementStepUp
 import au.com.woolworths.village.sdk.model.PaymentAgreements
+import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayPaymentAgreementResponse
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
 import kotlinx.serialization.json.*

@@ -17,7 +17,7 @@ interface VillageMerchantApiRepository {
     val admin: AdministrationApi
     val dp: DigitalPayRepository
     val payments: MerchantPaymentsRepository
-    val paymentAgreements: MerchantPaymentAgreementsRepository
+    val paymentAgreements: MerchantPaymentAgreementsApi
     val paymentSession: MerchantPaymentSessionsRepository
     val preferences: MerchantPreferencesApi
     val qr: QRCodeRepository

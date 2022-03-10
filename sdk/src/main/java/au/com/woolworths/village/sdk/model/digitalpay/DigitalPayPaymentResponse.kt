@@ -1,14 +1,15 @@
 package au.com.woolworths.village.sdk.model.digitalpay
 
 import au.com.woolworths.village.sdk.model.CreditCardStepUp
-import java.io.Serializable
+import au.com.woolworths.village.sdk.model.ModelType
+import kotlinx.serialization.Serializable
 
 /**
  * The JSON success response structure of the Payments endpoint.
  *
  * @category Model
  */
-interface DigitalPayPaymentResponse : Serializable {
+interface DigitalPayPaymentResponse : ModelType {
     /**
      *  Container reference in the transaction logs.
      *
@@ -52,18 +53,19 @@ interface DigitalPayPaymentResponse : Serializable {
     val unknown: List<DigitalPayPaymentInstrument>
 }
 
-interface DigitalPayFraudResponse : Serializable {
+@Serializable
+data class DigitalPayFraudResponse(
     /** The fraud check client id. Will be null if the fraud check was skipped. */
-    val clientId: String
+    val clientId: String,
 
     /** The fraud check reason code. Will be null if the fraud check was skipped. */
-    val reasonCode: String
+    val reasonCode: String,
 
     /** The fraud check decision. Will be null if the fraud check was skipped. */
     val decision: String
-}
+) : ModelType
 
-interface DigitalPayPaymentInstrument : Serializable {
+interface DigitalPayPaymentInstrument : ModelType {
     /** The credit card payment instrument id. */
     val paymentInstrumentId: String
 
@@ -118,7 +120,7 @@ interface DigitalPayCreditCard : DigitalPayPaymentInstrument {
     val threeDS: DigitalPayThreeDSResponse?
 }
 
-interface DigitalPayHandlingInstructions : Serializable {
+interface DigitalPayHandlingInstructions : ModelType {
     /** The handling instruction code. */
     val instructionCode: DigitalPayInstructionCode
 
@@ -221,17 +223,18 @@ interface DigitalPayPayPalReceiptData {
     val customerId: String
 }
 
-interface DigitalPayExtendedTransactionData : Serializable {
+@Serializable
+data class DigitalPayExtendedTransactionData(
     /**
      * The name of the extended transaction data field.
      *
      * The 'token' field is only included in the response if it is enabled in the consumers API configuration.
      */
-    val field: DigitalPayExtendedTransactionDataFieldName
+    val field: DigitalPayExtendedTransactionDataFieldName,
 
     /** The value of the extended transaction data field. */
     val value: String
-}
+) : ModelType
 
 interface DigitalPayThreeDSResponse {
     /** Received in response to a Visa authenticated Purchase and PreAuth. Only present for Visa. */

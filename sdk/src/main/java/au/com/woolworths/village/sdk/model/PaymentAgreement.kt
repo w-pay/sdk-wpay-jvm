@@ -211,3 +211,32 @@ data class PaymentAgreementBillingAddress(
     /** The customer's Alpha-2 (2-character) ISO-3166-1 country code. */
     val countryCode: String
 ) : ModelType
+
+/**
+ * Data required to charge against a [PaymentAgreement]
+ */
+@Serializable
+data class ChargePaymentAgreementRequest(
+    /**
+     * The payment token of the payment agreement.
+     *
+     * The payment token is a unique identifier for the payment agreement.
+     */
+    val paymentToken: String,
+
+    /** The amount that will be charged against the payment instrument linked to the payment agreement. */
+    @Serializable(with = CurrencySerializer::class)
+    val amount: BigDecimal,
+
+    /** A merchant application specific reference number for the transaction. */
+    val clientReference: String,
+
+    /** A merchant order number for the transaction. */
+    val orderNumber: String,
+
+    /** Transaction type containers to use for all instruments. */
+    val transactionType: TransactionType,
+
+    /** A merchant application specific reference number for the customer. */
+    val customerRef: String? = null
+) : ModelType

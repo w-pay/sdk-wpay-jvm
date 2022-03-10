@@ -1,20 +1,23 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import au.com.woolworths.village.sdk.CurrencySerializer
+import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 /**
  * The details of the payment to be created.
  */
-interface NewPaymentRequest : Serializable {
+@Serializable
+data class NewPaymentRequest(
     /** The unique reference for the payment */
-    val merchantReferenceId: String
+    val merchantReferenceId: String,
 
     /** The gross amount to be paid. Must be positive */
-    val grossAmount: BigDecimal
+    @Serializable(with = CurrencySerializer::class)
+    val grossAmount: BigDecimal,
 
     /** Whether a [QRCode] should be created and returned in the response */
-    val generateQR: Boolean
+    val generateQR: Boolean,
 
     /**
      * The number of times that the payment request can be used to create a payment.
@@ -23,7 +26,7 @@ interface NewPaymentRequest : Serializable {
      *
      * If set to 0 then the request can be used an unlimited number of times.
      */
-    val maxUses: Int?
+    val maxUses: Int? = 1,
 
     /**
      * The time in seconds that the payment request should remain valid.
@@ -32,7 +35,7 @@ interface NewPaymentRequest : Serializable {
      *
      * If absent, the API will default value to 0 which indicates that the payment request will not expire until it is deleted
      */
-    val timeToLivePayment: Int?
+    val timeToLivePayment: Int? = 0,
 
     /**
      * The time in seconds that the QR code should remain valid.
@@ -41,7 +44,7 @@ interface NewPaymentRequest : Serializable {
      *
      * If absent, the API will default value to 0 which indicates that the code will not expire until it is deleted
      */
-    val timeToLiveQR: Int?
+    val timeToLiveQR: Int? = 0,
 
     /**
      * The ID of a specific wallet for which the payment is intended.
@@ -52,14 +55,14 @@ interface NewPaymentRequest : Serializable {
      *
      * If absent then any wallet can create a payment against the Payment Request
      */
-    val specificWalletId: String?
+    val specificWalletId: String? = null,
 
     /** The [Basket] associated to the transaction. */
-    val basket: Basket?
+    val basket: Basket? = null,
 
     /** Optional extra details from the POS. */
-    val posPayload: PosPayload?
+    val posPayload: PosPayload? = null,
 
     /** Optional extra details from the merchant. */
-    val merchantPayload: MerchantPayload?
-}
+    val merchantPayload: MerchantPayload? = null
+) : ModelType

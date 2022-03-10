@@ -1,15 +1,9 @@
 package au.com.woolworths.village.sdk.matchers
 
-import au.com.woolworths.village.sdk.model.MerchantPaymentDetails
-import au.com.woolworths.village.sdk.model.MerchantPaymentSummaries
-import au.com.woolworths.village.sdk.model.MerchantPaymentSummary
-import au.com.woolworths.village.sdk.model.MerchantPaymentSummaryType
+import au.com.woolworths.village.sdk.model.*
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.*
 
 fun merchantPaymentSummariesFrom(dto: JsonObject): Matcher<MerchantPaymentSummaries> =
     object : Matcher<MerchantPaymentSummaries> {
@@ -45,5 +39,14 @@ fun merchantPaymentDetailsFrom(dto: JsonObject): Matcher<MerchantPaymentDetails>
                 MatcherResult.test(::basketFrom, dto["basket"], value.basket),
                 MatcherResult.test(::dynamicPayloadFrom, dto["posPayload"], value.posPayload),
                 MatcherResult.test(::dynamicPayloadFrom, dto["merchantPayload"], value.merchantPayload)
+            )
+    }
+
+fun paymentRequestCreatedFrom(dto: JsonObject): Matcher<CreatePaymentRequestResult> =
+    object : Matcher<CreatePaymentRequestResult> {
+        override fun test(value: CreatePaymentRequestResult): MatcherResult =
+            Matcher.tests(
+                MatcherResult.test(::equal, dto["paymentRequestId"]?.content(), value.paymentRequestId),
+                MatcherResult.test(::qrCodeFrom, dto["qr"], value.qr)
             )
     }

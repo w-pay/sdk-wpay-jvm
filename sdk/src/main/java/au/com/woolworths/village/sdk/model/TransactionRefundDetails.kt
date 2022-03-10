@@ -1,18 +1,19 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * Request payload containing the refund reason and instructions
  */
-interface TransactionRefundDetails : Serializable {
+@Serializable
+data class TransactionRefundDetails(
     /** The reason for the refund, or other message logged with the transaction */
-    val reason: String
+    val reason: String,
 
     /**
      * An optional client reference to be associated with the transaction.
      *
      * If not supplied the transactionId will be used.
      */
-    val clientReference: String?
-}
+    val clientReference: String? = null
+) : ModelType

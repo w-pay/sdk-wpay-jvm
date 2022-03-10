@@ -16,7 +16,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 interface VillageMerchantApiRepository {
     val admin: AdministrationApi
     val dp: DigitalPayRepository
-    val payments: MerchantPaymentsRepository
+    val payments: MerchantPaymentsApi
     val paymentAgreements: MerchantPaymentAgreementsApi
     val paymentSession: MerchantPaymentSessionsApi
     val preferences: MerchantPreferencesApi

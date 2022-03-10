@@ -9,8 +9,8 @@ import au.com.woolworths.village.sdk.*
 import au.com.woolworths.village.sdk.model.*
 
 class CustomerPaymentSessionsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a [PaymentSession] by it's ID

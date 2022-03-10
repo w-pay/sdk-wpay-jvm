@@ -12,8 +12,8 @@ import au.com.woolworths.village.sdk.model.*
  * @category API
  */
 class CustomerPaymentAgreementsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a list of customer's [PaymentAgreement]s

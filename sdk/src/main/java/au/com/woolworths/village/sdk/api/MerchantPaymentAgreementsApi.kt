@@ -17,8 +17,8 @@ import au.com.woolworths.village.sdk.model.digitalpay.DigitalPayPaymentAgreement
  * @category API
  */
 class MerchantPaymentAgreementsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Charge a [PaymentAgreement]s

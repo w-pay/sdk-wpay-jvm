@@ -10,8 +10,8 @@ import au.com.woolworths.village.sdk.model.*
 import au.com.woolworths.village.sdk.model.digitalpay.PaymentTransactionType
 
 class CustomerPaymentRequestsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a [CustomerPaymentRequest] by its ID

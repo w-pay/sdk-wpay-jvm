@@ -14,8 +14,8 @@ import au.com.woolworths.village.sdk.model.TermsAndConditionsAcceptances
 import org.threeten.bp.OffsetDateTime
 
 class CustomerTransactionsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a list of previously executed transactions for the customer.

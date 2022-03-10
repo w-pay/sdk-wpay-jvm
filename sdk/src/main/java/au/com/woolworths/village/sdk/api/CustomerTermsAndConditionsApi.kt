@@ -11,8 +11,8 @@ import au.com.woolworths.village.sdk.helpers.params
 import au.com.woolworths.village.sdk.model.*
 
 class CustomerTermsAndConditionsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Get the terms and conditions agreed to by the customer

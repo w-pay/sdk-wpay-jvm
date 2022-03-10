@@ -12,8 +12,8 @@ import au.com.woolworths.village.sdk.model.HealthCheck
  * Can be used to perform Administration functions on the API
  */
 class AdministrationApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Check the health/status of the API

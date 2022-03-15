@@ -1,46 +1,51 @@
 package au.com.woolworths.village.sdk.model
 
+import au.com.woolworths.village.sdk.ISODateSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 import org.threeten.bp.OffsetDateTime
-import java.io.Serializable
 
-interface MerchantSchemas : Serializable {
-}
+interface MerchantSchemas : ModelType
 
 /**
  * List of merchant schemas
  */
-interface MerchantSchemaSummaries : MerchantSchemas {
+@Serializable
+data class MerchantSchemaSummaries(
     /** A list of currently valid schemas for this merchant */
     val schemas: List<MerchantSchemaSummary>
-}
+) : ModelType
 
 /**
  * Summary information about a [MerchantSchema]
  */
-interface MerchantSchemaSummary : Serializable {
+@Serializable
+data class MerchantSchemaSummary(
     /** The unique ID assigned to the schema */
-    val schemaId: String
+    val schemaId: String,
 
     /** The type of the schema e.g. pos, merchant */
-    val type: String
+    val type: String,
 
     /** A description for the schema. */
-    val description: String?
-}
+    val description: String? = null
+) : ModelType
 
 /**
  * Details about a particular schema
  */
-interface MerchantSchema : Serializable {
+@Serializable
+data class MerchantSchema(
     /** The schema content formatted according to JSON Schema standards */
-    val schema: Map<String, Any>
+    val schema: JsonObject,
 
     /** The type of the schema e.g. pos, merchant */
-    val type: String?
+    val type: String? = null,
 
     /** A description for the schema */
-    val description: String?
+    val description: String? = null,
 
     /** The timestamp when the schema was created */
-    val created: OffsetDateTime?
-}
+    @Serializable(with = ISODateSerializer::class)
+    val created: OffsetDateTime? = null
+) : ModelType

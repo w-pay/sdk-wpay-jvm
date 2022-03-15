@@ -20,7 +20,7 @@ interface VillageMerchantApiRepository {
     val paymentAgreements: MerchantPaymentAgreementsApi
     val paymentSession: MerchantPaymentSessionsApi
     val preferences: MerchantPreferencesApi
-    val qr: QRCodeRepository
+    val qr: QRCodeApi
     val schemas: SchemasRepository
     val transactions: MerchantTransactionsRepository
 

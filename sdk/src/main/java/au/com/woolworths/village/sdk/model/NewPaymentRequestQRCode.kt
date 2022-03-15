@@ -1,16 +1,17 @@
 package au.com.woolworths.village.sdk.model
 
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * Request to create a new [QRCode] for a Payment Request
  */
-interface NewPaymentRequestQRCode : Serializable {
+@Serializable
+data class NewPaymentRequestQRCode(
     /** The ID of the payment request linked to this [QRCode] */
-    val referenceId: String
+    val referenceId: String,
 
     /** The type of ID held in [NewPaymentRequestQRCode.referenceId] */
-    val referenceType: QRCodePaymentReferenceType
+    val referenceType: QRCodePaymentReferenceType,
 
     /**
      * The time in seconds that the QR code should remain valid.
@@ -19,5 +20,5 @@ interface NewPaymentRequestQRCode : Serializable {
      *
      * If absent, the API will default value to 0 which indicates that the code will not expire until it is deleted.
      */
-    val timeToLive: Int get() = 0
-}
+    val timeToLive: Int = 0
+) : ModelType

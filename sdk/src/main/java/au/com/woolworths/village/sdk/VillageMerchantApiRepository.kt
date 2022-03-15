@@ -22,7 +22,7 @@ interface VillageMerchantApiRepository {
     val preferences: MerchantPreferencesApi
     val qr: QRCodeApi
     val schemas: SchemasApi
-    val transactions: MerchantTransactionsRepository
+    val transactions: MerchantTransactionsApi
 
     /**
      * Options that were given at SDK initialisation

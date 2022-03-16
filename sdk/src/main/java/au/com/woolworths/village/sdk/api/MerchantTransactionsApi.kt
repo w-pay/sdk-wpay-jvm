@@ -13,8 +13,8 @@ import au.com.woolworths.village.sdk.model.MerchantTransactionSummaries
 import org.threeten.bp.OffsetDateTime
 
 class MerchantTransactionsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Retrieve a list of previously executed transactions with the merchant.

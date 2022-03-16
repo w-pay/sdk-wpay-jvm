@@ -12,8 +12,8 @@ import au.com.woolworths.village.sdk.model.MerchantUpdatePaymentSessionRequest
 import au.com.woolworths.village.sdk.model.PaymentSession
 
 class MerchantPaymentSessionsApi(
-    val client: SdkApiClient,
-    val unmarshall: SdkJsonUnmarshaller
+    private val client: SdkApiClient,
+    private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
      * Create a new [PaymentSession]

@@ -29,7 +29,7 @@ class MerchantTransactionsApi(
         pageSize: Int? = null,
         endTime: OffsetDateTime? = null,
         startTime: OffsetDateTime? = null
-    ): ApiResult<MerchantTransactionSummaries>{
+    ): ApiResult<MerchantTransactionSummaries> {
         val unmarshaller = unmarshall(::fromData)(MerchantTransactionSummaries::class)
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
@@ -53,7 +53,7 @@ class MerchantTransactionsApi(
      *
      * @param transactionId The transaction id
      */
-    suspend fun getById(transactionId: String): ApiResult<MerchantTransactionDetails>{
+    suspend fun getById(transactionId: String): ApiResult<MerchantTransactionDetails> {
         val unmarshaller = unmarshall(::fromData)(MerchantTransactionDetails::class)
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 

@@ -16,7 +16,7 @@ import au.com.woolworths.village.sdk.auth.HasAccessToken
 interface VillageCustomerApiRepository {
     val admin: AdministrationApi
     val dp: DigitalPayRepository
-    val instruments: PaymentInstrumentsRepository
+    val instruments: PaymentInstrumentsApi
     val paymentAgreements: CustomerPaymentAgreementsApi
     val paymentRequests: CustomerPaymentRequestsApi
     val paymentSessions: CustomerPaymentSessionsApi

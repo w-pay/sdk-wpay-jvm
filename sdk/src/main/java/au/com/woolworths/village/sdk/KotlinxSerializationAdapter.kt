@@ -84,7 +84,7 @@ import kotlin.reflect.full.createType
  * Being a function type, complex transformations can be built if required. If identity is required,
  * the `jsonPassthrough` function can be used.
  */
-typealias JsonTransformer = (JsonObject) -> Either<SdkError, JsonObject>
+typealias JsonTransformer = suspend (JsonObject) -> Either<SdkError, JsonObject>
 
 /**
  * An SDK JSON Unmarshaller transforms then unmarshalls the JSON response into a known type.
@@ -99,7 +99,7 @@ fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
         override fun invoke(p1: JsonTransformer): GenericClassUnmarshaller =
             object: UnstructuredDataToGenericClassUnmarshaller() {
                 @Suppress("UNCHECKED_CAST")
-                override fun <T : Any> unmarshallString(cls: KClass<T>, data: String): Either<SdkError, T> {
+                override suspend fun <T : Any> unmarshallString(cls: KClass<T>, data: String): Either<SdkError, T> {
                     val parser = Json {
                         ignoreUnknownKeys = true
                     }
@@ -173,7 +173,13 @@ object CurrencySerializer : DecimalSerializer() {
 fun jsonPassthrough(json: JsonObject): Either<SdkError, JsonObject> =
     json.right()
 
-fun fromData(json: JsonObject): Either<SdkError, JsonObject> =
+fun fromProp(prop: String, json: JsonObject): Either<SdkError, JsonObject> =
     Either
-        .fromNullable(json["data"]?.jsonObject)
-        .bimap({ missingProp("data") }, ::identity)
+        .fromNullable(json[prop]?.jsonObject)
+        .bimap({ missingProp(prop) }, ::identity)
+
+fun fromData(json: JsonObject): Either<SdkError, JsonObject> =
+    fromProp("data", json)
+
+fun fromMeta(json: JsonObject): Either<SdkError, JsonObject> =
+    fromProp("meta", json)

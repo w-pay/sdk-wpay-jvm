@@ -3,6 +3,8 @@ package au.com.woolworths.village.sdk.matchers
 import arrow.core.*
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 
 private fun emptyResult(): Either<MatcherResult, MatcherResult> =
     MatcherResult(true, { "" }, { "" }).right()
@@ -83,3 +85,9 @@ fun Matcher.Companion.tests(results: List<MatcherResult>): MatcherResult =
 
 fun Matcher.Companion.tests(vararg results: MatcherResult): MatcherResult =
     Matcher.tests(results.asList())
+
+fun fromDataDTO(dto: JsonObject): JsonObject =
+    dto["data"]!!.jsonObject
+
+fun fromMetaDTO(dto: JsonObject): JsonObject =
+    dto["meta"]!!.jsonObject

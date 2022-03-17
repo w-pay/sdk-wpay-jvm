@@ -1,44 +1,16 @@
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
+apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: "org.jetbrains.dokka"
-apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: "maven-publish"
 apply plugin: "kotlinx-serialization"
 
-group = "au.com.wpay.village.sdk"
-version = "4.4.7"
-
-android {
-    compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-        }
-    }
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
-}
+group = "au.com.wpay.sdk"
+version = "0.1.0"
 
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.java
                 groupId = group
                 artifactId = "api-sdk"
                 version = version
@@ -51,8 +23,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.1.0"
-    implementation "androidx.appcompat:appcompat:1.1.0"
 
     api "org.threeten:threetenbp:1.4.4"
     implementation "com.github.RedCrewOS.api-sdk-creator-mpp:http-api-client:http-api-client_v0.5.1"
@@ -70,9 +40,10 @@ dependencies {
     testImplementation "com.natpryce:hamkrest:1.8.0.1"
     testImplementation "org.mockito:mockito-core:2.+"
     testImplementation "org.mockito:mockito-junit-jupiter:2.23.0"
+}
 
-    androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+test {
+    useJUnitPlatform()
 }
 
 dokkaHtml {

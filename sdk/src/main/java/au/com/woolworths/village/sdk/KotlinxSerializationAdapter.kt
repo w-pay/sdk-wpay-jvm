@@ -4,10 +4,7 @@ import arrow.core.Either
 import arrow.core.identity
 import arrow.core.left
 import arrow.core.right
-import au.com.redcrew.apisdkcreator.httpclient.GenericClassUnmarshaller
-import au.com.redcrew.apisdkcreator.httpclient.SdkError
-import au.com.redcrew.apisdkcreator.httpclient.UNMARSHALLING_ERROR_TYPE
-import au.com.redcrew.apisdkcreator.httpclient.UnstructuredDataToGenericClassUnmarshaller
+import au.com.redcrew.apisdkcreator.httpclient.*
 import au.com.woolworths.village.sdk.model.ChallengeResponse
 import au.com.woolworths.village.sdk.model.FraudPayload
 import kotlinx.serialization.KSerializer
@@ -94,16 +91,33 @@ interface SdkJsonUnmarshaller {
     operator fun invoke(p1: JsonTransformer): GenericClassUnmarshaller
 }
 
+@Suppress("EXPERIMENTAL_API_USAGE")
+private val parser = Json {
+    explicitNulls = false
+    ignoreUnknownKeys = true
+}
+
+fun kotlinxSerialisationMarshaller(): Marshaller =
+    {
+        try {
+            // TODO: As this uses reflection it might not be portable.
+            val type = it::class.createType()
+            val serializer: KSerializer<Any?> = parser.serializersModule.serializer(type)
+
+            UnstructuredData.String(parser.encodeToString(serializer, it)).right()
+        }
+        catch (e: Exception) {
+            SdkError(MARSHALLING_ERROR_TYPE, e.message!!, e).left()
+        }
+    }
+
+
 fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
     object: SdkJsonUnmarshaller {
         override fun invoke(p1: JsonTransformer): GenericClassUnmarshaller =
             object: UnstructuredDataToGenericClassUnmarshaller() {
                 @Suppress("UNCHECKED_CAST")
                 override suspend fun <T : Any> unmarshallString(cls: KClass<T>, data: String): Either<SdkError, T> {
-                    val parser = Json {
-                        ignoreUnknownKeys = true
-                    }
-
                     return try {
                         // TODO: As this uses reflection it might not be portable.
                         // TODO: Might have to replace with a compiler plugin.

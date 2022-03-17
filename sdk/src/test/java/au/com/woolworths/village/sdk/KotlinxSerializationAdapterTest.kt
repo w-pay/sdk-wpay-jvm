@@ -1,7 +1,5 @@
 package au.com.woolworths.village.sdk
 
-import arrow.core.Either
-import arrow.core.right
 import au.com.redcrew.apisdkcreator.httpclient.SdkError
 import au.com.redcrew.apisdkcreator.httpclient.UNMARSHALLING_ERROR_TYPE
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
@@ -26,18 +24,27 @@ data class Address(val street: String)
 fun dataFrom(json: String): UnstructuredData =
     UnstructuredData.String(json)
 
-fun identifyTransform(json: JsonObject): Either<SdkError, JsonObject> = json.right()
-
 @Suppress("EXPERIMENTAL_API_USAGE")
 private val JSON = Json { explicitNulls = false }
 
 class KotlinxSerializationAdapterTest: DescribeSpec({
-    describe("kotlinx-serialization adapter") {
+    describe("marshalling") {
+        val marshaller = kotlinxSerialisationMarshaller()
+
+        it("should marshall data") {
+            val name = "Bruce Wayne"
+
+            marshaller(Person(name))
+                .shouldBeRight(UnstructuredData.String("""{"name":"$name"}"""))
+        }
+    }
+
+    describe("unmarshalling") {
         val unmashallerFactory = kotlinxSerialisationUnmarshaller()
 
         it("should unmarshall JSON to object") {
             val name = "Bruce Wayne"
-            val result = unmashallerFactory(::identifyTransform)(Person::class)(
+            val result = unmashallerFactory(::jsonPassthrough)(Person::class)(
                 dataFrom("""{ "name": "$name" }""")
             )
 
@@ -45,7 +52,7 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
         }
 
         it("should return error when unmarshalling fails") {
-            val result = unmashallerFactory(::identifyTransform)(Address::class)(
+            val result = unmashallerFactory(::jsonPassthrough)(Address::class)(
                 dataFrom("""{ "street": "Wayne Way" }""")
             )
 
@@ -57,7 +64,7 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
 
         it("should ignore missing keys") {
             val name = "Bruce Wayne"
-            val result = unmashallerFactory(::identifyTransform)(Person::class)(
+            val result = unmashallerFactory(::jsonPassthrough)(Person::class)(
                 dataFrom("""{ "name": "$name", "address": { "street": "Wayne Way" } }""")
             )
 

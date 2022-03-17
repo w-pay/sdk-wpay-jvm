@@ -4,8 +4,24 @@ import arrow.core.Either
 import arrow.core.identity
 import arrow.core.right
 import au.com.redcrew.apisdkcreator.httpclient.*
+import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
+import au.com.woolworths.village.sdk.auth.ApiAuthenticator
+import au.com.woolworths.village.sdk.auth.HasAccessToken
+import au.com.woolworths.village.sdk.headers.defaultCustomerHeaders
+import au.com.woolworths.village.sdk.headers.defaultHeaders
+import au.com.woolworths.village.sdk.headers.defaultMerchantHeaders
+
+typealias HttpClientFactory = () -> HttpClient
 
 typealias SdkApiClient = suspend (request: HttpRequest<*>) -> Either<SdkError, HttpResult<*, UnstructuredData>>
+
+sealed class ApiTokenType {
+    data class StringToken(val token: String) : ApiTokenType()
+    data class ApiAuthenticatorToken(val authenticator: ApiAuthenticator<HasAccessToken>) :
+        ApiTokenType()
+
+    data class NoToken(val token: Unit = Unit) : ApiTokenType()
+}
 
 private fun unwrapUnstructuredData(data: UnstructuredData): String =
     when (data) {
@@ -45,3 +61,19 @@ fun <T : Any> apiResult(
     result: Either<SdkError, ApiResult<T>>
 ): ApiResult<T> =
     result.fold(::toApiErrorResult, ::identity)
+
+fun createApiClient(
+    httpClient: HttpClientFactory,
+    options: WPayOptions,
+): SdkApiClient {
+    val headers = when(options) {
+        is WPayCustomerOptions -> defaultCustomerHeaders(options)
+        is WPayMerchantOptions -> defaultMerchantHeaders(options)
+        else -> defaultHeaders(options)
+    }
+
+    return resolveUrl(options.baseUrl) pipe
+            addHeaders(headers) pipe
+            jsonMarshaller(kotlinxSerialisationMarshaller()) pipe
+            httpClient()
+}

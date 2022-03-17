@@ -1,4 +1,4 @@
-package au.com.woolworths.village.sdk
+package au.com.woolworths.village.sdk.headers
 
 /*
  * Even though header names are meant to be case insensitive, sometimes the case does matter.

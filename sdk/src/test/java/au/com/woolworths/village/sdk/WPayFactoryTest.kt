@@ -29,6 +29,26 @@ class WPayFactoryTest: DescribeSpec({
             ).right()
         }
 
+    describe("createApiClient") {
+        val opts = WPayOptions("abc123", "http://localhost")
+        lateinit var httpClient: StubHttpClient
+
+        beforeEach {
+            httpClient = StubHttpClient()
+        }
+
+        it("should resolve url to baseUrl config") {
+            val path = "/foo/bar"
+
+            createApiClient(httpClient.factory(), opts)(HttpRequest<Unit>(
+                method = HttpRequestMethod.GET,
+                url = HttpRequestUrl.String(path)
+            ))
+
+            httpClient.request.url.shouldBe(HttpRequestUrl.String("${opts.baseUrl}$path"))
+        }
+    }
+
     describe("resultHandler") {
         it("should return http failure") {
             val code = 500

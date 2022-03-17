@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk.auth
 
 import au.com.woolworths.village.sdk.ApiResult
+import au.com.woolworths.village.sdk.ApiTokenType
 
 /**
  * Abstracts how the SDK authenticates with the API.
@@ -18,3 +19,10 @@ interface ApiAuthenticator<T : Any> {
      */
     fun authenticate(): ApiResult<T>
 }
+
+fun toApiAuthenticator(token: ApiTokenType): ApiAuthenticator<HasAccessToken> =
+    when(token) {
+        is ApiTokenType.StringToken -> ProvidedTokenAuthenticator(token.token)
+        is ApiTokenType.ApiAuthenticatorToken -> token.authenticator
+        else -> ProvidedTokenAuthenticator("")
+    }

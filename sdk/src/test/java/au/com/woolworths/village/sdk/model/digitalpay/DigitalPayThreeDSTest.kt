@@ -1,58 +1,44 @@
 package au.com.woolworths.village.sdk.model.digitalpay
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 
-@DisplayName("DigitalPayThreeDS")
-class DigitalPayThreeDSTest {
-    @Nested
-    @DisplayName("Ares Status")
-    inner class AresStatusTest {
-        @Test
-        fun `should convert code to enum`() {
-            DigitalPayThreeDS.AresStatus.values().forEach { status ->
-                assertThat(DigitalPayThreeDS.AresStatus.fromCode(status.statusCode), equalTo(status))
+class DigitalPayThreeDSTest: DescribeSpec({
+    describe("DigitalPayThreeDS") {
+        describe("Ares Status") {
+            it("should convert code to enum") {
+                DigitalPayThreeDS.AresStatus.values().forEach { status ->
+                    DigitalPayThreeDS.AresStatus.fromCode(status.statusCode).shouldBe(status)
+                }
             }
-        }
 
-        @Test
-        fun `should return null if code not recognised`() {
-            assertThat(DigitalPayThreeDS.AresStatus.fromCode("ABC"), equalTo(null))
+            it("should return null if code not recognised") {
+                DigitalPayThreeDS.AresStatus.fromCode("ABC").shouldBe(null)
+            }
         }
     }
 
-    @Nested
-    @DisplayName("Veres Enrolled")
-    inner class VeresEnrolledTest {
-        @Test
-        fun `should convert code to enum`() {
+    describe("Veres Enrolled") {
+        it("should convert code to enum") {
             DigitalPayThreeDS.VeresEnrolled.values().forEach { status ->
-                assertThat(DigitalPayThreeDS.VeresEnrolled.fromCode(status.statusCode), equalTo(status))
+                DigitalPayThreeDS.VeresEnrolled.fromCode(status.statusCode).shouldBe(status)
             }
         }
 
-        @Test
-        fun `should return null if code not recognised`() {
-            assertThat(DigitalPayThreeDS.VeresEnrolled.fromCode("ABC"), equalTo(null))
+        it("should return null if code not recognised") {
+            DigitalPayThreeDS.VeresEnrolled.fromCode("ABC").shouldBe(null)
         }
     }
 
-    @Nested
-    @DisplayName("Trans Status")
-    inner class TransStatusTest {
-        @Test
-        fun `should convert code to enum`() {
+    describe("Trans Status") {
+        it("should convert code to enum") {
             DigitalPayThreeDS.TransStatus.values().forEach { status ->
-                assertThat(DigitalPayThreeDS.TransStatus.fromCode(status.statusCode), equalTo(status))
+                DigitalPayThreeDS.TransStatus.fromCode(status.statusCode).shouldBe(status)
             }
         }
 
-        @Test
-        fun `should return null if code not recognised`() {
-            assertThat(DigitalPayThreeDS.TransStatus.fromCode("ABC"), equalTo(null))
+        it("should return null if code not recognised") {
+            DigitalPayThreeDS.TransStatus.fromCode("ABC").shouldBe(null)
         }
     }
-}
+})

@@ -42,5 +42,5 @@ dokkaHtml {
     outputDirectory.set(new File("${projectDir}/docs"))
 
     // TODO When Dokka >= 1.4.10 is published
-    //moduleName.set("Woolworths Village Wallet Android SDK")
+    //moduleName.set("WPay JVM SDK")
 }

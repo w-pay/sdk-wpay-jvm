@@ -1,6 +1,6 @@
 # WPay JVM SDK
 
-This project contains an JVM compatible library that can facilitate applications accessing the WPay API.
+This project contains a JVM compatible library that can facilitate applications accessing the WPay API.
 
 | :memo: | The SDK is currently in development. Therefore parts may change. |
 |--------|:-----------------------------------------------------------------|
@@ -24,8 +24,8 @@ Applications have the flexibility to plug in different implementations of the in
 choices (eg: choice of HTTP client library). This makes it very easy to use the SDK in an existing project, without 
 necessarily introducing extra dependencies.
 
-The entry point for applications is the `createCustomerSDK` or
-`createMerchantSDK` functions depending on the goals of the application.
+The entry point for applications is the `createCustomerSDK` or `createMerchantSDK` functions depending on the goals of
+the application.
 
 ### Authentication layer
 
@@ -97,3 +97,7 @@ $ ./gradlew dokkaHtml
 ## Publishing
 
 Newer versions of the SDK are tagged in GitHub and are published via JitPack
+
+## Developing
+
+See [DEVELOPING.md](./DEVELOPING.md) on how to contribute to this SDK.

@@ -11,7 +11,7 @@ open class WPayOptions(
     val apiKey: String,
 
     /**
-     * An initial base URL for the API host to use. Is comprised of the the scheme, host, and any
+     * An initial base URL for the API host to use. It is comprised of the scheme, host, and any
      * context root for the API paths to use eg: https://myawesomeapp.com/api
      */
     val baseUrl: String,

@@ -53,3 +53,12 @@ help guide users of the SDK, as well as developers wanting to update the SDK.
 
 Additional [FP resources](https://github.com/RedCrewOS/api-sdk-creator-js/blob/main/http-api-client/docs/motivation.md#functional-programming-references) 
 are available to help explain the concepts that the SDK uses in its implementation.
+
+## Testing
+
+The SDK has test coverage across all the API classes, data transformers, and internal SDK logic. Updates to the SDK
+should maintain test coverage.
+
+The tests rely heavily on [Kotest](https://kotest.io/) matchers to match data in responses to source "DTO" data where
+"DTOs" are data structures that represent JSON data being sent/received from the SDK. This allows API operations and
+transformers to assert that the SDK is transforming data correctly as it executes the pipeline.

@@ -71,11 +71,11 @@ import kotlin.reflect.full.createType
  * the SDK. This is unwieldy given the amount of types in the SDK.
  *
  * We also can't use a wrapper class as (to use the second example above) we can't construct a
- * valid Person object without both the name and address. Therefore we would have to create a
+ * valid Person object without both the name and address. Therefore, we would have to create a
  * "partial Person" type or weaken constraints in the Person type (eg: make address nullable).
- * Weakening constraints leads to anemic model and is not a good long term approach.
+ * Weakening constraints leads to an anemic model and is not a good long term approach.
  *
- * Therefore we have a transformer type that can, at runtime process the JSON data and give the data
+ * Therefore, we have a transformer type that can, at runtime process the JSON data and give the data
  * to kotlinx-serialisation when ready.
  *
  * Being a function type, complex transformations can be built if required. If identity is required,

@@ -91,3 +91,11 @@ fun fromDataDTO(dto: JsonObject): JsonObject =
 
 fun fromMetaDTO(dto: JsonObject): JsonObject =
     dto["meta"]!!.jsonObject
+
+class PredicateMatcher<T>(
+    private val predicate: (T?, T?) -> Boolean,
+    private val expected: T
+) : Matcher<T> {
+    override fun test(value: T): MatcherResult =
+        MatcherResult.test(predicate, expected, value)
+}

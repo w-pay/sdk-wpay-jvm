@@ -1,28 +1,28 @@
 package au.com.woolworths.village.sdk.model.digitalpay
 
-import java.io.Serializable
+import au.com.woolworths.village.sdk.model.ModelType
+import kotlinx.serialization.Serializable
 
 /**
  * Fraud check response
- *
- * @category Model
  */
-interface DigitalPayFraudPayload : Serializable {
-    /* The fraud check provider. */
-    val provider: String
+@Serializable
+data class DigitalPayFraudPayload(
+    /** The fraud check provider. */
+    val provider: String,
 
-    /* The fraud check version. */
-    val version: String
+    /** The fraud check version. */
+    val version: String,
 
-    /* The fraud check message format. */
-    val format: DigitalPayFraudMessageFormat
+    /** The fraud check message format. */
+    val format: DigitalPayFraudMessageFormat,
 
-    /* The fraud check message format. */
-    val responseFormat: DigitalPayFraudMessageFormat
+    /** The fraud check message format. */
+    val responseFormat: DigitalPayFraudMessageFormat,
 
-    /* The fraud check message. */
+    /** The fraud check message. */
     val message: String
-}
+) : ModelType
 
 enum class DigitalPayFraudMessageFormat {
     ZIP_BASE_64_ENCODED,

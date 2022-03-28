@@ -12,7 +12,7 @@ interface DigitalPayRepository {
     val instruments: InstrumentsApiRepository
     val merchants: MerchantsApiRepository
     val openPay: OpenPayApi
-    val paymentAgreements: PaymentAgreementApiRepository
+    val paymentAgreements: PaymentAgreementApi
     val payments: PaymentApiRepository
     val paypal: PayPalApiRepository
     val transactions: TransactionsApiRepository

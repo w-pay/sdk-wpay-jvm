@@ -1,13 +1,14 @@
 package au.com.woolworths.village.sdk.model.digitalpay
 
-import java.io.Serializable
+import au.com.woolworths.village.sdk.model.ModelType
+import kotlinx.serialization.Serializable
 
 /**
  * The JSON request structure of the Voids endpoint.
  *
  * @category Model
  */
-interface DigitalPayVoidRequest : Serializable {
+interface DigitalPayVoidRequest : ModelType {
     /** A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system. */
     val clientReference: String
 
@@ -18,7 +19,9 @@ interface DigitalPayVoidRequest : Serializable {
     val voids: List<DigitalPayVoid>
 }
 
-interface DigitalPayVoid : Serializable {
+@Serializable
+data class DigitalPayVoid(
     /** Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container. */
     val paymentTransactionRef: String
-}
+) : ModelType
+

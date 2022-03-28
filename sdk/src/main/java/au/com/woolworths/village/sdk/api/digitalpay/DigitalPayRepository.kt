@@ -11,7 +11,7 @@ interface DigitalPayRepository {
     val googlePay: GooglePayApiRepository
     val instruments: InstrumentsApiRepository
     val merchants: MerchantsApiRepository
-    val openPay: OpenPayApiRepository
+    val openPay: OpenPayApi
     val paymentAgreements: PaymentAgreementApiRepository
     val payments: PaymentApiRepository
     val paypal: PayPalApiRepository

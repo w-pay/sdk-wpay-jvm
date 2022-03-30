@@ -10,7 +10,7 @@ interface DigitalPayRepository {
     val gifting: GiftingApi
     val googlePay: GooglePayApiRepository
     val instruments: InstrumentsApiRepository
-    val merchants: MerchantsApiRepository
+    val merchants: MerchantsApi
     val openPay: OpenPayApi
     val paymentAgreements: PaymentAgreementApi
     val payments: PaymentsApi

@@ -14,7 +14,7 @@ interface DigitalPayRepository {
     val openPay: OpenPayApi
     val paymentAgreements: PaymentAgreementApi
     val payments: PaymentsApi
-    val paypal: PayPalApiRepository
+    val paypal: PayPalApi
     val transactions: TransactionsApi
     val wallet: WalletApi
 }

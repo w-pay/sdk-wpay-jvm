@@ -5,7 +5,7 @@ import au.com.woolworths.village.sdk.api.walletmanagement.*
 interface DigitalPayRepository {
     val androidPay: AndroidPayApi
     val applePay: ApplePayApi
-    val cards: CardsApiRepository
+    val cards: CardCaptureApi
     val giftcards: GiftcardsApiRepository
     val gifting: GiftingApi
     val googlePay: GooglePayApiRepository

@@ -6,7 +6,7 @@ interface DigitalPayRepository {
     val androidPay: AndroidPayApi
     val applePay: ApplePayApi
     val cards: CardCaptureApi
-    val giftcards: GiftcardsApiRepository
+    val giftcards: GiftCardsApi
     val gifting: GiftingApi
     val googlePay: GooglePayApiRepository
     val instruments: InstrumentsApiRepository

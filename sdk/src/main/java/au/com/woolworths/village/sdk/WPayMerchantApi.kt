@@ -23,9 +23,7 @@ class WPayMerchantApi(
     val options: WPayMerchantOptions
 ) {
     val admin: AdministrationApi = AdministrationApi(client, unmarshall)
-
-    // TODO: Put me back
-    //val dp: DigitalPayRepository
+    val dp: DigitalPayRepository = DigitalPayRepository(client, unmarshall)
     val payments: MerchantPaymentsApi = MerchantPaymentsApi(client, unmarshall)
     val paymentAgreements: MerchantPaymentAgreementsApi = MerchantPaymentAgreementsApi(client, unmarshall)
     val paymentSession: MerchantPaymentSessionsApi = MerchantPaymentSessionsApi(client, unmarshall)

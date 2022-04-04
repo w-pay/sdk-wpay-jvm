@@ -1,6 +1,7 @@
 package au.com.woolworths.village.sdk
 
 import au.com.woolworths.village.sdk.api.*
+import au.com.woolworths.village.sdk.api.digitalpay.DigitalPayRepository
 
 /**
  * Defines the API operations that the SDK can use to call the Customer WPay API
@@ -18,9 +19,7 @@ class WPayCustomerApi(
     val options: WPayCustomerOptions
 ) {
     val admin: AdministrationApi = AdministrationApi(client, unmarshall)
-
-    // TODO: Put me back
-    //val dp: DigitalPayRepository
+    val dp: DigitalPayRepository = DigitalPayRepository(client, unmarshall)
     val instruments: PaymentInstrumentsApi = PaymentInstrumentsApi(client, unmarshall)
     val paymentAgreements: CustomerPaymentAgreementsApi = CustomerPaymentAgreementsApi(client, unmarshall)
     val paymentRequests: CustomerPaymentRequestsApi = CustomerPaymentRequestsApi(client, unmarshall)

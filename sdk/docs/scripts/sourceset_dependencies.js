@@ -1,1 +1,1 @@
-sourceset_dependencies = '{":sdk/debug": [], ":sdk/main": [], ":sdk/release": []}'
+sourceset_dependencies = '{":sdk/main": []}'

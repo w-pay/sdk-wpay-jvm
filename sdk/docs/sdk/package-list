@@ -1,12 +1,14 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 
-au.com.woolworths.village.sdk
-au.com.woolworths.village.sdk.api
-au.com.woolworths.village.sdk.api.digitalpay
-au.com.woolworths.village.sdk.api.walletmanagement
-au.com.woolworths.village.sdk.auth
-au.com.woolworths.village.sdk.model
-au.com.woolworths.village.sdk.model.digitalpay
-au.com.woolworths.village.sdk.model.walletmanagement
+au.com.wpay.sdk
+au.com.wpay.sdk.api
+au.com.wpay.sdk.api.digitalpay
+au.com.wpay.sdk.api.walletmanagement
+au.com.wpay.sdk.auth
+au.com.wpay.sdk.headers
+au.com.wpay.sdk.helpers
+au.com.wpay.sdk.model
+au.com.wpay.sdk.model.digitalpay
+au.com.wpay.sdk.model.walletmanagement
 

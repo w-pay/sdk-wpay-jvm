@@ -44,7 +44,9 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
 
         it("should unmarshall JSON to object") {
             val name = "Bruce Wayne"
-            val result = unmashallerFactory(::jsonPassthrough)(Person::class)(
+
+            @Suppress("MoveLambdaOutsideParentheses")
+            val result = unmashallerFactory(::jsonPassthrough)({ parser, el -> tryDecoding<Person>(parser, el) })(
                 dataFrom("""{ "name": "$name" }""")
             )
 
@@ -52,7 +54,8 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
         }
 
         it("should return error when unmarshalling fails") {
-            val result = unmashallerFactory(::jsonPassthrough)(Address::class)(
+            @Suppress("MoveLambdaOutsideParentheses")
+            val result = unmashallerFactory(::jsonPassthrough)({ parser, el -> tryDecoding<Address>(parser, el) })(
                 dataFrom("""{ "street": "Wayne Way" }""")
             )
 
@@ -64,7 +67,9 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
 
         it("should ignore missing keys") {
             val name = "Bruce Wayne"
-            val result = unmashallerFactory(::jsonPassthrough)(Person::class)(
+
+            @Suppress("MoveLambdaOutsideParentheses")
+            val result = unmashallerFactory(::jsonPassthrough)({ parser, el -> tryDecoding<Person>(parser, el) })(
                 dataFrom("""{ "name": "$name", "address": { "street": "Wayne Way" } }""")
             )
 

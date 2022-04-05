@@ -1,10 +1,8 @@
 package au.com.wpay.sdk
 
-import arrow.core.Either
-import arrow.core.identity
-import arrow.core.left
-import arrow.core.right
+import arrow.core.*
 import au.com.redcrew.apisdkcreator.httpclient.*
+import au.com.redcrew.apisdkcreator.httpclient.kotlin.GenericTypeCurriedFunction
 import au.com.wpay.sdk.model.ChallengeResponse
 import au.com.wpay.sdk.model.FraudPayload
 import kotlinx.serialization.KSerializer
@@ -14,21 +12,18 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.*
 import kotlinx.serialization.serializer
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.reflect.KClass
 import kotlin.reflect.full.createType
 
 /**
  * The shape of the data returned from the API doesn't match the shape of the types returned from
  * SDK operations. This is because the SDK types are designed to make integrating with a client
- * app easier (taking into account language and platform requirements) where as the API response
+ * app easier (taking into account language and platform requirements) whereas the API response
  * is a representation of the data in the server system.
  *
  * For example, let's suppose the SDK has a `Person` type
@@ -84,11 +79,29 @@ import kotlin.reflect.full.createType
 typealias JsonTransformer = suspend (JsonObject) -> Either<SdkError, JsonObject>
 
 /**
+ * At a point when the data type is known (typically in the implementation of an API operation) the
+ * JSON needs to be decoded into an instance of that type. In order to avoid needing to use reflection, a decoding
+ * function can be used that itself receives a Json instance and the parsed JSON data (JsonElement). The [JsonDecoder]
+ * can then try to decode the data.
+ *
+ * A helper function [tryDecoding] can be used to catch exceptions and convert to [SdkError]s
+ */
+typealias JsonDecoder<T> = suspend (Json, JsonElement) -> Either<SdkError, T>
+
+/**
+ * An Unmarshaller that uses a [JsonDecoder] to decode JSON data to an instance of a type.
+ */
+// DecodingUnmarshaller :: (JsonDecoder<T>) -> Unmarshaller<T>
+interface DecodingUnmarshaller: GenericTypeCurriedFunction {
+    suspend operator fun <T : Any> invoke(p1: JsonDecoder<T>): Unmarshaller<T>
+}
+
+/**
  * An SDK JSON Unmarshaller transforms then unmarshalls the JSON response into a known type.
  */
-// SdkJsonUnmarshaller :: (JsonTransformer) -> KClass<T> -> Unmarshaller<T>
+// SdkJsonUnmarshaller :: (JsonTransformer) -> JsonDecoder<T> -> Unmarshaller<T>
 interface SdkJsonUnmarshaller {
-    operator fun invoke(p1: JsonTransformer): GenericClassUnmarshaller
+    operator fun invoke(p1: JsonTransformer): DecodingUnmarshaller
 }
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -114,26 +127,40 @@ fun kotlinxSerialisationMarshaller(): Marshaller =
 
 fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
     object: SdkJsonUnmarshaller {
-        override fun invoke(p1: JsonTransformer): GenericClassUnmarshaller =
-            object: UnstructuredDataToGenericClassUnmarshaller() {
-                @Suppress("UNCHECKED_CAST")
-                override suspend fun <T : Any> unmarshallString(cls: KClass<T>, data: String): Either<SdkError, T> {
-                    return try {
-                        // TODO: As this uses reflection it might not be portable.
-                        // TODO: Might have to replace with a compiler plugin.
-                        val deserializer: KSerializer<T> =
-                            parser.serializersModule.serializer(cls.createType()) as KSerializer<T>
-                        val json = parser.parseToJsonElement(data)
+        override fun invoke(p1: JsonTransformer): DecodingUnmarshaller =
+            object : DecodingUnmarshaller {
+                override suspend fun <T : Any> invoke(p1: JsonDecoder<T>): Unmarshaller<T> =
+                    { data: UnstructuredData ->
+                        @Suppress("REDUNDANT_ELSE_IN_WHEN")
+                        when (data) {
+                            is UnstructuredData.String -> unmarshallString(p1, data.data)
 
-                        p1(json.jsonObject)
-                            .map { parser.decodeFromJsonElement(deserializer, it) }
+                            // future proofing
+                            else -> SdkError(ILLEGAL_STATE_ERROR_TYPE, "Unrecognised unstructured data type").left()
+                        }
                     }
-                    catch (e: Exception) {
-                        SdkError(UNMARSHALLING_ERROR_TYPE, e.message!!, e).left()
-                    }
-                }
+
+                    suspend fun <T : Any> unmarshallString(deserialiser: JsonDecoder<T>, data: String): Either<SdkError, T> =
+                        try {
+                            val json = parser.parseToJsonElement(data)
+
+                            p1(json.jsonObject)
+                                .flatMap { deserialiser(parser, it) }
+                        }
+                        catch (e: Exception) {
+                            SdkError(UNMARSHALLING_ERROR_TYPE, e.message!!, e).left()
+                        }
             }
     }
+
+/**
+ * Helper function to catch exceptions when decoding JsonElements and return the error.
+ */
+inline fun <reified T> tryDecoding(parser: Json, el: JsonElement): Either<SdkError, T> =
+    Either.catch(
+        { SdkError(UNMARSHALLING_ERROR_TYPE, it.message!!, it) },
+        { parser.decodeFromJsonElement(el) }
+    )
 
 /*
  * Only for use with HttpRequest's.

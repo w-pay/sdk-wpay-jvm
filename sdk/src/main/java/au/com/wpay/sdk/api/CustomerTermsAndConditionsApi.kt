@@ -26,7 +26,8 @@ class CustomerTermsAndConditionsApi(
         type: String? = null,
         version: String? = null
     ): ApiResult<TermsAndConditionsAcceptances> {
-        val unmarshaller = unmarshall(::fromData)(TermsAndConditionsAcceptances::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<TermsAndConditionsAcceptances>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -48,7 +49,8 @@ class CustomerTermsAndConditionsApi(
      * @param type The type of Ts and Cs that the shopper/customer has agreed to. Defaults to all if absent
      */
     suspend fun accept(request: AcceptTermsAndConditionsRequest): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

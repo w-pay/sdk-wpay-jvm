@@ -19,7 +19,8 @@ class AdministrationApi(
      * Check the health/status of the API
      */
     suspend fun checkHealth(): ApiResult<HealthCheck> {
-        val unmarshaller = unmarshall(::fromData)(HealthCheck::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<HealthCheck>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(

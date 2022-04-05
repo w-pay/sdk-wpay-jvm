@@ -21,7 +21,8 @@ class QRCodeApi(
     suspend fun createPaymentRequestQRCode(
         details: NewPaymentRequestQRCode
     ): ApiResult<QRCode> {
-        val unmarshaller = unmarshall(::fromData)(QRCode::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<QRCode>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -43,7 +44,8 @@ class QRCodeApi(
      * @param qrCodeId The ID to use.
      */
     suspend fun getPaymentRequestQRCodeContent(qrCodeId: String): ApiResult<QRCode> {
-        val unmarshaller = unmarshall(::fromData)(QRCode::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<QRCode>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -64,7 +66,8 @@ class QRCodeApi(
      * @param qrCodeId The ID of the QR code to cancel.
      */
     suspend fun cancelPaymentQRCode(qrCodeId: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(

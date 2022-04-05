@@ -21,7 +21,8 @@ class TransactionsApi(
     suspend fun history(
         transactionHistoryRequest: TransactionHistoryRequest
     ): ApiResult<TransactionHistoryResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TransactionHistoryResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TransactionHistoryResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

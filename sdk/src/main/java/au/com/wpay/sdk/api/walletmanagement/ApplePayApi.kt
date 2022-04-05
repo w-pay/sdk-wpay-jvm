@@ -19,7 +19,8 @@ class ApplePayApi(
      * @param tokenizeApplePayRequest Detail of the Apple Pay wallet item to be tokenized.
      */
     suspend fun tokenize(tokenizeApplePayRequest: TokenizeApplePayRequest): ApiResult<TokenizeApplePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeApplePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -37,7 +38,8 @@ class ApplePayApi(
     suspend fun guestTokenize(
         tokenizeApplePayRequest: TokenizeApplePayRequest
     ): ApiResult<TokenizeApplePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeApplePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -57,7 +59,8 @@ class ApplePayApi(
         paymentInstrumentId: String,
         tokenizeApplePayRequest: TokenizeApplePayRequest
     ): ApiResult<TokenizeApplePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeApplePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

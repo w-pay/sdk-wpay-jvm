@@ -30,7 +30,8 @@ class MerchantTransactionsApi(
         endTime: OffsetDateTime? = null,
         startTime: OffsetDateTime? = null
     ): ApiResult<MerchantTransactionSummaries> {
-        val unmarshaller = unmarshall(::fromData)(MerchantTransactionSummaries::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantTransactionSummaries>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -54,7 +55,8 @@ class MerchantTransactionsApi(
      * @param transactionId The transaction id
      */
     suspend fun getById(transactionId: String): ApiResult<MerchantTransactionDetails> {
-        val unmarshaller = unmarshall(::fromData)(MerchantTransactionDetails::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantTransactionDetails>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(

@@ -27,7 +27,8 @@ class MerchantPreferencesApi(
      */
     suspend fun get(): ApiResult<MerchantPreferences> {
         val unmarshaller: Unmarshaller<MerchantPreferences> = { data ->
-            unmarshall(::jsonPassthrough)(MerchantPreferencesResponse::class)(data).map { it.data }
+            @Suppress("MoveLambdaOutsideParentheses")
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<MerchantPreferencesResponse>(parser, el) })(data).map { it.data }
         }
 
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
@@ -44,7 +45,8 @@ class MerchantPreferencesApi(
      * @param preferences The preferences to use
      */
     suspend fun set(preferences: MerchantPreferences): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

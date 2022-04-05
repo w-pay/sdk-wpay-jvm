@@ -21,7 +21,8 @@ class GiftCardsApi(
      * @param tokenizeGiftCardRequest Detail of the Gift Card to be tokenized.
      */
     suspend fun tokenize(tokenizeGiftCardRequest: TokenizeGiftCardRequest): ApiResult<TokenizeGiftCardResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeGiftCardResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -39,7 +40,8 @@ class GiftCardsApi(
     suspend fun guestTokenize(
         tokenizeGiftCardRequest: TokenizeGiftCardRequest
     ): ApiResult<TokenizeGiftCardResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeGiftCardResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -55,7 +57,8 @@ class GiftCardsApi(
      * @param giftcardsBalanceRequest Detail of the Gift Card to recieve balences for.
      */
     suspend fun balance(giftcardsBalanceRequest: GiftCardsBalanceRequest): ApiResult<GiftCardsBalanceResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(GiftCardsBalanceResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<GiftCardsBalanceResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

@@ -18,7 +18,8 @@ class SchemasApi(
      * Retrieve the list of currently usable schemas previously added for the merchant
      */
     suspend fun list(): ApiResult<MerchantSchemaSummaries> {
-        val unmarshaller = unmarshall(::fromData)(MerchantSchemaSummaries::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummaries>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -33,7 +34,8 @@ class SchemasApi(
      * @param schemaId The schema to retrieve
      */
     suspend fun getById(schemaId: String): ApiResult<MerchantSchema>{
-        val unmarshaller = unmarshall(::fromData)(MerchantSchema::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchema>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -54,7 +56,8 @@ class SchemasApi(
      * @param schema The schema definition
      */
     suspend fun create(schema: MerchantSchema): ApiResult<MerchantSchemaSummary> {
-        val unmarshaller = unmarshall(::fromData)(MerchantSchemaSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

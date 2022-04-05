@@ -16,7 +16,8 @@ class CustomerPreferencesApi(
      * Retrieve a customer's preferences
      */
     suspend fun get(): ApiResult<CustomerPreferences> {
-        val unmarshaller = unmarshall(::fromData)(CustomerPreferences::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPreferences>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -31,7 +32,8 @@ class CustomerPreferencesApi(
      * @param preferences The preferences of the customer.
      */
     suspend fun set(preferences: CustomerPreferences): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

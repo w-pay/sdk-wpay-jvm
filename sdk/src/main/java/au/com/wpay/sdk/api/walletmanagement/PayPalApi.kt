@@ -19,7 +19,8 @@ class PayPalApi(
      * @param tokenizePaypalRequest Detail of the paypal account to be tokenized.
      */
     suspend fun tokenize(tokenizePaypalRequest: TokenizePaypalRequest): ApiResult<TokenizePaypalResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizePaypalResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizePaypalResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -38,7 +39,8 @@ class PayPalApi(
      * @param tokenizePaypalRequest Detail of the paypal account to be tokenized.
      */
     suspend fun guestTokenize(tokenizePaypalRequest: TokenizePaypalRequest): ApiResult<TokenizePaypalResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizePaypalResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizePaypalResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

@@ -25,7 +25,8 @@ class PaymentAgreementApi(
     suspend fun create(
         paymentAgreementRequest: DigitalPayCreatePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayPaymentAgreementResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -50,7 +51,8 @@ class PaymentAgreementApi(
         paymentToken: String,
         paymentAgreementRequest: DigitalPayUpdatePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayPaymentAgreementResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -79,7 +81,8 @@ class PaymentAgreementApi(
     suspend fun charge(
         chargeRequest: DigitalPayChargePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayPaymentAgreementResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -100,7 +103,8 @@ class PaymentAgreementApi(
      * @param paymentToken The payment agreement to delete
      */
     suspend fun delete(paymentToken: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

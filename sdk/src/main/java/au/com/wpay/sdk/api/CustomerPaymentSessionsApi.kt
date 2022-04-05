@@ -18,7 +18,8 @@ class CustomerPaymentSessionsApi(
      * @param paymentSessionId The payment session ID.
      */
     suspend fun getById(paymentSessionId: String): ApiResult<PaymentSession> {
-        val unmarshaller = unmarshall(::fromData)(PaymentSession::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentSession>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -39,7 +40,8 @@ class CustomerPaymentSessionsApi(
      * @param qrCodeId The QR code ID.
      */
     suspend fun getByQRCodeId(qrCodeId: String): ApiResult<PaymentSession> {
-        val unmarshaller = unmarshall(::fromData)(PaymentSession::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentSession>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -64,7 +66,8 @@ class CustomerPaymentSessionsApi(
         paymentSessionId: String,
         session: CustomerUpdatePaymentSessionRequest
     ): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -88,7 +91,8 @@ class CustomerPaymentSessionsApi(
      * @param paymentSessionId The payment session to delete
      */
     suspend fun delete(paymentSessionId: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -121,7 +125,8 @@ class CustomerPaymentSessionsApi(
         preferences: PaymentPreferences? = null,
         challengeResponses: List<ChallengeResponse>? = null
     ): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

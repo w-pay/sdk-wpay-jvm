@@ -29,7 +29,8 @@ class MerchantPaymentAgreementsApi(
         chargePaymentAgreementRequest: ChargePaymentAgreementRequest,
         fraudPayload: FraudPayload? = null
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
-        val unmarshaller = unmarshall(::fromData)(DigitalPayPaymentAgreementResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -53,7 +54,8 @@ class MerchantPaymentAgreementsApi(
      * @param paymentToken The ID.
      */
     suspend fun delete(paymentToken: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

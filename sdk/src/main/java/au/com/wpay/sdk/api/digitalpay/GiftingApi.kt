@@ -23,7 +23,8 @@ class GiftingApi(
      * @param productId detail of payment to be made
      */
     suspend fun getProductById(productId: String): ApiResult<DigitalPayGiftingProductDetail> {
-        val unmarshaller = unmarshall(::fromData)(DigitalPayGiftingProductDetail::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProductDetail>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -50,7 +51,8 @@ class GiftingApi(
         pageSize: Int? = null,
         lastUpdateDateTime: OffsetDateTime? = null
     ): ApiResult<DigitalPayGiftingProducts> {
-        val unmarshaller = unmarshall(::fromData)(DigitalPayGiftingProducts::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProducts>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -75,7 +77,8 @@ class GiftingApi(
     suspend fun getQuote(
         quoteRequest: DigitalPayGiftingQuoteRequest
     ): ApiResult<DigitalPayGiftingQuoteResponse> {
-        val unmarshaller = unmarshall(::fromData)(DigitalPayGiftingQuoteResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingQuoteResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -103,7 +106,8 @@ class GiftingApi(
         challengeResponses: List<ChallengeResponse>? = null,
         fraudPayload: FraudPayload? = null
     ): ApiResult<DigitalPayGiftingOrderResponse> {
-        val unmarshaller = unmarshall(::fromData)(DigitalPayGiftingOrderResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingOrderResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

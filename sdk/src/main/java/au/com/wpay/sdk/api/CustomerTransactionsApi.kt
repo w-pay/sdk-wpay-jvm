@@ -32,7 +32,8 @@ class CustomerTransactionsApi(
         endTime: OffsetDateTime? = null,
         startTime: OffsetDateTime? = null
     ): ApiResult<CustomerTransactionSummaries> {
-        val unmarshaller = unmarshall(::fromData)(CustomerTransactionSummaries::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummaries>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -57,7 +58,8 @@ class CustomerTransactionsApi(
      * @param transactionId The transaction id
      */
     suspend fun getById(transactionId: String): ApiResult<CustomerTransactionDetails> {
-        val unmarshaller = unmarshall(::fromData)(CustomerTransactionDetails::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionDetails>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(

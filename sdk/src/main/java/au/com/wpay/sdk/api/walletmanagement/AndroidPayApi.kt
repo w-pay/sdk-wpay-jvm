@@ -21,7 +21,8 @@ class AndroidPayApi(
     suspend fun tokenize(
         tokenizeAndroidPayRequest: TokenizeAndroidPayRequest
     ): ApiResult<TokenizeAndroidPayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeAndroidPayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeAndroidPayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -41,7 +42,8 @@ class AndroidPayApi(
         paymentInstrumentId: String,
         tokenizeAndroidPayRequest: TokenizeAndroidPayRequest
     ): ApiResult<TokenizeAndroidPayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeAndroidPayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeAndroidPayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

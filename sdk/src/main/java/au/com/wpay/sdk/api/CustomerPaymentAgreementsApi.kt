@@ -19,7 +19,8 @@ class CustomerPaymentAgreementsApi(
      * Retrieve a list of customer's [PaymentAgreement]s
      */
     suspend fun list(): ApiResult<PaymentAgreements> {
-        val unmarshaller = unmarshall(::fromData)(PaymentAgreements::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreements>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -34,7 +35,8 @@ class CustomerPaymentAgreementsApi(
      * @param paymentToken The ID.
      */
     suspend fun getById(paymentToken: String): ApiResult<PaymentAgreement> {
-        val unmarshaller = unmarshall(::fromData)(PaymentAgreement::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -61,7 +63,8 @@ class CustomerPaymentAgreementsApi(
         challengeResponses: List<ChallengeResponse>? = null,
         fraudPayload: FraudPayload? = null
     ): ApiResult<PaymentAgreement> {
-        val unmarshaller = unmarshall(::fromData)(PaymentAgreement::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -94,7 +97,8 @@ class CustomerPaymentAgreementsApi(
         challengeResponses: List<ChallengeResponse>? = null,
         fraudPayload: FraudPayload? = null
     ): ApiResult<PaymentAgreement> {
-        val unmarshaller = unmarshall(::fromData)(PaymentAgreement::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

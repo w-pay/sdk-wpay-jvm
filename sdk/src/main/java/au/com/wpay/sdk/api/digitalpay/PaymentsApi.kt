@@ -19,7 +19,8 @@ class PaymentsApi(
      * @param paymentRequest detail of payment to be made
      */
     suspend fun pay(paymentRequest: DigitalPayPaymentRequest): ApiResult<DigitalPayPaymentResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayPaymentResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -38,7 +39,8 @@ class PaymentsApi(
      * @param paymentRequest detail of payment to be made
      */
     suspend fun guestPayment(paymentRequest: DigitalPayPaymentRequest): ApiResult<DigitalPayPaymentResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayPaymentResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -59,7 +61,8 @@ class PaymentsApi(
     suspend fun complete(
         completionRequest: DigitalPayCompletionRequest
     ): ApiResult<DigitalPayCompletionResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayCompletionResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayCompletionResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -78,7 +81,8 @@ class PaymentsApi(
      * @param voidRequest detail of payment to be voided
      */
     suspend fun voidPayment(voidRequest: DigitalPayVoidRequest): ApiResult<DigitalPayVoidResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayVoidResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayVoidResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -97,7 +101,8 @@ class PaymentsApi(
      * @param refundRequest detail of payment to be refunded
      */
     suspend fun refund(refundRequest: DigitalPayRefundRequest): ApiResult<DigitalPayRefundResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(DigitalPayRefundResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayRefundResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

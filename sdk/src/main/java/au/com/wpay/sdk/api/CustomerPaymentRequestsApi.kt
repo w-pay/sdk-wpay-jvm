@@ -19,7 +19,8 @@ class CustomerPaymentRequestsApi(
      * @param paymentRequestId The ID.
      */
     suspend fun getById(paymentRequestId: String): ApiResult<CustomerPaymentRequest> {
-        val unmarshaller = unmarshall(::fromData)(CustomerPaymentRequest::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -40,7 +41,8 @@ class CustomerPaymentRequestsApi(
      * @param qrCodeId The QR Code ID.
      */
     suspend fun getByQRCodeId(qrCodeId: String): ApiResult<CustomerPaymentRequest> {
-        val unmarshaller = unmarshall(::fromData)(CustomerPaymentRequest::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -78,7 +80,8 @@ class CustomerPaymentRequestsApi(
         transactionType: PaymentTransactionType? = null,
         allowPartialSuccess: Boolean? = null
     ): ApiResult<CustomerTransactionSummary> {
-        val unmarshaller = unmarshall(::fromData)(CustomerTransactionSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -119,7 +122,8 @@ class CustomerPaymentRequestsApi(
         challengeResponses: List<ChallengeResponse>? = null,
         fraudPayload: FraudPayload? = null
     ): ApiResult<CustomerTransactionSummary> {
-        val unmarshaller = unmarshall(::fromData)(CustomerTransactionSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

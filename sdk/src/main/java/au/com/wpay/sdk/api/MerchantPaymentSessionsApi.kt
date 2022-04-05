@@ -23,7 +23,8 @@ class MerchantPaymentSessionsApi(
     suspend fun create(
         request: CreatePaymentSessionRequest
     ): ApiResult<CreatePaymentSessionResult> {
-        val unmarshaller = unmarshall(::fromData)(CreatePaymentSessionResult::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CreatePaymentSessionResult>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -45,7 +46,8 @@ class MerchantPaymentSessionsApi(
      * @param paymentSessionId The ID of the payment session to retrieve.
      */
     suspend fun getById(paymentSessionId: String): ApiResult<PaymentSession> {
-        val unmarshaller = unmarshall(::fromData)(PaymentSession::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentSession>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -70,7 +72,8 @@ class MerchantPaymentSessionsApi(
         paymentSessionId: String,
         session: MerchantUpdatePaymentSessionRequest
     ): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -94,7 +97,8 @@ class MerchantPaymentSessionsApi(
      * @param paymentSessionId The payment session to delete.
      */
     suspend fun delete(paymentSessionId: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

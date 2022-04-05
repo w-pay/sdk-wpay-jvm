@@ -46,7 +46,8 @@ class PaymentInstrumentsApi(
         paymentToken: String,
         publicKey: String? = null
     ): ApiResult<IndividualPaymentInstrument> {
-        val unmarshaller = unmarshall(::fromGetByTokenResponse)(IndividualPaymentInstrument::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromGetByTokenResponse)({ parser, el -> tryDecoding<IndividualPaymentInstrument>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -65,7 +66,8 @@ class PaymentInstrumentsApi(
      * Retrieve the customer's registered [PaymentInstrument]s
      */
     suspend fun list(): ApiResult<WalletContents> {
-        val unmarshaller = unmarshall(::fromData)(WalletContents::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<WalletContents>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -80,7 +82,8 @@ class PaymentInstrumentsApi(
      * @param instrument The payment instrument to delete.
      */
     suspend fun delete(instrument: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(
@@ -106,7 +109,8 @@ class PaymentInstrumentsApi(
     suspend fun initiateAddition(
         instrument: PaymentInstrumentAddition
     ): ApiResult<PaymentInstrumentAdditionResult> {
-        val unmarshaller = unmarshall(::fromData)(PaymentInstrumentAdditionResult::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentInstrumentAdditionResult>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

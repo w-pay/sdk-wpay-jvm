@@ -26,7 +26,8 @@ class MerchantPaymentsApi(
         page: Int? = null,
         pageSize: Int? = null
     ): ApiResult<MerchantPaymentSummaries> {
-        val unmarshaller = unmarshall(::fromData)(MerchantPaymentSummaries::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantPaymentSummaries>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -51,7 +52,8 @@ class MerchantPaymentsApi(
     suspend fun createPaymentRequest(
         paymentRequest: NewPaymentRequest
     ): ApiResult<CreatePaymentRequestResult> {
-        val unmarshaller = unmarshall(::fromData)(CreatePaymentRequestResult::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CreatePaymentRequestResult>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -75,7 +77,8 @@ class MerchantPaymentsApi(
     suspend fun getPaymentRequestDetailsBy(
         paymentRequestId: String
     ): ApiResult<MerchantPaymentDetails> {
-        val unmarshaller = unmarshall(::fromData)(MerchantPaymentDetails::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantPaymentDetails>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -96,7 +99,8 @@ class MerchantPaymentsApi(
      * @param paymentRequestId The payment request to delete
      */
     suspend fun deletePaymentRequest(paymentRequestId: String): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -121,7 +125,8 @@ class MerchantPaymentsApi(
         transactionId: String,
         refundDetails: TransactionRefundDetails
     ): ApiResult<MerchantTransactionSummary> {
-        val unmarshaller = unmarshall(::fromData)(MerchantTransactionSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantTransactionSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -149,7 +154,8 @@ class MerchantPaymentsApi(
         transactionId: String,
         completionDetails: TransactionCompletionDetails
     ): ApiResult<MerchantTransactionSummary> {
-        val unmarshaller = unmarshall(::fromData)(MerchantTransactionSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantTransactionSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -177,7 +183,8 @@ class MerchantPaymentsApi(
         transactionId: String,
         voidDetails: TransactionVoidDetails
     ): ApiResult<MerchantTransactionSummary> {
-        val unmarshaller = unmarshall(::fromData)(MerchantTransactionSummary::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantTransactionSummary>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

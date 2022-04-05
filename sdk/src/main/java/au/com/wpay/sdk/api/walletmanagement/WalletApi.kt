@@ -18,7 +18,8 @@ class WalletApi(
      * @param walletDeleteRequest Detail of the consumer who will have their the wallet deleted.
      */
     suspend fun delete(walletDeleteRequest: WalletDeleteRequest): ApiResult<Unit> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(Unit::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

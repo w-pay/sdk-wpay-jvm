@@ -21,7 +21,8 @@ data class GooglePayApi(
     suspend fun tokenize(
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeGooglePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -39,7 +40,8 @@ data class GooglePayApi(
     suspend fun guestTokenize(
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeGooglePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -59,7 +61,8 @@ data class GooglePayApi(
         paymentToken: String,
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(TokenizeGooglePayResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

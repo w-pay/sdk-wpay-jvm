@@ -16,7 +16,8 @@ class MerchantsApi(
      * Get the current configuration set of the merchant. If this API is called without a valid access token it is IP restricted to allow unauthenticated server side calls.
      */
     suspend fun profile(): ApiResult<MerchantProfileResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(MerchantProfileResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<MerchantProfileResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest<Unit>(

@@ -21,7 +21,8 @@ class CardCaptureApi(
     suspend fun initCapture(
         initiateCardCaptureRequest: InitiateCardCaptureRequest
     ): ApiResult<InitiateCardCaptureResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(InitiateCardCaptureResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<InitiateCardCaptureResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -39,7 +40,8 @@ class CardCaptureApi(
     suspend fun guestInitCapture(
         initiateCardCaptureRequest: InitiateCardCaptureRequest
     ): ApiResult<InitiateCardCaptureResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(InitiateCardCaptureResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<InitiateCardCaptureResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

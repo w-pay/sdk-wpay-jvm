@@ -18,7 +18,8 @@ class OpenPayApi(
      * @param paymentRequest detail of payment to be made
      */
     suspend fun pay(paymentRequest: OpenPayPaymentRequest): ApiResult<OpenPayPaymentResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(OpenPayPaymentResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayPaymentResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -37,7 +38,8 @@ class OpenPayApi(
      * @param completionRequest detail of payment to be completed
      */
     suspend fun complete(completionRequest: OpenPayCompletionRequest): ApiResult<OpenPayCompletionResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(OpenPayCompletionResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayCompletionResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -56,7 +58,8 @@ class OpenPayApi(
      * @param voidRequest detail of payment to be voided
      */
     suspend fun voidPayment(voidRequest: OpenPayVoidRequest): ApiResult<OpenPayVoidResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(OpenPayVoidResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayVoidResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(
@@ -75,7 +78,8 @@ class OpenPayApi(
      * @param refundRequest detail of payment to be refunded
      */
     suspend fun refund(refundRequest: OpenPayRefundRequest): ApiResult<OpenPayRefundResponse> {
-        val unmarshaller = unmarshall(::jsonPassthrough)(OpenPayRefundResponse::class)
+        @Suppress("MoveLambdaOutsideParentheses")
+        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayRefundResponse>(parser, el) })
         val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
 
         return apiResult(pipe(HttpRequest(

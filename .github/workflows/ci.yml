@@ -2,10 +2,10 @@ name: 'Build'
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -27,15 +27,10 @@ jobs:
       - name: Unit tests
         uses: burrunan/gradle-cache-action@v1
         with:
-          arguments: lint test
-
-      - name: Build
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: clean assembleRelease
+          arguments: test
 
       - name: Update docs
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           ./gradlew dokkaHtml
           git add sdk/docs/
@@ -43,13 +38,13 @@ jobs:
           git push
 
       - name: Tag
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: ./scripts/tag.sh
         env:
           GH_AUTH_TOKEN: ${{ secrets.GH_AUTH_TOKEN }}
 
       - name: Push changes
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           git push
           git push --tags

@@ -78,7 +78,7 @@ fun createCustomerWPay(): WPayCustomerApi {
      * https://github.com/RedCrewOS/api-sdk-creator-jvm
      */
     return createCustomerSDK(
-        okHttpClient(),
+        ::okHttpClient,
         options,
     )
 }

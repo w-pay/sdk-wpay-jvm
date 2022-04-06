@@ -112,10 +112,12 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
 
             val amount = BigDecimal("12.232")
 
-            it("should serialise decimal to currency string") {
+            it("should serialise decimal to number") {
                 val result = JSON.encodeToJsonElement(CurrencySerializerStub(amount)).jsonObject
 
-                result["amount"]?.content().shouldBe("12.23")
+                val element = result["amount"]?.jsonPrimitive
+                element?.isString.shouldBe(false)
+                element?.double.shouldBe(12.23)
             }
 
             it("should round correctly") {

@@ -234,7 +234,7 @@ open class DecimalSerializer : KSerializer<BigDecimal> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigDecimal", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: BigDecimal) =
-        encoder.encodeString(value.toString())
+        encoder.encodeDouble(value.toDouble())
 
     override fun deserialize(decoder: Decoder): BigDecimal =
         decoder.decodeDouble().toBigDecimal()

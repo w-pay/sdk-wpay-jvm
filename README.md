@@ -59,9 +59,6 @@ in the SDK.
 
 ### Example usage
 
-The examples use the Open API implementation, however any class conforming to the correct interface
-can be used
-
 ```kotlin
 fun createCustomerWPay(): WPayCustomerApi {
     // read the docs on all the options available

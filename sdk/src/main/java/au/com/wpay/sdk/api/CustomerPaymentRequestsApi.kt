@@ -3,14 +3,13 @@ package au.com.wpay.sdk.api
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.*
 import au.com.wpay.sdk.model.digitalpay.PaymentTransactionType
 
 class CustomerPaymentRequestsApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -20,10 +19,12 @@ class CustomerPaymentRequestsApi(
      */
     suspend fun getById(paymentRequestId: String): ApiResult<CustomerPaymentRequest> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/customer/payments/:paymentRequestId"),
             headers = emptyMap(),
@@ -42,10 +43,12 @@ class CustomerPaymentRequestsApi(
      */
     suspend fun getByQRCodeId(qrCodeId: String): ApiResult<CustomerPaymentRequest> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerPaymentRequest>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/customer/qr/:qrCodeId"),
             headers = emptyMap(),
@@ -81,10 +84,12 @@ class CustomerPaymentRequestsApi(
         allowPartialSuccess: Boolean? = null
     ): ApiResult<CustomerTransactionSummary> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<PaymentDetailsDTO, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.PUT,
             url = HttpRequestUrl.String("/instore/customer/payments/:paymentRequestId"),
             headers = emptyMap(),
@@ -123,10 +128,12 @@ class CustomerPaymentRequestsApi(
         fraudPayload: FraudPayload? = null
     ): ApiResult<CustomerTransactionSummary> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<ImmediatePaymentRequest, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<CustomerTransactionSummary>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instore/customer/payments"),
             headers = emptyMap(),

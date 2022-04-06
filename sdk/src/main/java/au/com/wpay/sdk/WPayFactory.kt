@@ -5,6 +5,7 @@ import arrow.core.identity
 import arrow.core.right
 import au.com.redcrew.apisdkcreator.httpclient.*
 import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
+import au.com.redcrew.apisdkcreator.httpclient.kotlin.GenericTypeCurriedFunction
 import au.com.wpay.sdk.auth.ApiAuthenticator
 import au.com.wpay.sdk.auth.HasAccessToken
 import au.com.wpay.sdk.headers.defaultCustomerHeaders
@@ -13,7 +14,13 @@ import au.com.wpay.sdk.headers.defaultMerchantHeaders
 
 typealias HttpClientFactory = () -> HttpClient
 
-typealias SdkApiClient = suspend (request: HttpRequest<*>) -> Either<SdkError, HttpResult<*, UnstructuredData>>
+// SdkApiClientFactory :: (Marshaller, Unmarshaller<T>) -> SdkApiClient<T>
+interface SdkApiClientFactory : GenericTypeCurriedFunction {
+    operator fun <T : Any> invoke(
+        p1: Marshaller,
+        p2: Unmarshaller<T>
+    ): suspend (request: HttpRequest<*>) -> Either<SdkError, ApiResult<T>>
+}
 
 sealed class ApiTokenType {
     data class StringToken(val token: String) : ApiTokenType()
@@ -57,23 +64,28 @@ fun <T: Any> resultHandler(
         }
     }
 
-fun <T : Any> apiResult(
-    result: Either<SdkError, ApiResult<T>>
-): ApiResult<T> =
+fun <T : Any> apiResult(result: Either<SdkError, ApiResult<T>>): ApiResult<T> =
     result.fold(::toApiErrorResult, ::identity)
 
 fun createApiClient(
     httpClient: HttpClientFactory,
     options: WPayOptions,
-): SdkApiClient {
+): SdkApiClientFactory {
     val headers = when(options) {
         is WPayCustomerOptions -> defaultCustomerHeaders(options)
         is WPayMerchantOptions -> defaultMerchantHeaders(options)
         else -> defaultHeaders(options)
     }
 
-    return resolveUrl(options.baseUrl) pipe
-            addHeaders(headers) pipe
-            jsonMarshaller(kotlinxSerialisationMarshaller()) pipe
-            httpClient()
+    return object : SdkApiClientFactory {
+        override fun <T : Any> invoke(
+            p1: Marshaller,
+            p2: Unmarshaller<T>
+        ): suspend (request: HttpRequest<*>) -> Either<SdkError, ApiResult<T>> =
+            resolveUrl(options.baseUrl) pipe
+              addHeaders(headers) pipe
+              jsonMarshaller(p1) pipe
+              httpClient() pipe
+              resultHandler(jsonUnmarshaller(p2))
+    }
 }

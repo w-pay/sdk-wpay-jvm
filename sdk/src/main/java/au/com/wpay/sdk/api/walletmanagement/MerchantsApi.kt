@@ -3,13 +3,12 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.MerchantProfileResponse
 
 class MerchantsApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -17,10 +16,12 @@ class MerchantsApi(
      */
     suspend fun profile(): ApiResult<MerchantProfileResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<MerchantProfileResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<MerchantProfileResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/merchants/profile"),
         )))

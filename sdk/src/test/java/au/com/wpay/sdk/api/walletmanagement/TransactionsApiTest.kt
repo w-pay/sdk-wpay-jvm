@@ -8,6 +8,7 @@ import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.transactionHistoryRequestDTO
 import au.com.wpay.sdk.data.walletmanagement.transactionHistoryResponseDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.transactionHistoryResponseFrom
 import au.com.wpay.sdk.model.stringData
@@ -24,7 +25,8 @@ class TransactionsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = TransactionsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

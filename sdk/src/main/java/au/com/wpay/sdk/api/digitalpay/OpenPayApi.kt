@@ -3,13 +3,12 @@ package au.com.wpay.sdk.api.digitalpay
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.digitalpay.*
 
 class OpenPayApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -19,10 +18,12 @@ class OpenPayApi(
      */
     suspend fun pay(paymentRequest: OpenPayPaymentRequest): ApiResult<OpenPayPaymentResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayPaymentResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: OpenPayPaymentRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayPaymentResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/openpay/payments"),
             headers = emptyMap(),
@@ -39,10 +40,12 @@ class OpenPayApi(
      */
     suspend fun complete(completionRequest: OpenPayCompletionRequest): ApiResult<OpenPayCompletionResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayCompletionResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: OpenPayCompletionRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayCompletionResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/openpay/completions"),
             headers = emptyMap(),
@@ -59,10 +62,12 @@ class OpenPayApi(
      */
     suspend fun voidPayment(voidRequest: OpenPayVoidRequest): ApiResult<OpenPayVoidResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayVoidResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: OpenPayVoidRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayVoidResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/openpay/voids"),
             headers = emptyMap(),
@@ -79,10 +84,12 @@ class OpenPayApi(
      */
     suspend fun refund(refundRequest: OpenPayRefundRequest): ApiResult<OpenPayRefundResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayRefundResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: OpenPayRefundRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<OpenPayRefundResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/openpay/refunds"),
             headers = emptyMap(),

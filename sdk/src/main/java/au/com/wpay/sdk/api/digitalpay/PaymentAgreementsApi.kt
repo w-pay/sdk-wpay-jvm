@@ -3,8 +3,6 @@ package au.com.wpay.sdk.api.digitalpay
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.digitalpay.DigitalPayChargePaymentAgreementRequest
 import au.com.wpay.sdk.model.digitalpay.DigitalPayCreatePaymentAgreementRequest
@@ -12,7 +10,8 @@ import au.com.wpay.sdk.model.digitalpay.DigitalPayPaymentAgreementResponse
 import au.com.wpay.sdk.model.digitalpay.DigitalPayUpdatePaymentAgreementRequest
 
 class PaymentAgreementApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -26,10 +25,12 @@ class PaymentAgreementApi(
         paymentAgreementRequest: DigitalPayCreatePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: DigitalPayCreatePaymentAgreementRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/paymentagreements"),
             headers = emptyMap(),
@@ -52,10 +53,12 @@ class PaymentAgreementApi(
         paymentAgreementRequest: DigitalPayUpdatePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: DigitalPayUpdatePaymentAgreementRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/paymentagreements/:paymentToken"),
             headers = emptyMap(),
@@ -82,10 +85,12 @@ class PaymentAgreementApi(
         chargeRequest: DigitalPayChargePaymentAgreementRequest
     ): ApiResult<DigitalPayPaymentAgreementResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: DigitalPayChargePaymentAgreementRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<DigitalPayPaymentAgreementResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/paymentagreements/charge"),
             headers = emptyMap(),
@@ -103,11 +108,9 @@ class PaymentAgreementApi(
      * @param paymentToken The payment agreement to delete
      */
     suspend fun delete(paymentToken: String): ApiResult<Unit> {
-        @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(marshall(unitEncoder), unmarshall(::jsonPassthrough)(unitDecoder))
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.DELETE,
             url = HttpRequestUrl.String("/paymentagreements/:paymentToken"),
             headers = emptyMap(),

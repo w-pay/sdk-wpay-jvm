@@ -7,6 +7,7 @@ import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.*
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.importPaymentInstrumentsResponseFrom
 import au.com.wpay.sdk.matchers.walletmanagement.listPaymentInstrumentsResponseFrom
@@ -26,7 +27,8 @@ class InstrumentsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = InstrumentsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

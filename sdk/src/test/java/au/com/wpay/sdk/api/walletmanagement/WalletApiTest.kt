@@ -7,6 +7,7 @@ import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.aWalletDeleteRequest
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -20,7 +21,8 @@ class WalletApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = WalletApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

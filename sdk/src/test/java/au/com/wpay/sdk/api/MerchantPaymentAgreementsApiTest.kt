@@ -4,14 +4,11 @@ import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
-import au.com.wpay.sdk.ApiRequestBody
-import au.com.wpay.sdk.Meta
-import au.com.wpay.sdk.StubApiClient
+import au.com.wpay.sdk.*
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.chargePaymentAgreementRequest
 import au.com.wpay.sdk.data.digitalpay.digitalPayPaymentAgreementResponseDTO
 import au.com.wpay.sdk.data.fraudPayload
-import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.digitalpay.digitalPayPaymentAgreementFrom
 import au.com.wpay.sdk.model.apiResponse
 import au.com.wpay.sdk.model.stringData
@@ -31,7 +28,8 @@ class MerchantPaymentAgreementsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = MerchantPaymentAgreementsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

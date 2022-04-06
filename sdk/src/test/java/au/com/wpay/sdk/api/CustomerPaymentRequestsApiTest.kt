@@ -4,11 +4,8 @@ import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
-import au.com.wpay.sdk.ApiRequestBody
-import au.com.wpay.sdk.Meta
-import au.com.wpay.sdk.StubApiClient
+import au.com.wpay.sdk.*
 import au.com.wpay.sdk.data.*
-import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.customerPaymentRequestFrom
 import au.com.wpay.sdk.matchers.customerTransactionSummaryFrom
 import au.com.wpay.sdk.model.PaymentDetailsDTO
@@ -28,7 +25,8 @@ class CustomerPaymentRequestsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = CustomerPaymentRequestsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

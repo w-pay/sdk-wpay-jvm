@@ -35,15 +35,21 @@ class WPayFactoryTest: DescribeSpec({
 
         beforeEach {
             httpClient = StubHttpClient()
+            httpClient.response = aHttpResponse<UnstructuredData>().build()
         }
 
         it("should resolve url to baseUrl config") {
             val path = "/foo/bar"
 
-            createApiClient(httpClient.factory(), opts)(HttpRequest<Unit>(
-                method = HttpRequestMethod.GET,
-                url = HttpRequestUrl.String(path)
-            ))
+            createApiClient(httpClient.factory(), opts)(
+                kotlinxSerialisationMarshaller()(unitEncoder),
+                kotlinxSerialisationUnmarshaller()(::jsonPassthrough)(unitDecoder)
+            )(
+                HttpRequest<Unit>(
+                    method = HttpRequestMethod.GET,
+                    url = HttpRequestUrl.String(path)
+                )
+            )
 
             httpClient.request.url.shouldBe(HttpRequestUrl.String("${opts.baseUrl}$path"))
         }

@@ -3,16 +3,12 @@ package au.com.wpay.sdk.api
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.*
 
-/**
- * @category API
- */
 class CustomerPaymentAgreementsApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -20,10 +16,12 @@ class CustomerPaymentAgreementsApi(
      */
     suspend fun list(): ApiResult<PaymentAgreements> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreements>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreements>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/customer/payments/agreements")
         )))
@@ -36,10 +34,12 @@ class CustomerPaymentAgreementsApi(
      */
     suspend fun getById(paymentToken: String): ApiResult<PaymentAgreement> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/customer/payments/agreements/:paymentToken"),
             headers = emptyMap(),
@@ -64,10 +64,12 @@ class CustomerPaymentAgreementsApi(
         fraudPayload: FraudPayload? = null
     ): ApiResult<PaymentAgreement> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<CreatePaymentAgreementRequest, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instore/customer/payments/agreements"),
             headers = emptyMap(),
@@ -98,10 +100,12 @@ class CustomerPaymentAgreementsApi(
         fraudPayload: FraudPayload? = null
     ): ApiResult<PaymentAgreement> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<UpdatePaymentAgreementRequest, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<PaymentAgreement>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instore/customer/payments/agreements/:paymentToken"),
             headers = emptyMap(),

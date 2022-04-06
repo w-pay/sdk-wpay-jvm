@@ -3,13 +3,12 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.WalletDeleteRequest
 
 class WalletApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -19,10 +18,12 @@ class WalletApi(
      */
     suspend fun delete(walletDeleteRequest: WalletDeleteRequest): ApiResult<Unit> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: WalletDeleteRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)(unitDecoder)
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/wallet/delete"),
             headers = emptyMap(),

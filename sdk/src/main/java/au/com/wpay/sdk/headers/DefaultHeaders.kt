@@ -2,7 +2,6 @@ package au.com.wpay.sdk.headers
 
 import arrow.core.right
 import au.com.redcrew.apisdkcreator.httpclient.*
-import au.com.wpay.sdk.headers.*
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.auth.ApiAuthenticator
 import au.com.wpay.sdk.auth.HasAccessToken

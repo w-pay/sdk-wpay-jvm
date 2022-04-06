@@ -10,6 +10,7 @@ import au.com.wpay.sdk.data.walletmanagement.giftCardsBalanceRequest
 import au.com.wpay.sdk.data.walletmanagement.giftCardsBalanceResponseDTO
 import au.com.wpay.sdk.data.walletmanagement.tokenizeGiftCardRequest
 import au.com.wpay.sdk.data.walletmanagement.tokenizeGiftCardResponseDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.giftCardsBalanceFrom
 import au.com.wpay.sdk.matchers.walletmanagement.tokenizeGiftCardResponseFrom
@@ -27,7 +28,8 @@ class GiftCardsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = GiftCardsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

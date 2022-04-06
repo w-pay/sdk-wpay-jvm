@@ -10,6 +10,7 @@ import au.com.wpay.sdk.data.digitalpay.digitalPayChargePaymentAgreementRequest
 import au.com.wpay.sdk.data.digitalpay.digitalPayCreatePaymentAgreementRequest
 import au.com.wpay.sdk.data.digitalpay.digitalPayPaymentAgreementResponseDTO
 import au.com.wpay.sdk.data.digitalpay.digitalPayUpdatePaymentAgreementRequest
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.digitalpay.digitalPayPaymentAgreementFrom
 import au.com.wpay.sdk.model.stringData
@@ -27,7 +28,8 @@ class PaymentAgreementApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = PaymentAgreementApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

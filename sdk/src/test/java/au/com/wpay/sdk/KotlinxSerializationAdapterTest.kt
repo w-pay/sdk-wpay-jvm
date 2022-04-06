@@ -27,6 +27,7 @@ fun dataFrom(json: String): UnstructuredData =
 @Suppress("EXPERIMENTAL_API_USAGE")
 private val JSON = Json { explicitNulls = false }
 
+@Suppress("MoveLambdaOutsideParentheses")
 class KotlinxSerializationAdapterTest: DescribeSpec({
     describe("marshalling") {
         val marshaller = kotlinxSerialisationMarshaller()
@@ -34,7 +35,7 @@ class KotlinxSerializationAdapterTest: DescribeSpec({
         it("should marshall data") {
             val name = "Bruce Wayne"
 
-            marshaller(Person(name))
+            marshaller({ parser, data: Person -> tryEncoding(parser, data) })(Person(name))
                 .shouldBeRight(UnstructuredData.String("""{"name":"$name"}"""))
         }
     }

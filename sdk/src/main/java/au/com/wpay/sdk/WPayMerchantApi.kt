@@ -12,7 +12,8 @@ import au.com.wpay.sdk.api.digitalpay.DigitalPayRepository
  * Implementations of the protocol may provide additional constraints on the user.
  */
 class WPayMerchantApi(
-    client: SdkApiClient,
+    client: SdkApiClientFactory,
+    marshall: SdkJsonMarshaller,
     unmarshall: SdkJsonUnmarshaller,
 
     /**
@@ -20,13 +21,13 @@ class WPayMerchantApi(
      */
     val options: WPayMerchantOptions
 ) {
-    val admin: AdministrationApi = AdministrationApi(client, unmarshall)
-    val dp: DigitalPayRepository = DigitalPayRepository(client, unmarshall)
-    val payments: MerchantPaymentsApi = MerchantPaymentsApi(client, unmarshall)
-    val paymentAgreements: MerchantPaymentAgreementsApi = MerchantPaymentAgreementsApi(client, unmarshall)
-    val paymentSession: MerchantPaymentSessionsApi = MerchantPaymentSessionsApi(client, unmarshall)
-    val preferences: MerchantPreferencesApi = MerchantPreferencesApi(client, unmarshall)
-    val qr: QRCodeApi = QRCodeApi(client, unmarshall)
-    val schemas: SchemasApi = SchemasApi(client, unmarshall)
-    val transactions: MerchantTransactionsApi = MerchantTransactionsApi(client, unmarshall)
+    val admin: AdministrationApi = AdministrationApi(client, marshall, unmarshall)
+    val dp: DigitalPayRepository = DigitalPayRepository(client, marshall, unmarshall)
+    val payments: MerchantPaymentsApi = MerchantPaymentsApi(client, marshall, unmarshall)
+    val paymentAgreements: MerchantPaymentAgreementsApi = MerchantPaymentAgreementsApi(client, marshall, unmarshall)
+    val paymentSession: MerchantPaymentSessionsApi = MerchantPaymentSessionsApi(client, marshall, unmarshall)
+    val preferences: MerchantPreferencesApi = MerchantPreferencesApi(client, marshall, unmarshall)
+    val qr: QRCodeApi = QRCodeApi(client, marshall, unmarshall)
+    val schemas: SchemasApi = SchemasApi(client, marshall, unmarshall)
+    val transactions: MerchantTransactionsApi = MerchantTransactionsApi(client, marshall, unmarshall)
 }

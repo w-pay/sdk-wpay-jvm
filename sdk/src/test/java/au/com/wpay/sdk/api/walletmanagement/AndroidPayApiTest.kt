@@ -8,6 +8,7 @@ import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.tokenizeAndroidPayRequest
 import au.com.wpay.sdk.data.walletmanagement.tokenizeAndroidPayResponseDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.tokenizeAndroidPayResponseFrom
 import au.com.wpay.sdk.model.stringData
@@ -32,7 +33,8 @@ class AndroidPayApiTest : DescribeSpec({
                 .build()
 
             api = AndroidPayApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

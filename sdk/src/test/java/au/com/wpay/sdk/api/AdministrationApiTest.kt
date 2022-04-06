@@ -7,6 +7,7 @@ import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.healthCheckDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.healthCheckFrom
 import au.com.wpay.sdk.model.apiResponse
@@ -27,7 +28,11 @@ class AdministrationApiTest : DescribeSpec({
                 .withBody(stringData(apiResponse(healthCheckDTO())))
                 .build()
 
-            api = AdministrationApi(apiClient.client(), kotlinxSerialisationUnmarshaller())
+            api = AdministrationApi(
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
+                kotlinxSerialisationUnmarshaller()
+            )
         }
 
         it("should set request params") {

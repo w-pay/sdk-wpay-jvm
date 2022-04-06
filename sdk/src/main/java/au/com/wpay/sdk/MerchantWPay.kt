@@ -48,6 +48,7 @@ fun createMerchantSDK(
 ): WPayMerchantApi =
     WPayMerchantApi(
         createApiClient(httpClient, options),
+        kotlinxSerialisationMarshaller(),
         kotlinxSerialisationUnmarshaller(),
         options
     )

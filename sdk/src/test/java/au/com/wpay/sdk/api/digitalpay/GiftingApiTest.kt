@@ -26,7 +26,8 @@ class GiftingApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = GiftingApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

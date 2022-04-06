@@ -3,14 +3,13 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.TokenizeGooglePayRequest
 import au.com.wpay.sdk.model.walletmanagement.TokenizeGooglePayResponse
 
 data class GooglePayApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -22,10 +21,12 @@ data class GooglePayApi(
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeGooglePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/googlepay/tokenize"),
             body = tokenizeGooglePayRequest
@@ -41,10 +42,12 @@ data class GooglePayApi(
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeGooglePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/guest/googlepay/tokenize"),
             body = tokenizeGooglePayRequest
@@ -62,10 +65,12 @@ data class GooglePayApi(
         tokenizeGooglePayRequest: TokenizeGooglePayRequest
     ): ApiResult<TokenizeGooglePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeGooglePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGooglePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/googlepay/tokenize/:paymentToken"),
             headers = emptyMap(),

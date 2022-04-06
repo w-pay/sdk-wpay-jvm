@@ -8,6 +8,7 @@ import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.customerTransactionDetailsDTO
 import au.com.wpay.sdk.data.customerTransactionSummariesDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.customerTransactionDetailsFrom
 import au.com.wpay.sdk.matchers.customerTransactionSummariesFrom
@@ -29,7 +30,8 @@ class CustomerTransactionsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = CustomerTransactionsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

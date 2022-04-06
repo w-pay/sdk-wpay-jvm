@@ -3,14 +3,13 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.TokenizeApplePayRequest
 import au.com.wpay.sdk.model.walletmanagement.TokenizeApplePayResponse
 
 class ApplePayApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -20,10 +19,12 @@ class ApplePayApi(
      */
     suspend fun tokenize(tokenizeApplePayRequest: TokenizeApplePayRequest): ApiResult<TokenizeApplePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeApplePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/applepay/tokenize"),
             body = tokenizeApplePayRequest
@@ -39,10 +40,12 @@ class ApplePayApi(
         tokenizeApplePayRequest: TokenizeApplePayRequest
     ): ApiResult<TokenizeApplePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeApplePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/guest/applepay/tokenize"),
             body = tokenizeApplePayRequest
@@ -60,10 +63,12 @@ class ApplePayApi(
         tokenizeApplePayRequest: TokenizeApplePayRequest
     ): ApiResult<TokenizeApplePayResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeApplePayRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeApplePayResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/applepay/tokenize/:paymentInstrumentId"),
             headers = emptyMap(),

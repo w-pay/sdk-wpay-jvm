@@ -48,6 +48,7 @@ fun createCustomerSDK(
 ): WPayCustomerApi =
     WPayCustomerApi(
         createApiClient(httpClient, options),
+        kotlinxSerialisationMarshaller(),
         kotlinxSerialisationUnmarshaller(),
         options
     )

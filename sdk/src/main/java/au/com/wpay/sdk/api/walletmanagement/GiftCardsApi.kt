@@ -3,8 +3,6 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.GiftCardsBalanceRequest
 import au.com.wpay.sdk.model.walletmanagement.GiftCardsBalanceResponse
@@ -12,7 +10,8 @@ import au.com.wpay.sdk.model.walletmanagement.TokenizeGiftCardRequest
 import au.com.wpay.sdk.model.walletmanagement.TokenizeGiftCardResponse
 
 class GiftCardsApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -22,10 +21,12 @@ class GiftCardsApi(
      */
     suspend fun tokenize(tokenizeGiftCardRequest: TokenizeGiftCardRequest): ApiResult<TokenizeGiftCardResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeGiftCardRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/giftcards/tokenize"),
             body = tokenizeGiftCardRequest
@@ -41,10 +42,12 @@ class GiftCardsApi(
         tokenizeGiftCardRequest: TokenizeGiftCardRequest
     ): ApiResult<TokenizeGiftCardResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: TokenizeGiftCardRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<TokenizeGiftCardResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/guest/giftcards/tokenize"),
             body = tokenizeGiftCardRequest
@@ -58,10 +61,12 @@ class GiftCardsApi(
      */
     suspend fun balance(giftcardsBalanceRequest: GiftCardsBalanceRequest): ApiResult<GiftCardsBalanceResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<GiftCardsBalanceResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: GiftCardsBalanceRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<GiftCardsBalanceResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/giftcards/balance"),
             body = giftcardsBalanceRequest

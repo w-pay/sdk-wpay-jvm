@@ -8,6 +8,7 @@ import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.tokenizeApplePayRequest
 import au.com.wpay.sdk.data.walletmanagement.tokenizeApplePayResponseDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.tokenizeApplePayResponseFrom
 import au.com.wpay.sdk.model.stringData
@@ -32,7 +33,8 @@ class ApplePayApiTest : DescribeSpec({
                 .build()
 
             api = ApplePayApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

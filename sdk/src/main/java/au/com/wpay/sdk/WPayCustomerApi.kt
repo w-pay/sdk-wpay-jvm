@@ -10,7 +10,8 @@ import au.com.wpay.sdk.api.digitalpay.DigitalPayRepository
  * constructor arguments that meets the needs and preexisting technology choices of the application.
  */
 class WPayCustomerApi(
-    client: SdkApiClient,
+    client: SdkApiClientFactory,
+    marshall: SdkJsonMarshaller,
     unmarshall: SdkJsonUnmarshaller,
 
     /**
@@ -18,13 +19,13 @@ class WPayCustomerApi(
      */
     val options: WPayCustomerOptions
 ) {
-    val admin: AdministrationApi = AdministrationApi(client, unmarshall)
-    val dp: DigitalPayRepository = DigitalPayRepository(client, unmarshall)
-    val instruments: PaymentInstrumentsApi = PaymentInstrumentsApi(client, unmarshall)
-    val paymentAgreements: CustomerPaymentAgreementsApi = CustomerPaymentAgreementsApi(client, unmarshall)
-    val paymentRequests: CustomerPaymentRequestsApi = CustomerPaymentRequestsApi(client, unmarshall)
-    val paymentSessions: CustomerPaymentSessionsApi = CustomerPaymentSessionsApi(client, unmarshall)
-    val preferences: CustomerPreferencesApi = CustomerPreferencesApi(client, unmarshall)
-    val termsAndConditions: CustomerTermsAndConditionsApi = CustomerTermsAndConditionsApi(client, unmarshall)
-    val transactions: CustomerTransactionsApi = CustomerTransactionsApi(client, unmarshall)
+    val admin: AdministrationApi = AdministrationApi(client, marshall, unmarshall)
+    val dp: DigitalPayRepository = DigitalPayRepository(client, marshall, unmarshall)
+    val instruments: PaymentInstrumentsApi = PaymentInstrumentsApi(client, marshall, unmarshall)
+    val paymentAgreements: CustomerPaymentAgreementsApi = CustomerPaymentAgreementsApi(client, marshall, unmarshall)
+    val paymentRequests: CustomerPaymentRequestsApi = CustomerPaymentRequestsApi(client, marshall, unmarshall)
+    val paymentSessions: CustomerPaymentSessionsApi = CustomerPaymentSessionsApi(client, marshall, unmarshall)
+    val preferences: CustomerPreferencesApi = CustomerPreferencesApi(client, marshall, unmarshall)
+    val termsAndConditions: CustomerTermsAndConditionsApi = CustomerTermsAndConditionsApi(client, marshall, unmarshall)
+    val transactions: CustomerTransactionsApi = CustomerTransactionsApi(client, marshall, unmarshall)
 }

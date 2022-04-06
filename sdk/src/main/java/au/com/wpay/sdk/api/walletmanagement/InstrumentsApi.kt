@@ -3,13 +3,12 @@ package au.com.wpay.sdk.api.walletmanagement
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.walletmanagement.*
 
 class InstrumentsApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -21,10 +20,12 @@ class InstrumentsApi(
         importPaymentInstrumentsRequest: ImportPaymentInstrumentsRequest
     ): ApiResult<ImportPaymentInstrumentsResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ImportPaymentInstrumentsResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ImportPaymentInstrumentsRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ImportPaymentInstrumentsResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instruments/import"),
             body = importPaymentInstrumentsRequest
@@ -40,10 +41,12 @@ class InstrumentsApi(
         verifyPaymentInstrumentsRequest: VerifyPaymentInstrumentsRequest
     ): ApiResult<VerifyPaymentInstrumentsSuccessResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<VerifyPaymentInstrumentsSuccessResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: VerifyPaymentInstrumentsRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<VerifyPaymentInstrumentsSuccessResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instruments/verify"),
             body = verifyPaymentInstrumentsRequest
@@ -55,10 +58,12 @@ class InstrumentsApi(
      */
     suspend fun getList(): ApiResult<ListPaymentInstrumentsResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ListPaymentInstrumentsResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ListPaymentInstrumentsResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instruments")
         )))
@@ -73,10 +78,12 @@ class InstrumentsApi(
         listPaymentInstrumentsRequest: ListPaymentInstrumentsRequest
     ): ApiResult<ListPaymentInstrumentsResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ListPaymentInstrumentsResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ListPaymentInstrumentsRequest -> tryEncoding(parser, data) }),
+            unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<ListPaymentInstrumentsResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instruments"),
             body = listPaymentInstrumentsRequest
@@ -89,11 +96,9 @@ class InstrumentsApi(
      * @param paymentInstrumentId The id of the payment instrument to delete.
      */
     suspend fun delete(paymentInstrumentId: String): ApiResult<Unit> {
-        @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::jsonPassthrough)({ parser, el -> tryDecoding<Unit>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(marshall(unitEncoder), unmarshall(::jsonPassthrough)(unitDecoder))
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.DELETE,
             url = HttpRequestUrl.String("/instruments/:paymentInstrumentId"),
             headers = emptyMap(),

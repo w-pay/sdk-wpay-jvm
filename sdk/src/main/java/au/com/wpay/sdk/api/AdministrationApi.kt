@@ -3,8 +3,6 @@ package au.com.wpay.sdk.api
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.HealthCheck
 
@@ -12,7 +10,8 @@ import au.com.wpay.sdk.model.HealthCheck
  * Can be used to perform Administration functions on the API
  */
 class AdministrationApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -20,10 +19,12 @@ class AdministrationApi(
      */
     suspend fun checkHealth(): ApiResult<HealthCheck> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<HealthCheck>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<HealthCheck>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/")
         )))

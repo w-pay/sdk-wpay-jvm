@@ -7,6 +7,7 @@ import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.walletmanagement.merchantProfileResponseDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.walletmanagement.merchantProfileFrom
 import au.com.wpay.sdk.model.stringData
@@ -23,7 +24,8 @@ class MerchantsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = MerchantsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

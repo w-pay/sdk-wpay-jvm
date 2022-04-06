@@ -3,15 +3,14 @@ package au.com.wpay.sdk.api
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.model.MerchantSchema
 import au.com.wpay.sdk.model.MerchantSchemaSummaries
 import au.com.wpay.sdk.model.MerchantSchemaSummary
 
 class SchemasApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -19,10 +18,12 @@ class SchemasApi(
      */
     suspend fun list(): ApiResult<MerchantSchemaSummaries> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummaries>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummaries>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/merchant/schema")
         )))
@@ -35,10 +36,12 @@ class SchemasApi(
      */
     suspend fun getById(schemaId: String): ApiResult<MerchantSchema>{
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchema>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchema>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/instore/merchant/schema/:schemaId"),
             headers = emptyMap(),
@@ -57,10 +60,12 @@ class SchemasApi(
      */
     suspend fun create(schema: MerchantSchema): ApiResult<MerchantSchemaSummary> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummary>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<MerchantSchema, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<MerchantSchemaSummary>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/instore/merchant/schema"),
             headers = emptyMap(),

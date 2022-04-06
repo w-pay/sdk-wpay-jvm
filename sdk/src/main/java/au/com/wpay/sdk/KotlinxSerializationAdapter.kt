@@ -10,15 +10,14 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
-import kotlinx.serialization.serializer
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.reflect.full.createType
 
 /**
  * The shape of the data returned from the API doesn't match the shape of the types returned from
@@ -79,7 +78,17 @@ import kotlin.reflect.full.createType
 typealias JsonTransformer = suspend (JsonObject) -> Either<SdkError, JsonObject>
 
 /**
- * At a point when the data type is known (typically in the implementation of an API operation) the
+ * At the point when the request data type is known (typically in the implementation of an API operation) the
+ * request data needs to be encoded into UnstructuredData. In order to avoid needing to use reflection, an encoding
+ * function can be used that itself receives a Json instance and the data to be encoded. The [JsonEncoder] can then
+ * try to encode the data.
+ *
+ * A helper function [tryEncoding] can be used to catch exceptions and convert to [SdkError]s
+ */
+typealias JsonEncoder<T> = suspend (Json, T) -> Either<SdkError, UnstructuredData>
+
+/**
+ * At a point when the response data type is known (typically in the implementation of an API operation) the
  * JSON needs to be decoded into an instance of that type. In order to avoid needing to use reflection, a decoding
  * function can be used that itself receives a Json instance and the parsed JSON data (JsonElement). The [JsonDecoder]
  * can then try to decode the data.
@@ -89,12 +98,35 @@ typealias JsonTransformer = suspend (JsonObject) -> Either<SdkError, JsonObject>
 typealias JsonDecoder<T> = suspend (Json, JsonElement) -> Either<SdkError, T>
 
 /**
+ * A Marshaller that uses a [JsonEncoder] to encode JSON data to an instance of a type.
+ */
+// EncodingMarshaller :: (JsonEncoder<T>) -> Marshaller
+interface EncodingMarshaller: GenericTypeCurriedFunction {
+    suspend operator fun <T : Any> invoke(p1: JsonEncoder<T>): Marshaller
+}
+
+/**
  * An Unmarshaller that uses a [JsonDecoder] to decode JSON data to an instance of a type.
  */
 // DecodingUnmarshaller :: (JsonDecoder<T>) -> Unmarshaller<T>
 interface DecodingUnmarshaller: GenericTypeCurriedFunction {
     suspend operator fun <T : Any> invoke(p1: JsonDecoder<T>): Unmarshaller<T>
 }
+
+/**
+ * A [JsonEncoder] that can be used when there is no HttpRequest body. Returns an error if invoked.
+ */
+val unitEncoder: JsonEncoder<Unit> = { _, _ -> SdkError(MARSHALLING_ERROR_TYPE, "Can't encode an empty body").left() }
+
+/**
+ * A [JsonDecoder] that can be used when there is no HttpRequest body. Returns an error if invoked.
+ */
+val unitDecoder: JsonDecoder<Unit> = { _, _ -> SdkError(MARSHALLING_ERROR_TYPE, "Can't decode an empty body").left() }
+
+/**
+ * An alias to allow the future evolution of the SDK without having to update every "Api" class.
+ */
+typealias SdkJsonMarshaller = EncodingMarshaller
 
 /**
  * An SDK JSON Unmarshaller transforms then unmarshalls the JSON response into a known type.
@@ -110,20 +142,12 @@ private val parser = Json {
     ignoreUnknownKeys = true
 }
 
-fun kotlinxSerialisationMarshaller(): Marshaller =
-    {
-        try {
-            // TODO: As this uses reflection it might not be portable.
-            val type = it::class.createType()
-            val serializer: KSerializer<Any?> = parser.serializersModule.serializer(type)
-
-            UnstructuredData.String(parser.encodeToString(serializer, it)).right()
-        }
-        catch (e: Exception) {
-            SdkError(MARSHALLING_ERROR_TYPE, e.message!!, e).left()
-        }
+fun kotlinxSerialisationMarshaller(): SdkJsonMarshaller =
+    object : EncodingMarshaller {
+        @Suppress("UNCHECKED_CAST")
+        override suspend fun <T : Any> invoke(p1: JsonEncoder<T>): Marshaller =
+            { p1(parser, it as T) }
     }
-
 
 fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
     object: SdkJsonUnmarshaller {
@@ -152,6 +176,16 @@ fun kotlinxSerialisationUnmarshaller(): SdkJsonUnmarshaller =
                         }
             }
     }
+
+/**
+ * Helper function to catch exceptions when encoding data to JSON and return the error.
+ */
+inline fun <reified T> tryEncoding(parser: Json, data: T): Either<SdkError, UnstructuredData> =
+    Either.catch(
+        { SdkError(UNMARSHALLING_ERROR_TYPE, it.message!!, it) },
+        { UnstructuredData.String(parser.encodeToString(data)) }
+    )
+
 
 /**
  * Helper function to catch exceptions when decoding JsonElements and return the error.

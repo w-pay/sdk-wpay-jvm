@@ -7,6 +7,7 @@ import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
 import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.digitalpay.*
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.digitalpay.openPayCompletionResponseFrom
 import au.com.wpay.sdk.matchers.digitalpay.openPayRefundResponseFrom
@@ -26,7 +27,8 @@ class OpenPayApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = OpenPayApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

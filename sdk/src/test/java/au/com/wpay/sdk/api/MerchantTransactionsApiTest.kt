@@ -8,6 +8,7 @@ import au.com.wpay.sdk.StubApiClient
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.merchantTransactionDetailsDTO
 import au.com.wpay.sdk.data.merchantTransactionSummariesDTO
+import au.com.wpay.sdk.kotlinxSerialisationMarshaller
 import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.merchantTransactionDetailsFrom
 import au.com.wpay.sdk.matchers.merchantTransactionSummariesFrom
@@ -28,7 +29,8 @@ class MerchantTransactionsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = MerchantTransactionsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

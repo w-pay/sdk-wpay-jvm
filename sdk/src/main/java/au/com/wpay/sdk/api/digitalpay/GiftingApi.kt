@@ -3,8 +3,6 @@ package au.com.wpay.sdk.api.digitalpay
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
-import au.com.redcrew.apisdkcreator.httpclient.arrow.pipe
-import au.com.redcrew.apisdkcreator.httpclient.jsonUnmarshaller
 import au.com.wpay.sdk.*
 import au.com.wpay.sdk.helpers.optionalParam
 import au.com.wpay.sdk.helpers.params
@@ -14,7 +12,8 @@ import au.com.wpay.sdk.model.digitalpay.*
 import org.threeten.bp.OffsetDateTime
 
 class GiftingApi(
-    private val client: SdkApiClient,
+    private val factory: SdkApiClientFactory,
+    private val marshall: SdkJsonMarshaller,
     private val unmarshall: SdkJsonUnmarshaller
 ) {
     /**
@@ -24,10 +23,12 @@ class GiftingApi(
      */
     suspend fun getProductById(productId: String): ApiResult<DigitalPayGiftingProductDetail> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProductDetail>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProductDetail>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/gifting/products/:productId"),
             headers = emptyMap(),
@@ -52,10 +53,12 @@ class GiftingApi(
         lastUpdateDateTime: OffsetDateTime? = null
     ): ApiResult<DigitalPayGiftingProducts> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProducts>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall(unitEncoder),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingProducts>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest<Unit>(
+        return apiResult(client(HttpRequest<Unit>(
             method = HttpRequestMethod.GET,
             url = HttpRequestUrl.String("/gifting/products"),
             headers = emptyMap(),
@@ -78,10 +81,12 @@ class GiftingApi(
         quoteRequest: DigitalPayGiftingQuoteRequest
     ): ApiResult<DigitalPayGiftingQuoteResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingQuoteResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<DigitalPayGiftingQuoteRequest, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingQuoteResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/gifting/products/quote"),
             headers = emptyMap(),
@@ -107,10 +112,12 @@ class GiftingApi(
         fraudPayload: FraudPayload? = null
     ): ApiResult<DigitalPayGiftingOrderResponse> {
         @Suppress("MoveLambdaOutsideParentheses")
-        val unmarshaller = unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingOrderResponse>(parser, el) })
-        val pipe = client pipe resultHandler(jsonUnmarshaller(unmarshaller))
+        val client = factory(
+            marshall({ parser, data: ApiRequestBody<DigitalPayGiftingOrderRequest, Meta> -> tryEncoding(parser, data) }),
+            unmarshall(::fromData)({ parser, el -> tryDecoding<DigitalPayGiftingOrderResponse>(parser, el) })
+        )
 
-        return apiResult(pipe(HttpRequest(
+        return apiResult(client(HttpRequest(
             method = HttpRequestMethod.POST,
             url = HttpRequestUrl.String("/gifting/products/order"),
             headers = emptyMap(),

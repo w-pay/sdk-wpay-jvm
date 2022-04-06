@@ -4,11 +4,8 @@ import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
-import au.com.wpay.sdk.ApiRequestBody
-import au.com.wpay.sdk.Meta
-import au.com.wpay.sdk.StubApiClient
+import au.com.wpay.sdk.*
 import au.com.wpay.sdk.data.*
-import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.individualPaymentInstrumentFrom
 import au.com.wpay.sdk.matchers.paymentInstrumentAddedFrom
 import au.com.wpay.sdk.matchers.walletContentsFrom
@@ -30,7 +27,8 @@ class PaymentInstrumentsApiTest : DescribeSpec({
             apiClient = StubApiClient()
 
             api = PaymentInstrumentsApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }

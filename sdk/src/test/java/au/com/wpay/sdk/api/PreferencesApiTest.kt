@@ -4,13 +4,10 @@ import au.com.redcrew.apisdkcreator.httpclient.HttpRequest
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestMethod
 import au.com.redcrew.apisdkcreator.httpclient.HttpRequestUrl
 import au.com.redcrew.apisdkcreator.httpclient.UnstructuredData
-import au.com.wpay.sdk.ApiRequestBody
-import au.com.wpay.sdk.Meta
-import au.com.wpay.sdk.StubApiClient
+import au.com.wpay.sdk.*
 import au.com.wpay.sdk.data.aJsonResponse
 import au.com.wpay.sdk.data.customerPreferences
 import au.com.wpay.sdk.data.preferencesDTO
-import au.com.wpay.sdk.kotlinxSerialisationUnmarshaller
 import au.com.wpay.sdk.matchers.customerPreferencesFrom
 import au.com.wpay.sdk.matchers.preferencesFrom
 import au.com.wpay.sdk.model.apiResponse
@@ -31,7 +28,8 @@ class PreferencesApiTest : DescribeSpec({
 
         beforeEach {
             api = CustomerPreferencesApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }
@@ -92,7 +90,8 @@ class PreferencesApiTest : DescribeSpec({
 
         beforeEach {
             api = MerchantPreferencesApi(
-                apiClient.client(),
+                apiClient.factory(),
+                kotlinxSerialisationMarshaller(),
                 kotlinxSerialisationUnmarshaller()
             )
         }
